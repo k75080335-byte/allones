@@ -1,0 +1,57 @@
+/* 결락 v10 · DESCENT — 구름 → 낙하 → 수면 → 수면 아래 → 심연 */
+#surface{display:none!important}
+#descent{position:relative;height:760vh;background:#000}
+.dsc-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000;color:#E9EEF7}
+#dsc,#dscLiquid{position:absolute;inset:0;width:100%;height:100%;display:block}
+#dscLiquid{z-index:2;pointer-events:none;filter:drop-shadow(0 0 18px rgba(120,150,255,.25))}
+.dsc-static .dsc-pin{background:radial-gradient(60% 50% at 50% 50%,#0d1630,#000)}
+.dsc-static .dsc-fallback{display:block}
+.dsc-fallback{display:none;position:absolute;left:50%;top:50%;width:min(40vmin,300px);transform:translate(-50%,-50%);opacity:.9}
+
+/* HUD — ICE HIBISCUS 레퍼런스: 모서리 데이터, 세로 눈금, 조준선 */
+.dsc-hud{position:absolute;inset:0;z-index:4;pointer-events:none;font-family:var(--mono);font-size:10px;letter-spacing:.12em;line-height:1.7;text-transform:uppercase;color:rgba(233,238,247,.78)}
+.dsc-hud .tl,.dsc-hud .tr,.dsc-hud .bl,.dsc-hud .br{position:absolute}
+.dsc-hud .tl{left:var(--pad);top:84px;padding-left:10px;border-left:1px solid rgba(233,238,247,.35)}
+.dsc-hud .tr{right:calc(var(--pad) + 26px);top:84px;text-align:right}
+.dsc-hud .bl{left:var(--pad);bottom:26px}
+.dsc-hud .br{right:var(--pad);bottom:26px;text-align:right}
+.dsc-hud .tl::before,.dsc-hud .tr::after{content:"";position:absolute;width:12px;height:12px;border:1px solid rgba(233,238,247,.5)}
+.dsc-hud .tl::before{left:-1px;top:-14px;border-right:0;border-bottom:0}
+.dsc-hud .tr::after{right:-14px;top:-14px;border-left:0;border-bottom:0}
+.dsc-scale{position:absolute;right:var(--pad);top:22%;bottom:22%;width:12px;background:repeating-linear-gradient(180deg,rgba(233,238,247,.45) 0 1px,transparent 1px 8px);-webkit-mask-image:linear-gradient(90deg,transparent 30%,#000 30%);mask-image:linear-gradient(90deg,transparent 30%,#000 30%)}
+.dsc-scale i{position:absolute;right:0;width:26px;height:1px;background:#fff;box-shadow:0 0 8px #8fb0ff}
+.dsc-scale::after{content:"0M";position:absolute;right:18px;top:33.5%;font-size:9px;color:rgba(233,238,247,.6)}
+.dsc-cross{position:absolute;left:50%;top:50%;width:min(44vmin,360px);aspect-ratio:1;transform:translate(-50%,-50%);opacity:0}
+.dsc-cross svg{width:100%;height:100%;fill:none;stroke:rgba(255,255,255,.7);stroke-width:1;vector-effect:non-scaling-stroke}
+.dsc-cross svg *{vector-effect:non-scaling-stroke}
+/* 스캔 박스 — 안쪽만 다른 렌더링 */
+#scanBox{position:absolute;left:0;top:0;border:1px solid rgba(255,255,255,.85);opacity:0;z-index:4;pointer-events:none}
+#scanBox i{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff}
+#scanBox i:nth-child(1){left:-4px;top:50%;margin-top:-4px}#scanBox i:nth-child(2){right:-4px;top:50%;margin-top:-4px}
+#scanBox i:nth-child(3){left:50%;top:-4px;margin-left:-4px}#scanBox i:nth-child(4){left:50%;bottom:-4px;margin-left:-4px}
+#scanBox b{position:absolute;left:8px;top:6px;font:500 9px/1 var(--mono);letter-spacing:.16em;color:#fff}
+/* 캡션 */
+.dcap{position:absolute;left:var(--pad);bottom:clamp(90px,16vh,160px);z-index:5;max-width:min(460px,80vw);opacity:0;visibility:hidden;pointer-events:none}
+.dcap .no{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;margin-bottom:12px;color:#8FA9FF}
+.dcap h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(42px,6vw,92px);line-height:.92;letter-spacing:-.02em;color:#F3F6FB}
+.dcap p{margin-top:16px;font-size:12px;line-height:1.75;color:rgba(233,238,247,.75);max-width:300px}
+.dcap.c3{left:auto;right:calc(var(--pad) + 40px);text-align:right}
+.dcap.c3 p{margin-left:auto}
+/* 모드 버튼 */
+#modeBtn{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:6;display:flex;align-items:center;gap:10px;padding:9px 14px;border:1px solid rgba(255,255,255,.4);border-radius:999px;background:rgba(0,0,0,.35);backdrop-filter:blur(6px);color:#fff;font:500 10px/1 var(--mono);letter-spacing:.16em;cursor:pointer;min-height:36px}
+#modeBtn span{opacity:.45;transition:opacity .3s}
+#modeBtn span:first-child,#modeBtn.glass span:last-child{opacity:1}
+#modeBtn.glass span:first-child{opacity:.45}
+#modeBtn em{width:26px;height:12px;border-radius:99px;border:1px solid rgba(255,255,255,.6);position:relative}
+#modeBtn em::after{content:"";position:absolute;left:2px;top:2px;width:6px;height:6px;border-radius:50%;background:#fff;transition:transform .3s}
+#modeBtn.glass em::after{transform:translateX(14px);background:#174BFF;box-shadow:0 0 6px #6f8fff}
+.dsc-go{position:absolute;left:50%;bottom:74px;transform:translateX(-50%);z-index:6;font:500 10px/1 var(--mono);letter-spacing:.2em;color:rgba(255,255,255,.6)}
+@media (max-width:720px){
+  #descent{height:700vh}
+  .dsc-hud{font-size:8.5px}
+  .dsc-hud .tr{display:none}
+  .dsc-hud .tl{top:72px}
+  .dcap{bottom:110px}
+  .dcap.c3{right:var(--pad)}
+  .dsc-scale{top:30%;bottom:30%}
+}
