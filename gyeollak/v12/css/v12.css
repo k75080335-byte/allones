@@ -1,0 +1,22 @@
+/* 결락 v12 — 장면형 사이트 (공통) */
+@font-face{font-family:"Pretendard";src:url(../fonts/PretendardVariable.woff2) format("woff2");font-weight:45 920;font-display:swap}
+@font-face{font-family:"DM Mono";src:url(../fonts/DMMono-Regular.ttf) format("truetype");font-display:swap}
+@font-face{font-family:"Instrument Serif";src:url(../fonts/InstrumentSerif-Italic.ttf) format("truetype");font-style:italic;font-display:swap}
+@font-face{font-family:"Song Myung";src:url(../fonts/SongMyung-kr.woff2) format("woff2");font-display:swap}
+:root{--ink:#0B0D12;--paper:#F1F4F8;--blue:#174BFF;--prus:#0E2C6E;--mist:#C9D4E6;--sub:#5D6678;
+  --serif:"Instrument Serif",serif;--kr:"Song Myung",serif;--mono:"DM Mono",monospace;--sans:"Pretendard",system-ui,sans-serif;--pad:clamp(18px,4vw,56px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img{display:block;max-width:100%}
+.mono{font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase}
+/* header */
+.hd{position:fixed;left:0;right:0;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px var(--pad);pointer-events:none;mix-blend-mode:difference;color:#fff}
+.hd a{pointer-events:auto;text-decoration:none}
+.hd .brand{display:flex;align-items:baseline;gap:10px;font:500 11px/1 var(--mono);letter-spacing:.3em}
+.hd .brand b{font:400 18px/1 var(--kr);letter-spacing:.1em}
+.hd nav{display:flex;gap:clamp(10px,2vw,26px);font:500 10px/1 var(--mono);letter-spacing:.18em}
+.hd nav a{opacity:.7;padding:6px 0;border-bottom:1px solid transparent}
+.hd nav a.on,.hd nav a:hover{opacity:1;border-bottom-color:currentColor}
+@media (max-width:720px){.hd nav{gap:10px;font-size:9px}.hd nav .x{display:none}}

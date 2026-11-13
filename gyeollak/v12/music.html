@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GYEOLLAK 결락 — MUSIC · 장마의 잔향 (v12 draft)</title>
+<link rel="stylesheet" href="css/v12.css">
+<style>
+html{scroll-snap-type:y mandatory}
+.tk{position:relative;height:100vh;height:100svh;scroll-snap-align:start;overflow:hidden;background:var(--bg);color:var(--fg);display:grid;grid-template-columns:1fr 1fr;align-items:center}
+.tk .num{position:absolute;right:-1vw;bottom:-6vw;font:400 italic clamp(200px,36vw,560px)/.8 var(--serif);color:transparent;-webkit-text-stroke:1px var(--line);pointer-events:none;letter-spacing:-.05em}
+.tk .art{position:relative;justify-self:center;width:min(40vw,460px);aspect-ratio:1;display:grid;place-items:center}
+.tk .art img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.28));transform:rotate(var(--rot)) translateY(var(--ty,0));transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.tk.in .art img{--ty:0}
+.tk:not(.in) .art img{--ty:30px}
+.tk .art .disc{position:absolute;right:-14%;top:50%;width:62%;aspect-ratio:1;border-radius:50%;transform:translateY(-50%);z-index:-1;
+  background:radial-gradient(circle,var(--bg) 0 9%,#d9dee6 9.5% 11%,transparent 11.5%),conic-gradient(from 0deg,#cfd6e2,#f6f8fb,#aeb8c8,#f1f4f8,#c3ccdb,#cfd6e2);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);transition:right .8s,transform 4s linear}
+.tk.playing .art .disc{right:-30%;animation:spin 3s linear infinite}
+@keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
+.tx{position:relative;z-index:2;padding:80px var(--pad);max-width:560px}
+.tx .no{font:500 10px/1 var(--mono);letter-spacing:.2em;opacity:.7}
+.tx h2{margin-top:18px;font:400 clamp(44px,6.4vw,96px)/1 var(--kr);letter-spacing:-.02em}
+.tx h2.en{font:400 italic clamp(48px,7vw,104px)/.9 var(--serif)}
+.tx .sub{margin-top:12px;font:500 11px/1 var(--mono);letter-spacing:.16em;opacity:.75}
+.tx p{margin-top:22px;font-size:13.5px;line-height:1.8;max-width:340px;opacity:.85}
+.pl{display:flex;align-items:center;gap:14px;margin-top:30px}
+.pl button{width:58px;height:58px;border-radius:50%;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;font-size:16px;flex:none}
+.tk.playing .pl button{background:var(--fg);color:var(--bg)}
+.bar{flex:1;max-width:260px;height:1px;background:var(--line);position:relative;cursor:pointer}
+.bar i{position:absolute;left:0;top:-1px;height:3px;width:0;background:currentColor}
+.time{font:500 10px/1 var(--mono);letter-spacing:.12em;opacity:.7;min-width:86px}
+.case{margin-top:26px;font:500 9.5px/1.8 var(--mono);letter-spacing:.14em;opacity:.6}
+.idx{position:fixed;right:var(--pad);top:50%;transform:translateY(-50%);z-index:40;list-style:none;display:flex;flex-direction:column;gap:9px;mix-blend-mode:difference;color:#fff}
+.idx a{display:block;text-decoration:none;font:500 9px/1 var(--mono);letter-spacing:.12em;opacity:.4;text-align:right}
+.idx a.on{opacity:1}
+.cover{position:relative;height:100vh;height:100svh;scroll-snap-align:start;display:grid;place-items:center;text-align:center;background:linear-gradient(180deg,#F1F4F8,#DCE4F0)}
+.cover h1{font:400 clamp(56px,10vw,150px)/1 var(--kr);color:#0E1834}
+.cover p{margin-top:14px;font:500 10px/1.8 var(--mono);letter-spacing:.24em;color:#3B4A6B}
+.cover .down{margin-top:40px;font:500 10px/1 var(--mono);letter-spacing:.2em;color:var(--blue)}
+@media (max-width:820px){
+  .tk{grid-template-columns:1fr;grid-template-rows:44vh 1fr;align-items:start}
+  .tk .art{width:min(66vw,320px);margin-top:64px}
+  .tx{padding:8px var(--pad) 40px}
+  .tx h2{font-size:44px}.tx h2.en{font-size:52px}
+  .tx p{margin-top:12px;font-size:12.5px}
+  .idx{display:none}
+}
+</style>
+</head>
+<body>
+<header class="hd">
+  <a class="brand" href="index.html"><b>결락</b>GYEOLLAK</a>
+  <nav aria-label="주요 메뉴"><a href="index.html">FILM</a><a href="members.html">MEMBERS</a><a href="music.html" class="on">MUSIC</a><a class="x" href="archive.html#objects">OBJECTS</a><a class="x" href="archive.html#play">PLAY</a><a class="x" href="logo.html">LOGO</a></nav>
+</header>
+<main id="list">
+  <section class="cover" aria-label="앨범"><div><p>GYEOLLAK 1ST ALBUM · DRAFT</p><h1>장마의 잔향</h1><p>8 TRACKS — 곡마다 한 장면</p><div class="down">SCROLL ↓</div></div></section>
+</main>
+<ol class="idx" id="idx" aria-label="트랙 바로가기"></ol>
+<audio id="au" preload="none"></audio>
+<script>
+const T=[
+ {f:'00_intro',t:'비가 맺지 못한 것들',s:'INTRO',c:'01-clear-archive',cn:'CLEAR ARCHIVE',bg:'#E9EDF2',p:'앨범의 문. 빗소리 위로 첫 화음이 맺히다 만다.'},
+ {f:'02_gyeolro',t:'결로',k:'結露',s:'MEMORY · 기억이 돌아오는 곡',c:'02-chrome-thorn',cn:'CHROME THORN',bg:'#174BFF',p:'부재가 유리창에 맺혀 물방울이 되는 순간. 처지지 않게, 듣는 사람에게 건네는 노래.'},
+ {f:'03_amnesia',t:'Amnesia',en:1,s:'하진우 · 수국',c:'04-x-ray',cn:'X-RAY',bg:'#DCE9F6',p:'잊은 것과 남은 것 사이. 사고 이후에 쓰인 노래.'},
+ {f:'04_rewind',t:'Rewind',en:1,s:'문태준 · 백합 · 2집 타이틀',c:'06-sprue-kit',cn:'SPRUE KIT',bg:'#1B2A4A',p:'되감고 싶은 시간. 과거로 돌아가고 싶은 마음을 정면으로.'},
+ {f:'05_sangsahwa',t:'상사화',s:'채유성 · 동백',c:'05-soft-sleeve',cn:'SOFT SLEEVE',bg:'#F4E9EC',p:'잎과 꽃이 끝내 같은 계절에 만나지 못하는 꽃.'},
+ {f:'06_sodapop',t:'Soda Pop',en:1,s:'EVENT TRACK',c:'03-liquid-drip',cn:'LIQUID DRIP (임시)',bg:'#FFF1E6',p:'탄산처럼 터지는 한여름. 앨범 사이의 숨.'},
+ {f:'07_chija',t:'치자',s:'GARDENIA · HIDDEN',c:'08-vending-capsule',cn:'VENDING CAPSULE',bg:'#F5F0E1',p:'흰 꽃, 짙은 향. 숨겨 둔 트랙.'},
+ {f:'08_firstsnow',t:'첫눈이 오면',s:'BONUS',c:'07-receipt-sleeve',cn:'RECEIPT SLEEVE (임시)',bg:'#E6EDF6',p:'비가 눈이 되는 계절의 약속.'}];
+const lum=h=>{const n=parseInt(h.slice(1),16);return((n>>16)*.3+((n>>8)&255)*.59+(n&255)*.11)/255};
+const list=document.getElementById('list'),idx=document.getElementById('idx'),au=document.getElementById('au');let cur=-1;
+const fmt=s=>isFinite(s)?`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`:'0:00';
+T.forEach((x,i)=>{const n=String(i+1).padStart(2,'0'),id='t'+n,dark=lum(x.bg)<.45;
+  const s=document.createElement('section');s.className='tk';s.id=id;s.setAttribute('aria-label',`트랙 ${n} ${x.t}`);
+  s.style.setProperty('--bg',x.bg);s.style.setProperty('--fg',dark?'#F1F4F8':'#0E1834');s.style.setProperty('--line',dark?'rgba(255,255,255,.28)':'rgba(14,24,52,.18)');s.style.setProperty('--rot',(i%2?4:-5)+'deg');
+  s.innerHTML=`<div class="num" aria-hidden="true">${n}</div>
+  <div class="art"><span class="disc" aria-hidden="true"></span><img src="img/goods/${x.c}.webp" alt="${x.t} CD 케이스 · ${x.cn}"></div>
+  <div class="tx"><span class="no">TRACK ${n} / 08</span><h2 class="${x.en?'en':''}">${x.t}${x.k?` <small style="font-size:.4em;opacity:.6">${x.k}</small>`:''}</h2><div class="sub">${x.s}</div><p>${x.p}</p>
+  <div class="pl"><button type="button" aria-label="${x.t} 재생">▶</button><div class="bar" aria-hidden="true"><i></i></div><span class="time">0:00 / --:--</span></div>
+  <div class="case">CASE — ${x.cn}</div></div>`;
+  list.appendChild(s);
+  const li=document.createElement('li');li.innerHTML=`<a href="#${id}">${n} ${x.t}</a>`;idx.appendChild(li);
+  s.querySelector('button').onclick=()=>{if(cur===i&&!au.paused){au.pause();return}if(cur!==i){au.src=`audio/${x.f}.mp3`;cur=i}au.play()};
+  s.querySelector('.bar').onclick=e=>{if(cur!==i||!au.duration)return;const r=e.currentTarget.getBoundingClientRect();au.currentTime=(e.clientX-r.left)/r.width*au.duration}});
+const secs=[...document.querySelectorAll('.tk')];
+function ui(){secs.forEach((s,i)=>{const on=i===cur&&!au.paused;s.classList.toggle('playing',on);s.querySelector('button').textContent=on?'❚❚':'▶';
+  if(i===cur){s.querySelector('.bar i').style.width=(au.duration?au.currentTime/au.duration*100:0)+'%';s.querySelector('.time').textContent=`${fmt(au.currentTime)} / ${fmt(au.duration)}`}})}
+['play','pause','timeupdate','loadedmetadata','ended'].forEach(e=>au.addEventListener(e,ui));
+au.addEventListener('ended',()=>{if(cur<T.length-1)secs[cur+1].scrollIntoView({behavior:'smooth'})});
+const io=new IntersectionObserver(es=>es.forEach(e=>{e.target.classList.toggle('in',e.isIntersecting);if(e.isIntersecting)idx.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{threshold:.55});
+secs.forEach(s=>io.observe(s));
+</script>
+</body>
+</html>

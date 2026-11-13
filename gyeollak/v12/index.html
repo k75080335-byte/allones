@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GYEOLLAK 결락 — 비가 맺지 못한 것들 (v12 draft)</title>
+<meta name="description" content="결락 사이트 디자인 초안 v12 · 맺히고, 떨어지고, 다시 떠오르는 장면형 메인">
+<link rel="stylesheet" href="css/v12.css">
+<link rel="stylesheet" href="css/scene.css">
+</head>
+<body>
+<header class="hd">
+  <a class="brand" href="index.html"><b>결락</b>GYEOLLAK</a>
+  <nav aria-label="주요 메뉴">
+    <a href="index.html" class="on">FILM</a><a href="members.html">MEMBERS</a><a href="music.html">MUSIC</a><a class="x" href="archive.html#objects">OBJECTS</a><a class="x" href="archive.html#play">PLAY</a><a class="x" href="logo.html">LOGO</a>
+  </nav>
+</header>
+
+<main id="scene" aria-label="결락 장면: 구름에서 심연, 그리고 다시 떠오르기까지">
+  <div class="pin">
+    <!-- 배경 층 -->
+    <div class="ly sky" style="background-image:url(img/v12/sky.webp)"></div>
+    <div class="ly fog"></div>
+    <div class="ly cyano"></div>
+    <div class="ly abyss"></div>
+    <div class="ly ending" style="background-image:url(img/v12/ending.webp)"></div>
+
+    <!-- 01 결 로고: ㅣ가 빠져 떨어진다 -->
+    <div class="logo" aria-hidden="true"><img class="lb" src="img/v12/logo_base.png" alt=""><img class="li" src="img/v12/logo_i.png" alt=""><span class="ltag mono">GYEOLLAK · 缺落</span></div>
+    <i class="istroke" aria-hidden="true"></i>
+
+    <!-- 03 TV — 스크롤하면 바다가 재생된다 -->
+    <figure class="tv" aria-label="스크롤로 재생되는 바다 영상 (임시: 코드로 그린 화면)">
+      <div class="tv-body"><div class="scr"><canvas id="ocean" width="320" height="240"></canvas>
+        <div class="osd mono"><span>▶ PLAY</span><span id="tc">SP 00:00:00</span></div>
+        <div class="osd b mono"><span>2018.07.22</span><span>MONSOON · DEBUT</span></div></div>
+        <div class="knobs"><i></i><i></i><span class="mono">GYL-98</span></div></div>
+    </figure>
+
+    <!-- 05·06 류현: 가라앉고, 손이 닿고, 눈을 뜬다 -->
+    <img class="flower" id="xflower" alt="" aria-hidden="true">
+    <img class="fig sink" src="img/v12/ryuhyeon_suit_xr.webp" alt="물속으로 가라앉는 채류현 (엑스레이)">
+    <img class="fig rise" src="img/v12/ryuhyeon_suit_cy.webp" alt="다시 떠오르는 채류현 (시아노타입)">
+    <div class="slot mono" aria-hidden="true">GROK SLOT · 손이 닿는 컷 / 눈을 뜨는 컷</div>
+
+    <canvas id="fx" aria-hidden="true"></canvas>
+
+    <!-- 07 엔딩: 오려 붙인 네 사람 -->
+    <div class="cast" aria-label="결락 네 멤버">
+      <img src="img/members/taejun_casual.webp" alt="문태준" style="--d:0">
+      <img src="img/members/ryuhyeon_casual.webp" alt="채류현" style="--d:1">
+      <img src="img/members/yuseong_casual.webp" alt="채유성" style="--d:2">
+      <img src="img/members/jinwoo_casual.webp" alt="하진우" style="--d:3">
+    </div>
+    <div class="endcard">
+      <p class="mono">GYEOLLAK · 결락 · 缺落</p>
+      <h1>비가 맺지<br>못한 것들</h1>
+      <p class="slogan">우리는 닿는 순간부터 번지고 있었다</p>
+      <nav class="go" aria-label="더 보기">
+        <a href="members.html"><i class="mono">01</i>MEMBERS<span>네 사람, 네 장면</span></a>
+        <a href="music.html"><i class="mono">02</i>MUSIC<span>곡마다 한 장면</span></a>
+        <a href="archive.html#objects"><i class="mono">03</i>OBJECTS<span>굿즈 진열장</span></a>
+        <a href="archive.html#play"><i class="mono">04</i>PLAY<span>포켓 미니룸</span></a>
+      </nav>
+    </div>
+
+    <!-- 캡션 -->
+    <div class="cap" data-w="0,.11"><span class="no mono">01 — 結 · 맺히다</span><h2>Where clouds<br>condense.</h2><p>구름이 무게를 얻어 한 방울로 맺힌다. 결(結).</p></div>
+    <div class="cap" data-w=".12,.27"><span class="no mono">02 — 缺 · 떨어져 나가다</span><h2>One stroke<br>falls away.</h2><p>결의 ㅣ 한 획이 빠져 비가 된다. 떨어진 방울은 금붕어가 되어 아래로 헤엄친다.</p></div>
+    <div class="cap" data-w=".28,.43"><span class="no mono">03 — 그해 여름</span><h2>The sea<br>we kept.</h2><p>2018년 7월 22일, 장맛비 속 데뷔. 내려가기 전 마지막으로 본 바다.</p></div>
+    <div class="cap" data-w=".44,.59"><span class="no mono">04 — 落花 · 꽃이 진다</span><h2>Petals<br>let go.</h2><p>수면에 닿은 것들은 빛으로 찍힌 자국만 남긴다.</p></div>
+    <div class="cap" data-w=".60,.69"><span class="no mono">05 — 심연 · 숨이 닿지 않는 곳</span><h2>Below,<br>no breath.</h2><p>가라앉는 사람. 기억은 없고 반응만 남아 있었다.</p></div>
+    <div class="cap" data-w=".69,.77"><span class="no mono">05 — 손</span><h2>A hand<br>reaches.</h2><p>이름 모를 손이 닿는다. 유일하게 따뜻한 것.</p></div>
+    <div class="cap r" data-w=".77,.88"><span class="no mono">06 — 결 · 물결, 숨결</span><h2>Eyes open.<br>Rising.</h2><p>눈을 뜬다. 떨어진 꽃도, 결국 다시 떠오른다.</p></div>
+
+    <!-- HUD -->
+    <div class="hud mono" aria-hidden="true"><span id="hSt">01 / HIGH CLOUD</span><span id="hAlt">ALT 4850M</span></div>
+    <ol class="rail mono" aria-hidden="true"><li>CLOUD</li><li>FALL</li><li>SEA</li><li>BLOOM</li><li>ABYSS</li><li>RISE</li><li>CAST</li></ol>
+    <div class="hint mono" aria-hidden="true">SCROLL ↓</div>
+  </div>
+</main>
+<script src="js/scene.js"></script>
+</body>
+</html>
