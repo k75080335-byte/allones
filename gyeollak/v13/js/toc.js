@@ -2,15 +2,17 @@
 (() => {
   const me = document.currentScript, page = me.dataset.page;
   const P = [
-    ['film', '00', 'Film', '결락 — 떨어지는 장면', 'index.html', 'img/v12/sky.webp', '구름에서 맺혀, 떨어지고, 심연에서 다시 떠오르기까지.'],
-    ['members', '01', 'Members', '네 사람, 네 장면', 'members.html', 'img/v12/ryuhyeon_suit_cy.webp', '문태준 · 채류현 · 채유성 · 하진우. 한 사람에 한 장면.'],
-    ['lineup', '02', 'Line-up', '라인업 · 의상 돌려보기', 'lineup.html', 'img/members/yuseong_suit.webp', '사선으로 선 네 사람. 의상을 바꾸고 돌려 본다.'],
-    ['album', '03', 'Album', '장마의 잔향 · 곡별 소개', 'album.html', 'img/goods/02-chrome-thorn.webp', '정규 《장마의 잔향》. 곡마다 한 장면.'],
-    ['listen', '04', 'Listen', 'CD 플레이어', 'listen.html', 'img/goods/04-x-ray.webp', '케이스를 열고 디스크를 넣는다. 듣는 화면.'],
-    ['objects', '05', 'Objects', '굿즈 진열장', 'objects.html', 'img/goods/kr7-panther.webp', '아크릴 진열장 속 CD · 키링 · 인형. 하나씩 꺼내 본다.'],
-    ['story', '06', 'Story Film', '물방울 하나가 잇는 필름', 'story.html', 'img/film/case.webp', '한 방울이 여섯 장면을 끝까지 따라간다.'],
-    ['play', '07', 'Play', '포켓 미니룸', 'play.html', 'img/goods/kr1-front.webp', '투명 케이스 속 작은 방을 꾸민다.'],
-    ['logo', '08', 'Logo', '결 · 로고 시안', 'logo.html', 'img/logo2/A_gyeol_ink_paper.png', '한 획이 빠진 결. 먹 · 크롬 · 마블링 · 인장.'],
+    ['surface', '00', 'Surface', '첫 화면 · 결 가운데 빛을 문질러 본다', 'surface.html', 'img/logo/mark-droplet.png', '은빛 수면 위의 결. 문지르면 가운데 빛이 손끝을 따라 나온다.'],
+    ['film', '01', 'Film', '떨어지는 장면', 'index.html', 'img/v12/sky.webp', '구름에서 맺혀, 떨어지고, 심연에서 다시 떠오르기까지.'],
+    ['descent', '02', 'Descent', '하강 · X-RAY / GLASS 꽃', 'descent.html', 'img/v12/ryuhyeon_suit_xr.webp', '수면이 깨진 자리에서 핀 꽃. 네모 안은 언제나 반대쪽.'],
+    ['members', '03', 'Members', '네 사람, 네 장면', 'members.html', 'img/v12/ryuhyeon_suit_cy.webp', '문태준 · 채류현 · 채유성 · 하진우. 한 사람에 한 장면.'],
+    ['lineup', '04', 'Line-up', '라인업 · 의상 돌려보기', 'lineup.html', 'img/members/yuseong_suit.webp', '사선으로 선 네 사람. 의상을 바꾸고 돌려 본다.'],
+    ['album', '05', 'Album', '장마의 잔향 · 곡별 소개', 'album.html', 'img/goods/02-chrome-thorn.webp', '정규 《장마의 잔향》. 곡마다 한 장면.'],
+    ['listen', '06', 'Listen', 'CD 플레이어', 'listen.html', 'img/goods/04-x-ray.webp', '케이스를 열고 디스크를 넣는다. 듣는 화면.'],
+    ['objects', '07', 'Objects', '굿즈 진열장', 'objects.html', 'img/goods/kr7-panther.webp', '아크릴 진열장 속 CD · 키링 · 인형. 하나씩 꺼내 본다.'],
+    ['story', '08', 'Story Film', '물방울 하나가 잇는 필름', 'story.html', 'img/film/case.webp', '한 방울이 여섯 장면을 끝까지 따라간다.'],
+    ['play', '09', 'Play', '포켓 미니룸', 'play.html', 'img/goods/kr1-front.webp', '투명 케이스 속 작은 방을 꾸민다.'],
+    ['logo', '10', 'Logo', '결 · 로고 시안', 'logo.html', 'img/logo2/A_gyeol_ink_paper.png', '한 획이 빠진 결. 먹 · 크롬 · 마블링 · 인장.'],
   ];
   const cur = P.findIndex(p => p[0] === page);
   document.querySelectorAll('header.hd').forEach(h => { h.style.display = 'none'; h.setAttribute('aria-hidden', 'true'); });

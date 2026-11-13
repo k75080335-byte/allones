@@ -4,7 +4,9 @@ v11 한 스크롤 + v12 장면형을 목차(INDEX)로 나눈 버전. 우상단 I
 
 | No | 페이지 | 파일 | 출처 |
 |---|---|---|---|
-| 00 | Film — 떨어지는 장면 | index.html | v12 + v07 커서 파문 |
+| 00 | Surface — 첫 화면, 결 가운데 빛 문지르기 | surface.html | v07 HERO (+ 문지르면 빛이 따라 나옴) |
+| 01 | Film — 떨어지는 장면 | index.html | v12 + v07 커서 파문 |
+| 02 | Descent — X-RAY / GLASS 하강 | descent.html | v10 |
 | 01 | Members — 네 사람, 네 장면 | members.html | v12 |
 | 02 | Line-up — 의상 돌려보기 | lineup.html | v07/v11 MEMBERS |
 | 03 | Album — 장마의 잔향 곡별 | album.html | v12 music |

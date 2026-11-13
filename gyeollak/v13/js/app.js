@@ -56,11 +56,11 @@ const Hero = (() => {
   const c = $('#water'), ctx = c.getContext('2d');
   const f = $('#fluid'), fctx = f.getContext('2d');
   const drops = [], ripples = [];
-  let W = 0, H = 0, mx = .5, my = .62, t0 = 0, entered = false;
+  let W = 0, H = 0, mx = .5, my = .62, t0 = 0, entered = false, rub = false, tx = .5, ty = .46, rubT = 0;
   const blobs = Array.from({ length: 7 }, (_, i) => ({
     a: i * 0.9, r: 0.11 + (i % 3) * 0.035, ox: 0.5, oy: 0.46,
     px: Math.sin(i * 1.7) * 0.08, py: Math.cos(i * 1.3) * 0.05,
-    s: 0.18 + i * 0.03, k: 0.35 + (i % 4) * 0.08
+    s: 0.18 + i * 0.03, k: 0.35 + (i % 4) * 0.08, cx: 0.5, cy: 0.46, lag: 0.03 + i * 0.011
   }));
   function resize() {
     const r = c.parentElement.getBoundingClientRect();
@@ -88,9 +88,12 @@ const Hero = (() => {
   }
   function loop() {
     t0 += 0.016; ctx.clearRect(0, 0, W, H); fctx.clearRect(0, 0, W, H);
+    if (!rub) { tx += (0.5 - tx) * 0.04; ty += (0.46 - ty) * 0.04; }
+    blobs.forEach((b, i) => { b.cx += (tx - b.cx) * b.lag; b.cy += (ty - b.cy) * b.lag; });
+    if (rub && ++rubT % 5 === 0) drop(tx * W, ty * H, 26 + Math.random() * 30);
     blobs.forEach((b, i) => {
-      const x = W * (b.ox + Math.sin(t0 * b.s + b.a) * b.px + (mx - 0.5) * 0.04);
-      const y = H * (b.oy + Math.cos(t0 * b.s * 0.85 + b.a) * b.py + (my - 0.5) * 0.03);
+      const x = W * (b.cx + Math.sin(t0 * b.s + b.a) * b.px + (mx - 0.5) * 0.04);
+      const y = H * (b.cy + Math.cos(t0 * b.s * 0.85 + b.a) * b.py + (my - 0.5) * 0.03);
       const rad = Math.min(W, H) * b.r * (1.05 + 0.08 * Math.sin(t0 * b.k + i));
       const rg = fctx.createRadialGradient(x - rad * 0.2, y - rad * 0.25, rad * 0.05, x, y, rad);
       if (i % 3 === 0) {
@@ -114,8 +117,8 @@ const Hero = (() => {
     fctx.globalCompositeOperation = 'source-over';
     fctx.globalAlpha = 0.35;
     blobs.slice(0, 3).forEach((b) => {
-      const x = W * (b.ox + Math.sin(t0 * b.s + b.a) * b.px);
-      const y = H * (b.oy + Math.cos(t0 * b.s * 0.85 + b.a) * b.py);
+      const x = W * (b.cx + Math.sin(t0 * b.s + b.a) * b.px);
+      const y = H * (b.cy + Math.cos(t0 * b.s * 0.85 + b.a) * b.py);
       const rad = Math.min(W, H) * b.r * 0.92;
       fctx.strokeStyle = 'rgba(255,255,255,0.45)'; fctx.lineWidth = 1.2 * devicePixelRatio;
       fctx.beginPath(); fctx.arc(x, y, rad, -0.8, 0.6); fctx.stroke();
@@ -149,6 +152,8 @@ const Hero = (() => {
   function ring(x, y) { const el = document.createElement('i'); el.className = 'ring'; el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.width = el.style.height = '160px'; $('#surface').appendChild(el); setTimeout(() => el.remove(), 1100); }
   function onPtr(e) {
     const r = c.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width; my = (e.clientY - r.top) / r.height;
+    if (e.type === 'pointerdown') rub = true;
+    if (rub) { tx = mx; ty = my; }
     if (e.type === 'pointerdown') {
       drop((e.clientX - r.left) * devicePixelRatio, (e.clientY - r.top) * devicePixelRatio, entered ? 90 : 140);
       ring(e.clientX - r.left, e.clientY - r.top);
@@ -161,9 +166,11 @@ const Hero = (() => {
   });
   $('#surface').addEventListener('pointermove', onPtr);
   $('#surface').addEventListener('pointerdown', onPtr);
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => $('#surface').addEventListener(ev, () => { rub = false; }));
   /* v10: 첫 화면은 DESCENT. 흰 수면 게이트는 숨김 → 루프 돌리지 않음 */
   entered = true; document.body.classList.add('entered');
   addEventListener('resize', resize); resize();
+  if (window.GY_SURFACE) { loop(); if (!RM) setInterval(autoDrop, 2600); }
   DEMO.enter = () => enter();
   return { drop, enter };
 })();
