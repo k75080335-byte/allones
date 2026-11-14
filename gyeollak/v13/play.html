@@ -3,235 +3,132 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>GYEOLLAK 결락 — 07 PLAY · 포켓 미니룸 (v13 draft)</title>
-<link rel="preload" href="fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="icon" href="data:,">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/film.css">
-<link rel="stylesheet" href="css/descent.css">
-<style>
-/* droplogos only — original index.html / style.css untouched */
-.logo-mark{width:min(46vw,330px);filter:drop-shadow(0 22px 34px rgba(23,75,255,.22)) drop-shadow(0 2px 0 rgba(255,255,255,.7)) saturate(1.25) contrast(1.08);}
-#fluid{opacity:.62}
-</style>
+<title>GYEOLLAK 결락 — 09 PLAY · 게임 모니터 (v13 draft)</title>
+<link rel="stylesheet" href="css/v12.css">
 <link rel="stylesheet" href="css/toc.css">
-<style>body section:not(#play),body>footer{display:none!important}#play{padding-top:64px}</style>
+<style>
+body{background:radial-gradient(120% 90% at 50% 20%,#EEF1F5,#C9D0DB);min-height:100vh}
+.room{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:84px var(--pad) 40px}
+.wrap{width:min(92vw,1000px,calc((100svh - 230px) * 1.22));display:grid;gap:18px}
+@media (max-width:720px){.wrap{width:92vw}}
+.title{display:flex;justify-content:space-between;align-items:end;gap:16px}
+.title h1{font:400 italic clamp(40px,6vw,84px)/.9 var(--serif);color:#0E1834}
+.title p{font:500 10px/1.8 var(--mono);letter-spacing:.16em;color:#3B4A6B;text-align:right}
+/* 90년대 모니터 */
+.crt{position:relative;padding:4.2% 4.2% 9%;border-radius:22px 22px 18px 18px;
+  background:linear-gradient(175deg,#EDE8DD,#D9D2C3 55%,#C6BEAD);box-shadow:inset 0 2px 0 #fff,inset 0 -8px 18px rgba(0,0,0,.12),0 50px 70px -40px rgba(20,30,60,.5)}
+.bezel{position:relative;border-radius:16px;padding:2.4%;background:linear-gradient(160deg,#4A4A48,#2A2A29);box-shadow:inset 0 0 0 2px #1a1a19,inset 0 6px 18px rgba(0,0,0,.6)}
+.screen{position:relative;aspect-ratio:4/3;border-radius:22px/30px;overflow:hidden;background:#05070C}
+.screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#F6F8FB;opacity:0;transition:opacity .4s}
+.screen.game iframe{opacity:1}
+.screen::before{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px),radial-gradient(120% 95% at 50% 50%,transparent 62%,rgba(0,0,0,.55));mix-blend-mode:multiply}
+.screen::after{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,.12),transparent 38%);animation:flick 4s steps(60) infinite}
+@keyframes flick{50%{opacity:.85}52%{opacity:1}}
+/* 부팅 화면 */
+.boot{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4%;color:#BFD3FF;font:500 clamp(10px,1.7vw,16px)/1.6 var(--mono);letter-spacing:.14em;text-align:center;
+  background:radial-gradient(80% 70% at 50% 45%,#0D1C49,#03050B);transition:opacity .4s}
+.screen.game .boot{opacity:0;pointer-events:none}
+.boot .logo{font:400 clamp(44px,9vw,104px)/1 "Song Myung",serif;color:#E9F0FF;text-shadow:3px 0 rgba(23,75,255,.8),-2px 0 rgba(255,80,160,.35),0 0 24px rgba(120,160,255,.6)}
+.boot .sub{font-size:.8em;opacity:.7}
+.boot ol{list-style:none;display:grid;gap:.6em;margin-top:2%}
+.boot li button{all:unset;cursor:pointer;padding:.3em .8em}
+.boot li button:focus-visible,.boot li button:hover,.boot li button.sel{background:#174BFF;color:#fff}
+.boot li button[disabled]{opacity:.4;cursor:default;background:none}
+.blink{animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+.power-on{animation:on .9s ease-out both}
+@keyframes on{0%{transform:scale(1,.004);filter:brightness(4)}40%{transform:scale(1,.004)}70%{transform:scale(1,1);filter:brightness(2)}100%{filter:none}}
+/* 하단 조작부 */
+.ctrl{position:absolute;left:5%;right:5%;bottom:2.6%;display:flex;align-items:center;gap:12px;font:500 9.5px/1 var(--mono);letter-spacing:.16em;color:#6B6455}
+.ctrl .led{width:8px;height:8px;border-radius:50%;background:#3a3a36;box-shadow:inset 0 1px 1px rgba(0,0,0,.5)}
+.ctrl .led.on{background:#6CFF8E;box-shadow:0 0 8px #6CFF8E}
+.ctrl button{all:unset;cursor:pointer;padding:8px 12px;border-radius:99px;border:1px solid rgba(80,70,50,.35);background:linear-gradient(#F3EFE6,#D8D0BF);color:#3B3528;min-height:20px}
+.ctrl button[aria-pressed="true"]{background:#174BFF;color:#fff;border-color:#174BFF}
+.ctrl .brand{margin-left:auto}
+.notes{display:flex;justify-content:space-between;gap:16px;font:500 9.5px/1.8 var(--mono);letter-spacing:.14em;color:#3B4A6B}
+@media (max-width:720px){.title{flex-direction:column;align-items:start}.title p{text-align:left}.ctrl{gap:6px}.ctrl .brand{display:none}.notes{flex-direction:column}}
+</style>
 </head>
 <body>
-<header class="hd">
-  <a class="brand" href="#surface"><b>GYEOLLAK</b><span>결락</span></a>
-  <nav class="nav">
-    <a href="#descent" data-s="descent"><i>01</i>DESCENT</a>
-    <a href="#film" data-s="film"><i>✦</i>FILM</a>
-    <a href="#objects" data-s="objects"><i>02</i>OBJECTS</a>
-    <a href="#members" data-s="members"><i>03</i>MEMBERS</a>
-    <a href="#listen" data-s="listen"><i>04</i>LISTEN</a>
-    <a href="#play" data-s="play"><i>05</i>PLAY</a>
-    <a href="logo.html" data-s="logo"><i>◇</i>LOGO</a>
-  </nav>
-  <div class="hd-r">
-    <span class="side-toggle"><span class="dot"></span>SIDE A</span>
-    <button class="snd" id="sndBtn" aria-label="소리"><span class="bars"><i></i><i></i><i></i></span></button>
-  </div>
-</header>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="wd" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.03" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="gChrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#C9D6EA"/><stop offset=".55" stop-color="#F4F7FB"/><stop offset="1" stop-color="#3E4E6B"/></linearGradient>
-    <linearGradient id="gIce" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#C3D3E6"/></linearGradient>
-  </defs>
-</svg>
-
-
-
-<!-- 01 SURFACE — logo + fluid motion, no goods -->
-<section id="surface" aria-label="결락 오프닝">
-  <canvas id="water"></canvas>
-  <canvas id="fluid"></canvas>
-  <div class="hero-ui">
-    <h1 class="vh">GYEOLLAK 결락</h1>
-    <ul class="spec-labels" aria-hidden="true">
-      <li class="sp tl"><b>01</b> SURFACE<sub>SILVER / #F3F6FA</sub></li>
-      <li class="sp tr">SPEC<sub>CLEAR SERIES · N26.11</sub></li>
-      <li class="sp bl">MAT.<sub>H₂O · ACRYLIC · CHROME</sub></li>
-      <li class="sp br">ACCENT<sub>#174BFF</sub></li>
-    </ul>
-    <button type="button" class="logo-hit" id="enterBtn" aria-label="TOUCH, 사이트로 들어가기">
-      <img class="logo-mark" src="img/logo/mark-droplet.png" alt="">
-      <span class="logo-word">GYEOLLAK</span>
-      <span class="logo-sub">缺落 · 결락</span>
-    </button>
-    <div class="touch-cue mono" id="touchCue"><i></i><span>TOUCH</span></div>
-    <div class="after-enter">
-      <p class="it">Same music, different weather.</p>
-      <div class="scroll-cue mono"><svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke="#0B0D12"><path d="M4 1.5h6a3 3 0 0 1 0 6H4a3 3 0 0 1 0-6zM7 7.5v12M3.5 16l3.5 3.5 3.5-3.5"/></svg>SCROLL</div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-<!-- 02 OBJECTS -->
-<section id="objects" aria-label="굿즈 진열장">
-  <div class="sec-head">
-    <div class="no-col"><span class="no">02 —</span><span class="spec-tick">CASE / 880×600 · ACRYLIC</span></div>
-    <h2>OBJECT CASE<small>굿즈 · CD · 패키지 진열장 — 하나를 집어 꺼내서 돌려 본다</small></h2>
-    <p>투명 아크릴 진열장 안 3단 선반. 누르면 물건이 선반에서 빠져나와 턴테이블에 오르고, 드래그하면 360° 회전, 튕기면 관성으로 돌다가 제자리로 돌아온다.</p>
-  </div>
-  <div class="cab-wrap">
-    <div class="cabinet" id="cabinet">
-      <div class="case-shell" id="caseShell">
-        <div class="rod"></div>
-        <div class="tier t1"></div><div class="tier t2"></div><div class="tier t3"></div>
-        <div id="shelfItems"></div>
-        <div class="case-glare" id="caseGlare"></div>
-      </div>
-      <div class="plinth"><span class="eng">GYEOLLAK</span><span class="eng-kr">결락 · OBJECT ARCHIVE 26.11</span><span class="led"></span></div>
-    </div>
-    <aside class="side-card">
-      <h3>진열 목록</h3>
-      <p>선반 위 물건을 누르거나 목록을 고르면 꺼내 볼 수 있어. ← → 키로도 돌아가.</p>
-      <ol id="itemList"></ol>
-    </aside>
-  </div>
-  <div class="hex-rule"></div>
-  <div class="blister-head"><h3>CD CASE 8 · BLISTER RAIL</h3><span class="mono" style="color:var(--sub)">← 드래그 · 8종 케이스 변주 (v06 §16)</span></div>
-  <div class="rail" id="rail"></div>
-</section>
-
-<!-- 03 MEMBERS -->
-<section id="members" aria-label="멤버 라인업">
-  <div class="sec-head">
-    <div class="no-col"><span class="no">03 —</span><span class="spec-tick">LINE-UP / 4 UNITS · SUIT·CASUAL·Y2K</span></div>
-    <h2>LINE-UP<small>사선으로 늘어선 네 사람 — 밀면 다음 사람이 앞으로 걸어 나온다</small></h2>
-    <p>정장 · 캐주얼 · Y2K 의상 전환. 앞사람을 잡고 돌리면 회전, 탭하면 포즈가 바뀐다. 바닥 마이크 선이 화면의 선 모티프.</p>
-  </div>
-  <div class="stage" id="stage">
-    <div class="diag-type" aria-hidden="true"><span>GYEOLLAK — FOUR, AND THE ONE MISSING — 결락 — GYEOLLAK — FOUR, AND THE ONE MISSING — 결락 —&nbsp;</span></div>
-    <svg id="cables"></svg>
-    <div id="memLayer"></div>
-    <svg id="leaders"></svg>
-    <div id="labels"></div>
-    <p class="stage-hint mono">DRAG ← → 밀기 · 앞사람 드래그 = 회전 · TAP = 포즈</p>
-    <div class="stage-ui">
-      <div class="focus-card" id="focusCard"></div>
-      <div>
-        <div class="seg" id="outfitSeg"><span class="knob"></span><button data-o="suit" class="on">SUIT</button><button data-o="casual">CASUAL</button><button data-o="y2k">Y2K</button></div>
-        <div class="pager"><button class="arrow" id="memPrev" aria-label="이전">←</button><span class="mono" id="memCount">01 / 04</span><button class="arrow" id="memNext" aria-label="다음">→</button></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 04 LISTEN -->
-<section id="listen" aria-label="음악 듣기">
-  <div class="sec-head">
-    <div class="no-col"><span class="no">04 —</span><span class="spec-tick">PLAYER / CLEAR SERIES · 8 TRK</span></div>
-    <h2>LISTENING ROOM<small>투명 CD 플레이어 — 뚜껑이 열리고, 디스크가 돌고, 레이저가 읽는다</small></h2>
-    <p>결락_음악_bgm 실제 음원 8곡. 원형 링이나 파형을 끌어서 탐색. 곡을 바꾸면 뚜껑이 열렸다 닫힌다.</p>
-  </div>
-  <div class="listen-grid">
-    <div class="deck" id="deck">
-      <svg id="cord"></svg>
-      <div class="walkman" id="walkman">
-        <svg class="pcb" viewBox="0 0 100 100" fill="none" stroke="#174BFF" stroke-width=".25"><path d="M10 50h12l4-4h10M90 40H76l-4 4H62M50 8v10l4 4v8M30 84l6-6h12l4 4h12M74 80l-6-6"/><circle cx="22" cy="50" r="1"/><circle cx="76" cy="40" r="1"/><circle cx="54" cy="30" r="1"/><circle cx="64" cy="82" r="1"/></svg>
-        <span class="screw" style="left:14%;top:12%"></span><span class="screw" style="right:14%;top:12%"></span><span class="screw" style="left:12%;bottom:16%"></span><span class="screw" style="right:12%;bottom:16%"></span>
-        <div class="led-s"><span><i id="ledPlay"></i>PLAY</span><span><i id="ledEsp" class="on"></i>ESP</span><span><i id="ledHold"></i>HOLD</span></div>
-        <div class="open-sw" id="openSw" title="뚜껑 열기"></div>
-        <div class="platter" id="platter">
-          <div class="well"></div>
-          <div class="rail-sled"><div class="sled" id="sled"></div></div>
-          <div class="cd" id="cd"><div class="art" id="cdArt"></div></div>
-          <div class="cd-sheen"></div>
-          <div class="hub"></div>
-          <div class="lid" id="lid">
-            <svg viewBox="0 0 200 200"><defs><path id="cp" d="M100,100 m-86,0 a86,86 0 1,1 172,0 a86,86 0 1,1 -172,0"/></defs>
-              <text font-family="DM Mono" font-size="5.6" fill="rgba(11,13,18,.55)" letter-spacing="1.6"><textPath href="#cp">GYEOLLAK DISC PLAYER · CLEAR SERIES · ESP 40SEC ANTI-SKIP · 1-BIT DAC · 장마의 잔향 · SIDE A ·</textPath></text>
-              <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(255,255,255,.9)"/><path d="M60 22h80" stroke="#AEB7C4" stroke-width="3" stroke-linecap="round"/></svg>
-          </div>
+<main class="room">
+  <div class="wrap">
+    <div class="title"><h1>Play.</h1><p>09 — GYEOLLAK POCKET<br>CRT · 4:3 · 1998 MODE<br>BGM: ORIGINAL CHIPTUNE</p></div>
+    <div class="crt">
+      <div class="bezel"><div class="screen" id="scr">
+        <div class="boot" id="boot">
+          <div class="logo">결락</div>
+          <div class="sub">GYEOLLAK POCKET · v0.2</div>
+          <ol role="menu" aria-label="게임 선택">
+            <li><button type="button" class="sel" data-g="room" role="menuitem">▶ POCKET ROOM · 방 꾸미기</button></li>
+            <li><button type="button" disabled role="menuitem">— 16-BIT 결락 · COMING SOON</button></li>
+          </ol>
+          <div class="blink">PRESS START</div>
         </div>
-        <svg class="scrub-ring" id="scrubRing" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="96" stroke="rgba(11,13,18,.12)" stroke-width="1"/>
-          <circle id="progArc" cx="100" cy="100" r="96" stroke="#174BFF" stroke-width="1.6" stroke-dasharray="0 999" transform="rotate(-90 100 100)" stroke-linecap="round"/>
-          <g id="needle" class="knob-n"><circle r="4.2" fill="#fff" stroke="#174BFF" stroke-width="1.4"/><circle r="1.4" fill="#174BFF"/></g>
-        </svg>
-        <div class="wm-btns">
-          <button class="kbtn" data-k="prev" aria-label="이전 곡"><svg viewBox="0 0 14 10"><path d="M1 1v8M13 1L5 5l8 4z" fill="#0B0D12" stroke="#0B0D12"/></svg></button>
-          <button class="kbtn play" data-k="play" aria-label="재생"><svg viewBox="0 0 14 10" id="playIco"><path d="M4 1l8 4-8 4z" fill="#fff"/></svg></button>
-          <button class="kbtn" data-k="next" aria-label="다음 곡"><svg viewBox="0 0 14 10"><path d="M13 1v8M1 1l8 4-8 4z" fill="#0B0D12" stroke="#0B0D12"/></svg></button>
-          <button class="kbtn" data-k="stop" aria-label="정지"><svg viewBox="0 0 14 10"><rect x="4" y="1" width="7" height="7" fill="#0B0D12"/></svg></button>
-        </div>
-        <div class="jack" id="jack"></div>
+        <iframe id="game" title="결락 포켓 미니룸" data-src="../pocket/index.html"></iframe>
+      </div></div>
+      <div class="ctrl">
+        <i class="led" id="led"></i><span>POWER</span>
+        <button type="button" id="bgm" aria-pressed="false">♪ BGM</button>
+        <button type="button" id="menu">MENU</button>
+        <span class="brand">GYL-98 · TRINITRON-ISH</span>
       </div>
     </div>
-    <div class="panel">
-      <div class="lcd">
-        <div class="row"><span id="lcdTrk">TRK 01/08</span><span id="lcdState">■ STOP</span><span><span class="bat"></span></span></div>
-        <div class="ttl" id="lcdTtl"><span>비가 맺지 못한 것들</span></div>
-        <div class="row"><span id="lcdTime">00:00</span><span id="lcdCase">CASE · CLEAR ARCHIVE</span><span id="lcdRem">-00:00</span></div>
-        <canvas id="spec" width="480" height="92"></canvas>
-      </div>
-      <div class="wave" id="wave"><canvas id="waveC"></canvas><span class="tip" id="waveTip">00:00</span></div>
-      <div class="ctrls">
-        <button class="chip" id="rpt">REPEAT · ALL</button>
-        <button class="chip" id="shuf">LID OPEN</button>
-        <span class="mono" style="color:var(--sub)">VOL</span><div class="vol" id="vol" title="볼륨 (드래그)"></div>
-      </div>
-      <ol class="tracks" id="tracks"></ol>
-      <p class="note">음원: D:\바슈\결락멤버들\결락사이트\결락_음악_bgm (m4a → mp3 112kbps 시안용 변환). 곡별 케이스 아트는 v06 §16 8종을 임시로 붙였어.</p>
-    </div>
+    <div class="notes"><span>클릭/엔터 = START · MENU = 처음 화면 · ♪ = 배경음 켜기/끄기</span><span>BGM은 90년대 게임기 소리(사각파·삼각파·노이즈)로 새로 만든 곡</span></div>
   </div>
-</section>
+</main>
+<script>
+(() => {
+  const scr = document.getElementById('scr'), boot = document.getElementById('boot'), fr = document.getElementById('game');
+  const led = document.getElementById('led'), bgmBtn = document.getElementById('bgm');
+  let on = false;
+  function power() { if (on) return; on = true; led.classList.add('on'); scr.classList.add('power-on'); }
+  function start(g) { power(); if (!fr.src) fr.src = fr.dataset.src; scr.classList.add('game'); fr.focus(); if (!bgm.playing) toggle(true); }
+  boot.querySelectorAll('button[data-g]').forEach(b => b.addEventListener('click', () => start(b.dataset.g)));
+  boot.addEventListener('click', e => { if (!e.target.closest('button')) start('room'); });
+  addEventListener('keydown', e => { if (e.key === 'Enter' && !scr.classList.contains('game')) start('room'); });
+  document.getElementById('menu').onclick = () => { power(); scr.classList.remove('game'); };
 
-<!-- 05 PLAY — 결락 POCKET 미니룸 게임 -->
-<section id="play" aria-label="결락 포켓 게임">
-  <div class="sec-head">
-    <div class="no-col"><span class="no">05 —</span><span class="spec-tick">POCKET / MINI ROOM · Y2K</span></div>
-    <h2>POCKET ROOM<small>결락 미니룸 — 방을 꾸미고, 멤버를 부르고, 굿즈를 놓는다</small></h2>
-    <p>투명 케이스 안에 든 작은 방. 침대·인형·키링·틴케이스를 끌어다 놓는다. 화면 안에서 바로 하거나 전체 화면으로 연다.</p>
-  </div>
-  <div class="play-wrap">
-    <div class="play-case">
-      <div class="play-bar mono"><span>GYEOLLAK POCKET</span><span>CLEAR SERIES · ROOM</span></div>
-      <div class="play-screen">
-        <iframe id="pocketFrame" title="결락 포켓 미니룸" loading="lazy" data-src="../pocket/index.html"></iframe>
-        <button type="button" class="play-start" id="playStart"><span class="mono">TAP TO PLAY</span><b>◇</b></button>
-      </div>
-    </div>
-    <div class="play-side">
-      <ol class="play-steps mono"><li><i>01</i>아이템 탭 → 방에 놓기</li><li><i>02</i>끌어서 자리 옮기기</li><li><i>03</i>멤버 불러서 대화</li></ol>
-      <a class="play-full mono" href="../pocket/" target="_blank" rel="noopener">전체 화면으로 열기 ↗</a>
-    </div>
-  </div>
-</section>
-
-
-<footer><span>GYEOLLAK 결락 · SITE DESIGN DRAFT v07 · 2026-11-13</span><span>prototype — not deployed</span></footer>
-
-<div class="mini" id="mini"><div class="md" id="miniDisc"></div><div class="mt" id="miniT">—<span>00:00</span></div><button class="snd" id="miniPlay" aria-label="재생/정지">❚❚</button></div>
-
-<div class="insp" id="insp" role="dialog" aria-modal="true" aria-label="물건 자세히 보기">
-  <div class="insp-bg"></div>
-  <div class="insp-stage" id="inspStage">
-    <div class="turntable" id="turntable"></div>
-    <div class="obj3d" id="obj3d"></div>
-    <p class="drag-hint mono">⟲ DRAG TO ROTATE · FLICK TO SPIN</p>
-    <p class="angle-read" id="angleRead">0°</p>
-  </div>
-  <div class="insp-info" id="inspInfo"></div>
-  <button class="close-x" id="inspClose" aria-label="닫기">✕</button>
-</div>
-
-<audio id="audio" preload="metadata"></audio>
-<script src="js/audio-features.js"></script>
+  /* ── 90s 칩튠 BGM (원곡, Web Audio로 실시간 합성) ── */
+  const bgm = { playing: false, ctx: null, timer: 0, step: 0, next: 0, gain: null };
+  const N = n => 440 * Math.pow(2, (n - 69) / 12);
+  // A단조 · 템포 132 · 16스텝 x 4마디 반복 (비 오는 날 오락실 느낌)
+  const LEAD = [69,0,72,0,76,0,74,72, 71,0,69,0,71,72,74,0, 72,0,76,0,79,0,77,76, 74,0,72,0,71,0,69,0,
+                69,0,72,0,76,0,81,79, 77,0,76,0,74,0,72,74, 76,0,74,72,71,0,72,71, 69,0,0,0,64,0,0,0];
+  const BASS = [45,45,57,45,45,45,57,45, 41,41,53,41,41,41,53,41, 48,48,60,48,48,48,60,48, 43,43,55,43,40,40,52,40];
+  const ARP = [[57,60,64],[53,57,60],[48,52,55],[55,59,62]];
+  function tone(type, f, t, d, v, ctx) {
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .005); g.gain.exponentialRampToValueAtTime(.0008, t + d);
+    o.connect(g); g.connect(bgm.gain); o.start(t); o.stop(t + d + .02);
+  }
+  function noise(t, d, v, ctx) {
+    const b = ctx.createBuffer(1, ctx.sampleRate * d, ctx.sampleRate), x = b.getChannelData(0); for (let i = 0; i < x.length; i++) x[i] = Math.random() * 2 - 1;
+    const s = ctx.createBufferSource(), g = ctx.createGain(), hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 6000;
+    s.buffer = b; g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + d); s.connect(hp); hp.connect(g); g.connect(bgm.gain); s.start(t);
+  }
+  function sched() {
+    const ctx = bgm.ctx, st = 60 / 132 / 4;
+    while (bgm.next < ctx.currentTime + .15) {
+      const i = bgm.step, t = bgm.next, bar = Math.floor(i / 16) % 4;
+      const ln = LEAD[i % 64]; if (ln) tone('square', N(ln), t, st * 1.8, .055, ctx);
+      if (i % 2 === 0) tone('triangle', N(BASS[(i / 2) % 32]), t, st * 1.9, .16, ctx);
+      const ar = ARP[bar]; tone('square', N(ar[i % 3] + 12), t, st * .6, .018, ctx);
+      if (i % 4 === 2) noise(t, .04, .05, ctx); if (i % 8 === 4) noise(t, .12, .09, ctx);
+      bgm.step++; bgm.next += st;
+    }
+  }
+  function toggle(force) {
+    const want = force ?? !bgm.playing;
+    if (want) {
+      if (!bgm.ctx) { bgm.ctx = new (window.AudioContext || window.webkitAudioContext)(); bgm.gain = bgm.ctx.createGain(); bgm.gain.gain.value = .5; bgm.gain.connect(bgm.ctx.destination); }
+      bgm.ctx.resume(); bgm.next = bgm.ctx.currentTime + .05; bgm.timer = setInterval(sched, 40); bgm.playing = true;
+    } else { clearInterval(bgm.timer); bgm.ctx && bgm.ctx.suspend(); bgm.playing = false; }
+    bgmBtn.setAttribute('aria-pressed', bgm.playing);
+  }
+  bgmBtn.onclick = () => { power(); toggle(); };
+  document.addEventListener('visibilitychange', () => { if (document.hidden && bgm.playing) toggle(false); });
+})();
+</script>
 <script src="js/toc.js" data-page="play" data-next="1"></script>
-<script>window.GY_MARK="img/logo2/A_mark.png"</script>
-<script src="js/liquid.js"></script>
-<script src="js/app.js"></script>
-<script>(()=>{const b=document.getElementById('playStart'),f=document.getElementById('pocketFrame');if(b)b.addEventListener('click',()=>{f.src=f.dataset.src;b.classList.add('off')})})();</script>
 </body>
 </html>

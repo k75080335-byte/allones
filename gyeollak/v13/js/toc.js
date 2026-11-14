@@ -11,7 +11,7 @@
     ['listen', '06', 'Listen', 'CD 플레이어', 'listen.html', 'img/goods/04-x-ray.webp', '케이스를 열고 디스크를 넣는다. 듣는 화면.'],
     ['objects', '07', 'Objects', '굿즈 진열장', 'objects.html', 'img/goods/kr7-panther.webp', '아크릴 진열장 속 CD · 키링 · 인형. 하나씩 꺼내 본다.'],
     ['story', '08', 'Story Film', '물방울 하나가 잇는 필름', 'story.html', 'img/film/case.webp', '한 방울이 여섯 장면을 끝까지 따라간다.'],
-    ['play', '09', 'Play', '포켓 미니룸', 'play.html', 'img/goods/kr1-front.webp', '투명 케이스 속 작은 방을 꾸민다.'],
+    ['play', '09', 'Play', '게임 · 90년대 모니터', 'play.html', 'img/goods/kr1-front.webp', '브라운관을 켜고 START. 칩튠 BGM 위에서 포켓 미니룸을 꾸민다.'],
     ['logo', '10', 'Logo', '결 · 로고 시안', 'logo.html', 'img/logo2/A_gyeol_ink_paper.png', '한 획이 빠진 결. 먹 · 크롬 · 마블링 · 인장.'],
   ];
   const cur = P.findIndex(p => p[0] === page);
