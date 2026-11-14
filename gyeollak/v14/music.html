@@ -24,15 +24,16 @@ body{background:linear-gradient(180deg,#F7F9FC 0%,#E7EEF8 60%,#D9E4F4 100%);min-
 .mh p{margin-top:16px;max-width:460px;font-size:14px;line-height:1.75;color:#1B2A4A}
 .tl{list-style:none;margin-top:36px;border-bottom:1px solid rgba(14,24,52,.14)}
 .tl li{border-top:1px solid rgba(14,24,52,.14)}
-.tl button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:38px 1fr auto 34px;gap:12px;align-items:center;padding:16px 4px}
+.tl button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:44px 30px 1fr auto 34px;gap:12px;align-items:center;padding:16px 4px}
 .tl button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.tl .th{width:40px;height:40px;object-fit:contain}
 .tl .n{font:500 10px/1 var(--mono);color:var(--sub)}
 .tl .t{font:400 clamp(19px,1.8vw,24px)/1.2 var(--kr);color:#0E1834}
 .tl .t.en{font:400 italic clamp(24px,2.2vw,30px)/1 var(--serif)}
 .tl .t small{font:400 12px/1 var(--kr);color:var(--sub);margin-left:6px}
 .tl .s{font:500 9px/1.4 var(--mono);letter-spacing:.12em;color:var(--sub);text-align:right}
 .tl .pp{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:10px;border:1px solid rgba(14,24,52,.25);color:#0E1834}
-.tl .more{display:none;grid-column:2/-1;padding:0 4px 18px 54px;font-size:13.5px;line-height:1.7;color:#1B2A4A}
+.tl .more{display:none;padding:0 4px 18px 90px;font-size:13.5px;line-height:1.7;color:#1B2A4A}
 .tl .more span{display:block;margin-top:8px;font:500 9px/1 var(--mono);letter-spacing:.14em;color:var(--sub)}
 .tl li.sel .more{display:block}
 .tl li.sel .t,.tl li.sel .n{color:var(--blue)}
@@ -43,9 +44,9 @@ body{background:linear-gradient(180deg,#F7F9FC 0%,#E7EEF8 60%,#D9E4F4 100%);min-
   .deck{position:relative;top:0;height:auto;min-height:0;padding:10px 0 34px}
   .case{width:min(70vw,320px)}
   .mh h1{font-size:44px}
-  .tl button{grid-template-columns:30px 1fr 30px}
+  .tl button{grid-template-columns:36px 24px 1fr 30px}.tl .th{width:32px;height:32px}
   .tl .s{display:none}
-  .tl .more{padding-left:42px}
+  .tl .more{padding-left:70px}
 }
 @media (prefers-reduced-motion:reduce){.mu.playing .disc{animation:none}}
 </style>
@@ -68,7 +69,7 @@ body{background:linear-gradient(180deg,#F7F9FC 0%,#E7EEF8 60%,#D9E4F4 100%);min-
 (()=>{const T=GY_TRACKS,tl=document.getElementById('tl'),mu=document.getElementById('mu'),img=document.getElementById('caseImg');let sel=GYP.cur;
  const n2=i=>String(i+1).padStart(2,'0');
  T.forEach((x,i)=>{const li=document.createElement('li');li.id='t'+n2(i);
-  li.innerHTML=`<button type="button" aria-label="${x.t} 고르고 재생"><span class="n">${n2(i)}</span><span class="t${x.en?' en':''}">${x.t}${x.k?`<small>${x.k}</small>`:''}</span><span class="s">${x.s}</span><span class="pp" aria-hidden="true">▶</span></button><div class="more">${x.p}<span>CASE — ${x.cn}</span></div>`;
+  li.innerHTML=`<button type="button" aria-label="${x.t} 고르고 재생"><img class="th" src="img/goods/${x.c}.webp" alt="" loading="lazy"><span class="n">${n2(i)}</span><span class="t${x.en?' en':''}">${x.t}${x.k?`<small>${x.k}</small>`:''}</span><span class="s">${x.s}</span><span class="pp" aria-hidden="true">▶</span></button><div class="more">${x.p}<span>CASE — ${x.cn}</span></div>`;
   li.firstChild.onclick=()=>{if(sel===i&&GYP.cur===i){GYP.toggle();return}pick(i);GYP.play(i)};tl.appendChild(li)});
  function pick(i){sel=i;[...tl.children].forEach((li,k)=>li.classList.toggle('sel',k===i));const src=`img/goods/${T[i].c}.webp`;
   if(!img.src.endsWith(src)){img.classList.add('sw');setTimeout(()=>{img.src=src;img.onload=()=>img.classList.remove('sw')},200)}
