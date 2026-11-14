@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GYEOLLAK 결락 — IV 물건 · 진열장 (v14 draft)</title>
+<link rel="preload" href="fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/film.css">
+<link rel="stylesheet" href="css/descent.css">
+<style>
+/* droplogos only — original index.html / style.css untouched */
+.logo-mark{width:min(46vw,330px);filter:drop-shadow(0 22px 34px rgba(23,75,255,.22)) drop-shadow(0 2px 0 rgba(255,255,255,.7)) saturate(1.25) contrast(1.08);}
+#fluid{opacity:.62}
+</style>
+<link rel="stylesheet" href="css/toc.css">
+<style>#objects{padding-top:64px}
+.item.to-album{display:flex;flex-direction:column;justify-content:center;gap:6px;height:84px;padding:12px 16px;border:1px solid rgba(23,75,255,.45);border-radius:12px;background:rgba(255,255,255,.55);color:#0E1834;text-align:left;font:500 9px/1.4 "DM Mono",monospace;letter-spacing:.14em}
+.item.to-album b{font:400 18px/1.1 "Song Myung",serif;letter-spacing:0}.item.to-album .ta-k{color:#174BFF}.item.to-album:hover{background:#174BFF;color:#fff}.item.to-album:hover .ta-k{color:#fff}
+#itemList li a{color:#174BFF;text-decoration:none}
+.insp-info a.chip{text-decoration:none;color:#174BFF;border-color:#174BFF}
+</style>
+</head>
+<body>
+<header class="hd">
+  <a class="brand" href="#surface"><b>GYEOLLAK</b><span>결락</span></a>
+  <nav class="nav">
+    <a href="#descent" data-s="descent"><i>01</i>DESCENT</a>
+    <a href="#film" data-s="film"><i>✦</i>FILM</a>
+    <a href="#objects" data-s="objects"><i>02</i>OBJECTS</a>
+    <a href="#members" data-s="members"><i>03</i>MEMBERS</a>
+    <a href="#listen" data-s="listen"><i>04</i>LISTEN</a>
+    <a href="#play" data-s="play"><i>05</i>PLAY</a>
+    <a href="logo.html" data-s="logo"><i>◇</i>LOGO</a>
+  </nav>
+  <div class="hd-r">
+    <span class="side-toggle"><span class="dot"></span>SIDE A</span>
+    <button class="snd" id="sndBtn" aria-label="소리"><span class="bars"><i></i><i></i><i></i></span></button>
+  </div>
+</header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="wd" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.03" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gChrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#C9D6EA"/><stop offset=".55" stop-color="#F4F7FB"/><stop offset="1" stop-color="#3E4E6B"/></linearGradient>
+    <linearGradient id="gIce" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#C3D3E6"/></linearGradient>
+  </defs>
+</svg>
+
+
+
+
+
+
+
+
+
+
+
+<div class="cover" role="region" aria-label="챕터 IV 물건">
+  <video src="videos/iv_reel_10s.mp4" poster="videos/iv_reel_poster.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
+  <div class="ct"><i>IV.</i><b>물건</b><span>CHAPTER IV · OBJECTS · 10s REEL · CLEAR SERIES</span></div>
+  <div class="down">SCROLL ↓</div>
+</div>
+<section id="objects" aria-label="굿즈 진열장">
+  <div class="sec-head">
+    <div class="no-col"><span class="no">IV —</span><span class="spec-tick">CASE / 880×600 · ACRYLIC</span></div>
+    <h2>OBJECT CASE<small>키링 · 인형 · CD 패키지 — 하나를 집어 꺼내서 돌려 본다</small></h2>
+    <p>투명 아크릴 진열장 안 3단 선반. 누르면 물건이 선반에서 빠져나와 턴테이블에 오르고, 드래그하면 360° 회전, 튕기면 관성으로 돌다가 제자리로 돌아온다.</p>
+  </div>
+  <div class="cab-wrap">
+    <div class="cabinet" id="cabinet">
+      <div class="case-shell" id="caseShell">
+        <div class="rod"></div>
+        <div class="tier t1"></div><div class="tier t2"></div><div class="tier t3"></div>
+        <div id="shelfItems"></div>
+        <div class="case-glare" id="caseGlare"></div>
+      </div>
+      <div class="plinth"><span class="eng">GYEOLLAK</span><span class="eng-kr">결락 · OBJECT ARCHIVE 26.11</span><span class="led"></span></div>
+    </div>
+    <aside class="side-card">
+      <h3>진열 목록</h3>
+      <p>선반 위 물건을 누르거나 목록을 고르면 꺼내 볼 수 있어. ← → 키로도 돌아가.</p>
+      <ol id="itemList"></ol>
+    </aside>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<div class="insp" id="insp" role="dialog" aria-modal="true" aria-label="물건 자세히 보기">
+  <div class="insp-bg"></div>
+  <div class="insp-stage" id="inspStage">
+    <div class="turntable" id="turntable"></div>
+    <div class="obj3d" id="obj3d"></div>
+    <p class="drag-hint mono">⟲ DRAG TO ROTATE · FLICK TO SPIN</p>
+    <p class="angle-read" id="angleRead">0°</p>
+  </div>
+  <div class="insp-info" id="inspInfo"></div>
+  <button class="close-x" id="inspClose" aria-label="닫기">✕</button>
+</div>
+
+<script src="js/toc.js" data-page="objects" data-next="1"></script>
+<script>window.GY_MARK="img/logo2/A_mark.png"</script>
+<script src="js/liquid.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

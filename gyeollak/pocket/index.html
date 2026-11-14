@@ -199,9 +199,16 @@ body[data-weather="b"] nav a[aria-current="page"]{background:linear-gradient(180
   .disc{transition:none}
   .view.on{animation:none}
 }
+
+/* embed (사이트 CRT 안에서 열 때: ?embed) — 바깥 앱 껍데기 숨기고 ROOM만 */
+body.embed .status,body.embed header,body.embed .marquee,body.embed nav[aria-label="메뉴"]{display:none!important}
+body.embed{background:#F6F8FB!important;padding:0!important;min-height:100vh}
+body.embed .device{width:100%!important;max-width:none!important;height:auto!important;min-height:100vh;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;background:transparent!important}
+body.embed .screen{border-radius:0!important;box-shadow:none!important;min-height:100vh}
 </style>
 </head>
 <body data-weather="a">
+<script>if(/[?&]embed/.test(location.search)){document.body.classList.add("embed");if(!location.hash)location.hash="#room"}</script>
 <div class="device">
  <div class="screen">
   <div class="status">
@@ -730,7 +737,7 @@ document.getElementById('tcount').textContent=TRACKS.length+' SONGS';
 /* ---------- router ---------- */
 let current='home';
 const navs=[...document.querySelectorAll('nav a')];
-function route(){const h=(location.hash||'#home').slice(1);const v=['home','members','music','room'].includes(h)?h:'home';current=v;
+function route(){const h=document.body.classList.contains('embed')?'room':(location.hash||'#home').slice(1);const v=['home','members','music','room'].includes(h)?h:'home';current=v;
   document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));
   navs.forEach(a=>a.toggleAttribute('aria-current',a.dataset.v===v)&&a.setAttribute('aria-current','page'));
   navs.forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});

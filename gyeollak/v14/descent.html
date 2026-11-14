@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GYEOLLAK 결락 — 02 DESCENT · X-RAY / GLASS (v14 draft)</title>
+<link rel="preload" href="fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/film.css">
+<link rel="stylesheet" href="css/descent.css">
+<style>
+/* droplogos only — original index.html / style.css untouched */
+.logo-mark{width:min(46vw,330px);filter:drop-shadow(0 22px 34px rgba(23,75,255,.22)) drop-shadow(0 2px 0 rgba(255,255,255,.7)) saturate(1.25) contrast(1.08);}
+#fluid{opacity:.62}
+</style>
+<link rel="stylesheet" href="css/toc.css">
+<style>#descent .dsc-pin{top:0}#descent{height:660vh}@media (max-width:720px){#descent{height:600vh}}</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="wd" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.03" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gChrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#C9D6EA"/><stop offset=".55" stop-color="#F4F7FB"/><stop offset="1" stop-color="#3E4E6B"/></linearGradient>
+    <linearGradient id="gIce" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#C3D3E6"/></linearGradient>
+  </defs>
+</svg>
+
+<header class="hd">
+  <a class="brand" href="#surface"><b>GYEOLLAK</b><span>결락</span></a>
+  <nav class="nav">
+    <a href="#descent" data-s="descent"><i>01</i>DESCENT</a>
+    <a href="#film" data-s="film"><i>✦</i>FILM</a>
+    <a href="#objects" data-s="objects"><i>02</i>OBJECTS</a>
+    <a href="#members" data-s="members"><i>03</i>MEMBERS</a>
+    <a href="#listen" data-s="listen"><i>04</i>LISTEN</a>
+    <a href="#play" data-s="play"><i>05</i>PLAY</a>
+    <a href="logo.html" data-s="logo"><i>◇</i>LOGO</a>
+  </nav>
+  <div class="hd-r">
+    <span class="side-toggle"><span class="dot"></span>SIDE A</span>
+    <button class="snd" id="sndBtn" aria-label="소리"><span class="bars"><i></i><i></i><i></i></span></button>
+  </div>
+</header>
+
+
+
+
+
+<section id="descent" aria-label="결락 하강: 떨어짐, 수면, 수면 아래, 심연">
+  <div class="dsc-pin">
+    <canvas id="dsc" aria-hidden="true"></canvas>
+    <canvas id="dscLiquid" aria-hidden="true"></canvas>
+    <img class="dsc-fallback" src="img/logo2/A_gyeol_white.png" alt="">
+    <div class="dsc-hud" aria-hidden="true">
+      <div class="tl">TARGET: GYEOLLAK 결락<br><span id="hAlt">ALT: 4850M</span><br><span id="hTmp">TEMP: -14°C</span><br><span id="hSt">STATE: HIGH CLOUD</span></div>
+      <div class="tr">HUMIDITY:<br><span id="hHum">98.0%</span><br>SCAN:<br><span id="hScn">0%</span><br>FLOW ID:<br>GLK-08</div>
+      <div class="dsc-scale"><i></i></div>
+      <div class="dsc-cross"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="16"/><path d="M10 50H34M66 50H90M50 10V34M50 66V90"/></svg></div>
+      <div id="scanBox"><i></i><i></i><i></i><i></i><b>GLASS</b></div>
+    </div>
+    <div class="dcap c1" hidden style="display:none"></div>
+    <div class="dcap c2"><span class="no">I-3 — FALL · 缺落</span><h2>One drop<br>falls away.</h2><p>결락(缺落) — 떨어져 나간 한 방울. 먹이 번져 화면을 덮는 순간, 그 아래가 검은 수면이다.</p></div>
+    <div class="dcap c3"><span class="no">03 — SURFACE · 0M</span><h2>It blooms<br>where it breaks.</h2><p>수면이 깨진 자리에서 꽃이 핀다. 아래 버튼으로 X-RAY ↔ GLASS. 네모 안은 언제나 반대쪽.</p></div>
+    <div class="dcap c4"><span class="no">04 — UNDER</span><h2>Below<br>the surface.</h2><p>물 아래에서 올려다본 같은 꽃. 빛이 일렁이며 바닥까지 닿는다.</p></div>
+    <div class="dcap c5"><span class="no">05 — ABYSS · -1000M</span><h2>A missing<br>piece remains.</h2><p>꽃은 방울로 흩어지고, 심연에서 다시 모여 한 획이 빠진 결이 된다.</p></div>
+    <button type="button" id="modeBtn" aria-pressed="false" aria-label="꽃 표현 바꾸기: X-RAY 또는 GLASS"><span>X-RAY</span><em></em><span>GLASS</span></button>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="js/toc.js" data-page="descent" data-next="1"></script>
+<script>window.GY_MARK="img/logo2/A_mark.png"</script>
+<script src="js/liquid.js"></script>
+<script src="js/app.js"></script>
+<script>window.GY_DESCENT_P0=.14</script>
+<script src="js/descent.js"></script>
+</body>
+</html>

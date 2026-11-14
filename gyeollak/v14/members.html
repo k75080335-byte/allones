@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GYEOLLAK 결락 — MEMBERS (v14 draft)</title>
+<link rel="stylesheet" href="css/v12.css">
+<link rel="stylesheet" href="css/toc.css">
+<style>
+html{scroll-snap-type:y mandatory}
+.mb{position:relative;height:100vh;height:100svh;scroll-snap-align:start;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;align-items:stretch;background:var(--bg,#F1F4F8)}
+.mb:nth-child(even) .stage{order:2}
+.mb .ghost{position:absolute;left:-2vw;right:-2vw;top:50%;transform:translateY(-50%);font:400 italic clamp(120px,22vw,340px)/.8 var(--serif);letter-spacing:-.04em;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(14,24,52,.16);pointer-events:none;text-align:center}
+.stage{position:relative;display:flex;align-items:flex-end;justify-content:center;padding-top:70px}
+.stage img.fig{height:88vh;width:auto;max-width:100%;object-fit:contain;object-position:bottom;
+  filter:drop-shadow(4px 0 0 #fff) drop-shadow(-4px 0 0 #fff) drop-shadow(0 -4px 0 #fff) drop-shadow(0 20px 22px rgba(20,30,70,.22));
+  transition:opacity .35s, transform .6s cubic-bezier(.2,.8,.2,1)}
+.stage img.fig.sw{opacity:0;transform:translateY(14px)}
+.stage .flowerbox{position:absolute;left:8%;top:22%;width:clamp(90px,12vw,150px);aspect-ratio:3/4;background:#fff;padding:8px 8px 26px;box-shadow:0 10px 24px rgba(20,30,70,.15);transform:rotate(-4deg);display:flex;flex-direction:column}
+.stage .flowerbox div{flex:1;background:var(--acc);opacity:.85;display:grid;place-items:center;color:#fff;font:400 22px/1 var(--kr)}
+.stage .flowerbox span{font:500 8.5px/1 var(--mono);letter-spacing:.14em;margin-top:8px;color:#1B2A4A}
+.stage .plush{position:absolute;right:8%;bottom:10%;width:clamp(70px,9vw,120px);filter:drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 10px 10px rgba(0,0,0,.2));transform:rotate(6deg)}
+.info{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:90px var(--pad) 60px;max-width:560px}
+.info .no{font:500 10px/1 var(--mono);letter-spacing:.2em;color:var(--acc)}
+.info h2{margin-top:16px;font:400 italic clamp(44px,6vw,92px)/.9 var(--serif);letter-spacing:-.02em;color:#0E1834}
+.info .kr{margin-top:12px;display:flex;align-items:baseline;gap:14px;font:400 clamp(28px,3.4vw,46px)/1 var(--kr);color:#0E1834}
+.info .kr small{font:500 10px/1 var(--mono);letter-spacing:.16em;color:var(--sub)}
+.info blockquote{margin:26px 0 22px;padding-left:14px;border-left:2px solid var(--acc);font:400 15px/1.7 var(--kr);color:#1B2A4A}
+.info dl{display:grid;grid-template-columns:auto 1fr;gap:9px 18px;font-size:12.5px;border-top:1px solid rgba(14,24,52,.15);padding-top:16px}
+.info dt{font:500 9.5px/1.9 var(--mono);letter-spacing:.14em;color:var(--sub)}
+.info dd{color:#0E1834}
+.info dd a{color:var(--blue);text-underline-offset:3px}
+.ctl{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.ctl button{font:500 9.5px/1 var(--mono);letter-spacing:.14em;padding:9px 12px;border:1px solid rgba(14,24,52,.3);background:transparent;border-radius:99px;cursor:pointer;min-height:34px;color:#0E1834}
+.ctl button.on{background:#0E1834;color:#fff}
+.ctl .sep{width:1px;background:rgba(14,24,52,.2);margin:0 4px}
+.dots{position:fixed;right:var(--pad);top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:12px;list-style:none}
+.dots a{display:block;font:500 9px/1 var(--mono);letter-spacing:.14em;text-decoration:none;color:#0E1834;opacity:.35;text-align:right}
+.dots a.on{opacity:1}
+.dots a::after{content:"";display:inline-block;width:10px;height:1px;background:currentColor;margin-left:8px;vertical-align:middle}
+.dots a.on::after{width:24px}
+.mb .tape{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:space-between;padding:0 var(--pad);font:500 9px/1 var(--mono);letter-spacing:.18em;color:var(--sub);z-index:3}
+@media (max-width:820px){
+  .mb{grid-template-columns:1fr;grid-template-rows:56vh 1fr}
+  .mb:nth-child(even) .stage{order:0}
+  .stage img.fig{height:54vh}
+  .stage .flowerbox{left:5%;top:auto;bottom:6%;width:74px}
+  .info{padding:14px var(--pad) 40px;justify-content:flex-start}
+  .info h2{font-size:40px}.info .kr{font-size:24px}
+  .info blockquote{margin:12px 0;font-size:13px}
+  .info dl{font-size:11.5px;gap:6px 14px}
+  .dots{display:none}
+  .mb .ghost{top:28%}
+}
+
+/* 입구: 4인 라인업 → 누르면 그 사람 장면 */
+.lu{position:relative;height:100vh;height:100svh;scroll-snap-align:start;overflow:hidden;background:linear-gradient(180deg,#F7F9FC,#DFE8F5)}
+.lu .k{position:absolute;left:var(--pad);top:90px;font:500 10px/1.8 var(--mono);letter-spacing:.2em;color:var(--sub)}
+.lu .k b{display:block;font:400 clamp(36px,4.6vw,64px)/1 var(--kr);letter-spacing:0;color:#0E1834;margin-top:10px}
+.lu .row{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;gap:0;padding:0 4vw}
+.lu .row button{all:unset;cursor:pointer;position:relative;height:var(--h);margin:0 -2.4vw;transition:transform .5s cubic-bezier(.2,.8,.2,1),filter .3s}
+.lu .row button img{height:100%;width:auto;filter:drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 18px 20px rgba(20,30,70,.2))}
+.lu .row button span{position:absolute;left:50%;top:-6px;transform:translate(-50%,-100%);font:500 9.5px/1.6 var(--mono);letter-spacing:.16em;color:#0E1834;white-space:nowrap;text-align:center;opacity:.75}
+.lu .row button span b{display:block;font:400 17px/1 var(--kr);letter-spacing:0}
+.lu .row button:hover,.lu .row button:focus-visible{transform:translateY(-12px)}
+.lu .row button:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.lu .hint{position:absolute;right:var(--pad);bottom:110px;font:500 9.5px/1.8 var(--mono);letter-spacing:.16em;color:var(--sub);text-align:right}
+/* 스펙 선 (사진을 누르면) */
+.stage{touch-action:pan-y}
+.stage img.fig{cursor:pointer}
+.spec{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s}
+.mb.spec-on .spec{opacity:1}
+.spec svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.spec svg line{stroke:var(--acc);stroke-width:1}
+.spec svg circle{fill:#fff;stroke:var(--acc);stroke-width:1.4}
+.spec .lab{position:absolute;font:500 9px/1.5 var(--mono);letter-spacing:.14em;color:#0E1834;background:rgba(255,255,255,.86);padding:5px 7px;border:1px solid var(--acc);white-space:nowrap}
+.spec .lab b{display:block;font:400 13px/1.2 var(--kr);letter-spacing:0}
+.mb .tip{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:3;font:500 9px/1 var(--mono);letter-spacing:.16em;color:var(--sub);white-space:nowrap}
+.plushlink{display:inline-flex;align-items:center;gap:6px;color:var(--blue);text-decoration:none}
+.plushlink img{width:22px;height:22px;object-fit:contain;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(14,24,52,.15)}
+.turnnote{font:500 9px/1.6 var(--mono);letter-spacing:.12em;color:var(--sub);margin-top:8px}
+@media (max-width:820px){.lu .row button{margin:0 -7vw}.lu .row button span{font-size:8px}.lu .row button span b{font-size:13px}.lu .hint{bottom:96px}.spec .lab{font-size:8px;padding:3px 5px}.spec .lab b{font-size:11px}}
+</style>
+</head>
+<body>
+<section class="cover" aria-label="챕터 II 사람">
+  <video src="videos/v07_members_16x9_web.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
+  <div class="ct"><i>II.</i><b>사람</b><span>CHAPTER II · PEOPLE · VEIL 01–04</span></div>
+  <div class="down">SCROLL ↓</div>
+</section>
+<section class="lu" id="lineup" aria-label="네 사람 라인업">
+  <div class="k">II · 사람 — LINE-UP<b>네 사람, 네 장면</b></div>
+  <div class="row" id="luRow"></div>
+  <div class="hint">사람을 누르면 그 장면으로 ↓<br>사진을 누르면 스펙 · 옆으로 밀면 옷이 바뀜</div>
+</section>
+<main id="list"></main>
+<ol class="dots" id="dots" aria-label="멤버 바로가기"></ol>
+<script>
+const M=[
+ {id:'taejun',no:'01',en:'Moon Taejun',kr:'문태준',role:'LEADER · DRUM',born:'1995',mbti:'ISTJ-A',flower:'백합',fk:'百合',animal:'갈색 곰',plush:'kr7-bear',rain:'막아야 할 파도',film:'《파문의 안쪽》',track:'Rewind',acc:'#0E2C6E',bg:'#F1F4F8',line:'막아야 할 파도가 있다면, 맨 앞에 선다.',voice:'묵직하고 걸걸한 저음'},
+ {id:'ryuhyeon',no:'02',en:'Chae Ryuhyeon',kr:'채류현',role:'VOCAL',born:'1996.10.24',mbti:'INTJ',flower:'능소화',fk:'凌霄',animal:'검은 재규어',plush:'kr7-panther',rain:'잃어버린 첫사랑 · 우산',film:'《못: 비가 맺히지 않는 곳》',track:'능소화',acc:'#174BFF',bg:'#EEF3FA',line:'기억은 없고, 반응만 남아 있었다.',voice:'부드럽지만 허스키한 음색'},
+ {id:'yuseong',no:'03',en:'Chae Yuseong',kr:'채유성',role:'GUITAR · VOCAL',born:'1998',mbti:'INTJ-T · 겉 ENFP',flower:'동백 · 낙화',fk:'冬柏',animal:'은청색 여우',plush:'kr7-fox',rain:'형제 사이의 경계',film:'《낙화》',track:'상사화',acc:'#3E6FD8',bg:'#F1F4F8',line:'웃으면서, 열쇠를 훔친다.',voice:'높고 힘 있는 리드 테너 · 랩'},
+ {id:'jinwoo',no:'04',en:'Ha Jinwoo',kr:'하진우',role:'POSITION — TBD',born:'1999',mbti:'ENFP-A',flower:'수국',fk:'水菊',animal:'베이지 강아지',plush:'kr7-puppy',rain:'집을 나와 음악을 택한 밤',film:'《수면의 빛》',track:'Amnesia',acc:'#6D9BE8',bg:'#EEF3FA',line:'젖은 채로도, 빛 쪽으로 걷는다.',voice:'맑은 톤 보컬'}];
+const POSE={taejun:{SUIT:'taejun_suit',CASUAL:'taejun_casual',Y2K:'taejun_y2k'},ryuhyeon:{SUIT:'ryuhyeon_suit',CASUAL:'ryuhyeon_casual',Y2K:'ryuhyeon_y2k'},yuseong:{SUIT:'yuseong_suit',CASUAL:'yuseong_casual',Y2K:'yuseong_y2k'},jinwoo:{SUIT:'jinwoo_suit',CASUAL:'jinwoo_casual',Y2K:'jinwoo_y2k'}};
+const TURN={ryuhyeon:{key:'ryuhyeon_y2k',n:5},yuseong:{key:'yuseong_m2',n:6}};
+const TRK={'Rewind':'t04','Amnesia':'t03','상사화':'t05'};
+const list=document.getElementById('list'),dots=document.getElementById('dots');
+M.forEach(m=>{
+  const s=document.createElement('section');s.className='mb';s.id=m.id;s.style.setProperty('--bg',m.bg);s.style.setProperty('--acc',m.acc);s.setAttribute('aria-label',m.kr+' 프로필');
+  const tr=TRK[m.track]?`<a href="music.html#${TRK[m.track]}">${m.track} ▶</a>`:`${m.track} <small style="color:var(--sub)">(음원 준비 중)</small>`;
+  s.innerHTML=`<div class="ghost" aria-hidden="true">${m.en.split(' ')[1]}</div>
+  <div class="stage"><div class="flowerbox" aria-hidden="true"><div>${m.fk}</div><span>${m.flower}</span></div>
+    <img class="fig" src="img/v12/${POSE[m.id].SUIT}_cy.webp" alt="${m.kr}">
+    <div class="spec" aria-hidden="true"></div></div><span class="tip" aria-hidden="true">TAP · SPEC　　SWIPE · OUTFIT</span>
+  <div class="info"><span class="no">${m.no} / 04</span><h2>${m.en}</h2>
+    <div class="kr">${m.kr}<small>${m.role}</small></div>
+    <blockquote>“${m.line}”</blockquote>
+    <dl><dt>BORN</dt><dd>${m.born}</dd><dt>MBTI</dt><dd>${m.mbti}</dd><dt>FLOWER</dt><dd>${m.flower}</dd><dt>COMPANION</dt><dd><a class="plushlink" href="objects.html"><img src="img/goods/${m.plush}.webp" alt="">${m.animal} · IV 물건에서 보기</a></dd>
+    <dt>VOICE</dt><dd>${m.voice}</dd><dt>DEBUT RAIN</dt><dd>${m.rain}</dd><dt>FILM</dt><dd>${m.film}</dd><dt>TRACK</dt><dd>${tr}</dd></dl>
+    <div class="ctl" role="group" aria-label="${m.kr} 이미지 바꾸기">${Object.keys(POSE[m.id]).map((k,i)=>`<button data-p="${k}" class="${i?'':'on'}">${k}</button>`).join('')}${TURN[m.id]?'<button data-p="360">360°</button>':''}<span class="sep"></span><button data-t="cy" class="on">CYANO</button><button data-t="col">COLOR</button></div></div>
+  <div class="tape" aria-hidden="true"><span>GYEOLLAK · VEIL ${m.no}</span><span>2018.07.22 — MONSOON DEBUT</span></div>`;
+  list.appendChild(s);
+  const li=document.createElement('li');li.innerHTML=`<a href="#${m.id}">${m.kr}</a>`;dots.appendChild(li);
+  let pose='SUIT',tone='cy',tf=0;const img=s.querySelector('.fig'),keys=Object.keys(POSE[m.id]),T360=TURN[m.id];
+  const srcOf=()=>pose==='360'?`img/turn/${T360.key}_${tf}.webp`:(tone==='cy'?`img/v12/${POSE[m.id][pose]}_cy.webp`:`img/members/${POSE[m.id][pose]}.webp`);
+  const set=(fast)=>{if(fast){img.src=srcOf();return}img.classList.add('sw');setTimeout(()=>{img.src=srcOf();img.onload=()=>img.classList.remove('sw')},180)};
+  const mark=()=>s.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',x.dataset.p===pose));
+  s.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{pose=b.dataset.p;tf=0;mark();set()});
+  s.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{tone=b.dataset.t;s.querySelectorAll('[data-t]').forEach(x=>x.classList.toggle('on',x===b));if(pose!=='360')set()});
+  // 스펙 선
+  const sp=s.querySelector('.spec');
+  const P=[[50,14,'POSITION',m.role],[46,34,'BORN · MBTI',m.born+' · '+m.mbti],[54,52,'FLOWER',m.flower+' '+m.fk],[48,74,'VOICE',m.voice]];
+  sp.innerHTML='<svg>'+P.map((q,k)=>{const lx=k%2?84:14;return`<line x1="${q[0]}%" y1="${q[1]}%" x2="${lx}%" y2="${q[1]}%"/><circle cx="${q[0]}%" cy="${q[1]}%" r="3.5"/>`}).join('')+'</svg>'+P.map((q,k)=>`<div class="lab" style="${k%2?'left:84%':'right:86%'};top:calc(${q[1]}% - 14px)">${q[2]}<b>${q[3]}</b></div>`).join('');
+  // 누르기 = 스펙, 옆으로 밀기 = 옷 (360°일 때는 돌리기)
+  let d=null;
+  img.addEventListener('pointerdown',e=>{d={x:e.clientX,y:e.clientY,f:tf,mv:0};img.setPointerCapture(e.pointerId)});
+  img.addEventListener('pointermove',e=>{if(!d)return;const dx=e.clientX-d.x;d.mv=Math.max(d.mv,Math.abs(dx));if(pose==='360'){const nf=((d.f+Math.round(-dx/40))%T360.n+T360.n)%T360.n;if(nf!==tf){tf=nf;set(true)}}});
+  img.addEventListener('pointerup',e=>{if(!d)return;const dx=e.clientX-d.x;const mv=d.mv;d=null;
+    if(mv<8){s.classList.toggle('spec-on');return}
+    if(pose!=='360'&&Math.abs(dx)>50){const k=keys.indexOf(pose);pose=keys[(k+(dx<0?1:-1)+keys.length)%keys.length];mark();set()}});
+  img.addEventListener('pointercancel',()=>d=null);
+  img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();s.classList.toggle('spec-on')}});img.tabIndex=0;
+});
+const luRow=document.getElementById('luRow');
+M.forEach((m,i)=>{const b=document.createElement('button');b.type='button';b.style.setProperty('--h',[78,82,80,76][i]+'vh');b.style.zIndex=[2,4,3,1][i];
+  b.innerHTML=`<span>${m.role}<b>${m.kr}</b></span><img src="img/v12/${POSE[m.id].SUIT}_cy.webp" alt="">`;b.setAttribute('aria-label',m.kr+' 장면으로');
+  b.onclick=()=>{const t=document.getElementById(m.id);t.scrollIntoView({behavior:'smooth'});setTimeout(()=>t.classList.add('spec-on'),700)};luRow.appendChild(b)});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)dots.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{threshold:.55});
+document.querySelectorAll('.mb').forEach(x=>io.observe(x));
+</script>
+<script src="js/toc.js" data-page="members" data-next="1"></script>
+</body>
+</html>
