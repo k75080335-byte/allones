@@ -1,0 +1,126 @@
+/* 결락 v15 · 홈 롱스크롤 */
+body.home{background:#0B1328;color:#0E1834;overflow-x:hidden}
+#home{position:relative}
+.hs{position:relative}
+.hs .st{position:fixed;left:0;top:0;width:100%;height:100vh;height:100svh;overflow:hidden;opacity:0;visibility:hidden;z-index:var(--z,1)}
+.hs .st.on{visibility:visible}
+.hs.end{z-index:20;background:#EAF1FA}
+.hs.end .st{position:sticky;opacity:1;visibility:visible}
+body.rm .hs .st{position:relative;opacity:1;visibility:visible}
+.hs .bg{position:absolute;inset:-4%;background:center/cover no-repeat;will-change:transform,opacity}
+.hs img,.hs .seq,.hs figure,.hs [data-a]{will-change:transform,opacity}
+.st.sky{background:#EEF3F9}
+
+/* 01 하늘 · 결 */
+.wash{position:absolute;inset:0;background:radial-gradient(70% 60% at 50% 45%,rgba(246,249,253,.85),rgba(246,249,253,.25) 60%,transparent 80%)}
+.markwrap{position:absolute;left:50%;top:46%;width:min(34vw,46vh,360px);aspect-ratio:900/1100;translate:-50% -50%}
+.mark{position:absolute;inset:0;filter:url(#warp)}
+.mark img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.markwrap .core{position:absolute;left:50%;top:52%;width:34%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(214,228,248,.55) 30%,rgba(214,228,248,0) 68%);mix-blend-mode:screen;pointer-events:none}
+.glint{position:absolute;width:220px;height:220px;translate:-50% -50%;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.75),rgba(200,220,245,.25) 40%,transparent 70%);mix-blend-mode:screen;opacity:0;transition:opacity .4s;left:50%;top:46%}
+.cap{position:absolute;z-index:5;font:500 10px/1.8 var(--mono);letter-spacing:.2em;color:#24324F}
+.cap.tl{left:var(--pad);top:88px}
+.cap.br{right:var(--pad);bottom:clamp(96px,14vh,140px);display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tbtn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:99px;background:#0E1834;color:#fff;font:500 11px/1 var(--mono);letter-spacing:.14em;text-decoration:none}
+.tbtn small{font:400 14px/1 var(--serif);font-style:italic;letter-spacing:0;opacity:.75}
+.tbtn.ghost{background:rgba(255,255,255,.6);color:#0E1834;box-shadow:inset 0 0 0 1px rgba(14,24,52,.25);backdrop-filter:blur(8px)}
+.tbtn:hover{background:#174BFF;color:#fff}
+.tbtn:focus-visible{outline:2px solid #174BFF;outline-offset:3px}
+.scrollcue{position:absolute;left:50%;bottom:110px;translate:-50% 0;font:500 9.5px/1 var(--mono);letter-spacing:.3em;color:#3B4A6B}
+.scrollcue::after{content:"";display:block;width:1px;height:38px;margin:12px auto 0;background:linear-gradient(#3B4A6B,transparent);animation:cue 2s ease-in-out infinite}
+@keyframes cue{50%{transform:translateY(8px);opacity:.4}}
+
+/* 02 응결 · 낙하 */
+.ink{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,24,52,0),rgba(14,24,52,.55) 70%,#0E1834)}
+.stroke{position:absolute;left:50%;top:22%;width:6px;height:28vh;translate:-50% 0;border-radius:6px;background:linear-gradient(#24324F,#0E1834);transform-origin:50% 100%}
+.drop{position:absolute;left:50%;top:22%;width:min(30vw,40vh,340px);translate:-50% -50%;mix-blend-mode:screen}
+.line{position:absolute;left:var(--pad);bottom:22vh;z-index:3;font:400 clamp(22px,2.4vw,34px)/1.3 var(--kr);color:#EAF1FB}
+
+/* 03 바다 필름 */
+.st.sea{background:#0E1834;display:grid;place-items:center}
+.film{--k:min(1,calc(var(--p,0)/.7));position:absolute;inset:0;overflow:hidden;
+  /* 가운데 가로로 긴 프레임 → 화면 전체 */
+  clip-path:inset(calc((1 - var(--k))*24%) calc((1 - var(--k))*20%) round calc((1 - var(--k))*6px))}
+.film::after{content:"";position:absolute;inset:calc((1 - var(--k))*24%) calc((1 - var(--k))*20%);box-shadow:inset 0 0 0 1px rgba(14,24,52,.9);pointer-events:none}
+.seaimg{position:absolute;inset:-6%;background:center 60%/cover no-repeat;animation:swell 9s ease-in-out infinite alternate}
+@keyframes swell{to{transform:scale(1.06) translateX(-1.5%)}}
+.shimmer{position:absolute;inset:0;background:repeating-linear-gradient(100deg,transparent 0 22px,rgba(255,255,255,.08) 22px 24px);mix-blend-mode:screen;animation:shim 6s linear infinite;opacity:.7}
+@keyframes shim{to{background-position:240px 0}}
+.date{position:absolute;left:var(--pad);bottom:20vh;font:400 italic clamp(28px,3vw,44px)/1 var(--serif);color:#F1F5FB;z-index:3}
+
+/* 04·05 수면 아래 · 금붕어 */
+.st.under,.st.deep{background:#0B2A5C}
+.splash{position:absolute;inset:0;background:linear-gradient(180deg,rgba(235,244,255,.95),rgba(170,200,240,.5) 45%,transparent 80%)}
+.bubbles{position:absolute;inset:0;pointer-events:none}
+.bubbles i{position:absolute;bottom:-40px;width:var(--s,10px);height:var(--s,10px);border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.9),rgba(190,215,255,.25) 45%,rgba(190,215,255,.05) 70%);box-shadow:inset 0 0 0 1px rgba(220,235,255,.35);animation:rise var(--d,9s) linear infinite;animation-delay:var(--dl,0s);left:var(--l,50%);filter:blur(var(--bl,0))}
+@keyframes rise{to{transform:translate(var(--dx,20px),-120vh)}}
+.bubbles i:nth-child(1){--l:12%;--s:8px;--d:8s}.bubbles i:nth-child(2){--l:22%;--s:16px;--d:11s;--dl:-3s;--bl:1px}.bubbles i:nth-child(3){--l:31%;--s:6px;--d:7s;--dl:-5s}
+.bubbles i:nth-child(4){--l:44%;--s:22px;--d:13s;--dl:-2s;--bl:2px}.bubbles i:nth-child(5){--l:53%;--s:9px;--d:9s;--dl:-7s}.bubbles i:nth-child(6){--l:61%;--s:12px;--d:10s;--dl:-1s}
+.bubbles i:nth-child(7){--l:70%;--s:30px;--d:15s;--dl:-6s;--bl:3px}.bubbles i:nth-child(8){--l:78%;--s:7px;--d:8s;--dl:-4s}.bubbles i:nth-child(9){--l:86%;--s:14px;--d:12s;--dl:-8s}
+.bubbles i:nth-child(10){--l:92%;--s:5px;--d:7s;--dl:-2s}.bubbles i:nth-child(11){--l:6%;--s:18px;--d:14s;--dl:-9s;--bl:1px}.bubbles i:nth-child(12){--l:38%;--s:4px;--d:6s;--dl:-1s}
+.bubbles.slow i{animation-duration:calc(var(--d,9s)*1.8);opacity:.6}
+.fishwrap{position:absolute;left:50%;top:50%;width:min(58vw,820px);aspect-ratio:12/7;translate:-50% -50%}
+.seq{position:absolute;inset:0}
+.seq img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.fishwrap{mix-blend-mode:screen}
+.fish img{animation:swim 2.6s ease-in-out infinite}
+@keyframes swim{50%{transform:translateY(1.2%) rotate(1.2deg)}}
+.xband{position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(190,215,255,.35) 46%,transparent 60%);mix-blend-mode:overlay;animation:xb 5s ease-in-out infinite;pointer-events:none;-webkit-mask:url(../img/home/fish_ph.webp) center/contain no-repeat;mask:url(../img/home/fish_ph.webp) center/contain no-repeat;mask-mode:luminance}
+@keyframes xb{0%{transform:translateX(-60%)}60%,100%{transform:translateX(60%)}}
+
+/* 06 개화 */
+.st.abyss{background:#05091A}
+.fl{position:absolute;margin:0;aspect-ratio:1;mix-blend-mode:screen}
+.fl figcaption{position:absolute;left:50%;bottom:-2%;translate:-50% 0;white-space:nowrap;font:500 10px/1 var(--mono);letter-spacing:.2em;color:rgba(220,232,255,.75)}
+.f1{left:4%;top:8%;width:min(56vw,72vh)}
+.f2{right:2%;top:16%;width:min(48vw,62vh)}
+.f3{left:14%;top:4%;width:min(38vw,50vh)}
+.f4{left:50%;top:50%;width:min(70vw,90vh);translate:-50% -50%}
+
+/* 07 꽃잎 · 빛 */
+.petal{position:absolute;left:50%;top:50%;width:min(40vw,520px);translate:-50% -50%;mix-blend-mode:screen}
+.whiten{position:absolute;inset:0;background:radial-gradient(80% 70% at 50% 45%,#F6F9FD,#DCE7F6 60%,#B9CDEA);z-index:4}
+.bubbles.up{z-index:5}
+
+/* 08 네 사람 */
+.st.people{background:linear-gradient(180deg,#F6F9FD,#DCE7F6)}
+.four{position:absolute;left:0;right:0;bottom:0;height:88%;display:flex;align-items:flex-end;justify-content:center}
+.four img{height:var(--h);width:auto;margin:0 -2.2vw;position:relative;z-index:var(--z);filter:drop-shadow(0 20px 26px rgba(20,30,70,.18))}
+.endtext{position:absolute;left:var(--pad);top:96px;z-index:6;max-width:42vw}
+.endtext .k{font:500 10px/1 var(--mono);letter-spacing:.2em;color:#174BFF}
+.endtext h1{margin-top:16px;font:400 clamp(30px,3.6vw,56px)/1.2 var(--kr);color:#0E1834}
+.cta{margin-top:24px;display:flex;gap:8px;flex-wrap:wrap}
+
+/* 대체 소스 표시 (검토용 · ?public 이면 숨김) */
+.ph-tag{display:none}
+body.review .ph-tag{display:flex;flex-direction:column;gap:4px;position:absolute;left:var(--pad);bottom:clamp(92px,12vh,120px);z-index:20;max-width:min(520px,70vw);pointer-events:none}
+.ph-tag span{align-self:flex-start;font:500 9px/1.4 var(--mono);letter-spacing:.06em;padding:4px 8px;border-radius:6px;background:rgba(255,236,150,.92);color:#3A2F00}
+.ph-tag span.interim{background:rgba(255,255,255,.85);color:#24324F}
+#h1 .ph-tag,#h8 .ph-tag{bottom:auto;top:120px;left:auto;right:var(--pad);align-items:flex-end}
+#h1 .ph-tag span,#h8 .ph-tag span{align-self:flex-end}
+
+/* 건너뛰기 */
+.skip{all:unset;cursor:pointer;position:fixed;right:var(--pad);top:62px;z-index:800;font:500 10px/1 var(--mono);letter-spacing:.18em;padding:10px 14px;border-radius:99px;background:rgba(255,255,255,.7);color:#0E1834;backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px rgba(14,24,52,.2);transition:opacity .3s}
+.skip.hide{opacity:0;pointer-events:none}
+.skip:focus-visible{outline:2px solid #174BFF}
+
+@media (max-width:760px){
+  .markwrap{width:min(56vw,40vh);top:44%}
+  .cap.br{left:var(--pad);right:var(--pad);justify-content:flex-start;bottom:96px}
+  .drop{width:min(56vw,40vh)}
+  .fishwrap{width:92vw}
+  .film{clip-path:inset(calc((1 - var(--k))*34%) calc((1 - var(--k))*5%) round calc((1 - var(--k))*6px))}
+  .film::after{inset:calc((1 - var(--k))*34%) calc((1 - var(--k))*5%)}
+  .f1{left:-8%;top:6%;width:88vw}.f2{right:-10%;top:20%;width:78vw}.f3{left:4%;top:4%;width:64vw}.f4{width:110vw}
+  .petal{width:70vw}
+  .four{height:50%}
+  .four img{margin:0 -9vw}
+  .endtext{max-width:none;right:var(--pad);top:84px}
+  .endtext h1{font-size:28px}
+  .ph-tag span{font-size:8px}
+  .ph-tag span:nth-child(n+3){display:none}
+  body.review .ph-tag{max-width:86vw}
+  #h1 .ph-tag,#h8 .ph-tag{top:auto;bottom:160px;left:var(--pad);right:auto;align-items:flex-start}
+  #h1 .ph-tag span,#h8 .ph-tag span{align-self:flex-start}
+}
+@media (prefers-reduced-motion:reduce){.bubbles i,.seaimg,.shimmer,.fish img,.xband,.scrollcue::after{animation:none}}

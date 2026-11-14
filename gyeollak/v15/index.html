@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GYEOLLAK 결락 (v15 draft)</title>
+<link rel="preload" as="image" href="img/v12/sky.webp">
+<link rel="stylesheet" href="css/v12.css">
+<link rel="stylesheet" href="css/toc.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body class="home">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="warp" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".011 .016" numOctaves="2" seed="4" result="n"/><feDisplacementMap id="warpMap" in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+
+<main id="home">
+  <!-- 01 흐린 하늘 · 결이 모이고 빛이 맺힌다 -->
+  <section class="hs" id="h1" data-len="1.25" data-mlen="1.1" data-rm=".3" aria-label="흐린 하늘 위의 결">
+    <div class="st sky">
+      <div class="bg" data-slot="sky" data-a="s:1.12>1@0-1; y:0vh>-6vh@0-1"></div>
+      <div class="wash" aria-hidden="true"></div>
+      <div class="glint" aria-hidden="true"></div>
+      <div class="markwrap" data-a="s:1.04>.92@0-1">
+        <div class="mark"><img data-slot="mark" alt="결"><img class="i" data-slot="markI" alt="" data-a="o:1>0@.75-1; y:0vh>4vh@.6-1"></div>
+        <span class="core" aria-hidden="true" data-a="s:.4>1.4@0-1; o:.2>1@0-.8"></span>
+      </div>
+      <div class="cap tl"><span class="k">GYEOLLAK · 結落 / 缺落</span></div>
+      <div class="cap br">
+        <button type="button" class="tbtn" data-title-play>▶ 타이틀 듣기 <small>Rewind</small></button>
+        <a class="tbtn ghost" href="#h3">필름 보기 ↓</a>
+      </div>
+      <div class="scrollcue" aria-hidden="true" data-a="o:1>0@0-.25">SCROLL</div>
+    </div>
+  </section>
+
+  <!-- 02 응결과 낙하 · 방울 안에 금붕어 -->
+  <section class="hs" id="h2" data-len="1.5" data-mlen="1.3" data-rm=".55" aria-label="결이 방울이 되어 떨어진다">
+    <div class="st sky">
+      <div class="bg" data-slot="sky" data-a="s:1>1.25@0-1; o:1>.35@.3-1"></div>
+      <div class="ink" aria-hidden="true" data-a="o:0>1@.35-1"></div>
+      <div class="stroke" aria-hidden="true" data-a="s:1>.15@0-.35; o:1>0@.25-.4"></div>
+      <img class="drop" data-slot="drop" alt="" data-a="y:-24vh>46vh@.15-1; s:.35>1@.1-.5; o:0>1@.1-.25">
+      <p class="line cdrop" data-a="o:0>1@.4-.55; o:1>0@.8-.95">한 방울이 떨어져 나간다.</p>
+    </div>
+  </section>
+
+  <!-- 03 바다 필름 · 가운데 프레임이 화면을 채운다 -->
+  <section class="hs" id="h3" data-len="1.75" data-mlen="1.5" data-rm=".25" aria-label="바다">
+    <div class="st sea">
+      <div class="film">
+        <div class="seaimg" data-slot="sea"></div>
+        <div class="shimmer" aria-hidden="true"></div>
+      </div>
+      <span class="date" data-a="o:0>1@.05-.2; o:1>0@.55-.7">2018.07.22</span>
+    </div>
+  </section>
+
+  <!-- 04 수면 통과 -->
+  <section class="hs" id="h4" data-len="1.15" data-mlen="1" data-rm=".6" aria-label="수면 아래로">
+    <div class="st under">
+      <div class="bg" data-slot="under" data-a="y:-20vh>0vh@0-1; s:1.15>1@0-1"></div>
+      <div class="splash" aria-hidden="true" data-a="o:1>0@0-.45; y:0vh>-60vh@0-.6"></div>
+      <div class="bubbles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <!-- 05 금붕어 하강 -->
+  <section class="hs" id="h5" data-len="1.5" data-mlen="1.3" data-rm=".5" aria-label="금붕어를 따라 내려간다">
+    <div class="st deep">
+      <div class="bg" data-slot="under" data-a="o:1>0@0-.7"></div>
+      <div class="bg" data-slot="abyss" data-a="o:0>1@.2-.9"></div>
+      <div class="fishwrap" data-a="x:24vw>-6vw@0-1; y:-30vh>12vh@0-1; r:-14>-26@0-1; s:.6>.95@0-1">
+        <div class="seq fish" data-slot="fish"></div>
+        <span class="xband" aria-hidden="true"></span>
+      </div>
+      <div class="bubbles slow" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <!-- 06 X-RAY 개화 · 진우 수국 → 유성 동백 → 류현 능소화 → 태준 백합 -->
+  <section class="hs" id="h6" data-len="2.5" data-mlen="2.2" data-rm=".9" aria-label="네 송이의 꽃이 차례로 핀다">
+    <div class="st abyss">
+      <div class="bg" data-slot="abyss"></div>
+      <figure class="fl f1" data-a="o:.35>1@0-.08; o:1>.25@.3-.45; y:10vh>-14vh@0-.5; s:.7>1.05@0-.3">
+        <div class="seq" data-slot="hydrangea" data-seq="0-.24"></div><figcaption>수국 · 하진우</figcaption></figure>
+      <figure class="fl f2" data-a="o:0>1@.18-.26; o:1>.2@.5-.62; y:12vh>-12vh@.18-.68; s:.7>1@.18-.45">
+        <div class="seq" data-slot="camellia" data-seq=".2-.42"></div><figcaption>동백 · 채유성</figcaption></figure>
+      <figure class="fl f3" data-a="o:0>1@.4-.48; o:1>.2@.7-.82; y:14vh>-10vh@.4-.88; s:.7>1@.4-.65">
+        <div class="seq" data-slot="trumpet" data-seq=".42-.64"></div><figcaption>능소화 · 채류현</figcaption></figure>
+      <figure class="fl f4" data-a="o:0>1@.62-.7; y:10vh>-4vh@.62-1; s:.75>1.08@.62-1">
+        <div class="seq" data-slot="lily" data-seq=".64-.88"></div><figcaption>백합 · 문태준</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 07 흩날림과 빛 -->
+  <section class="hs" id="h7" data-len="1.25" data-mlen="1.1" data-rm=".85" aria-label="꽃잎이 흩날리고 빛이 번진다">
+    <div class="st abyss">
+      <div class="bg" data-slot="abyss"></div>
+      <img class="petal p1" data-slot="petal" alt="" data-a="x:-30vw>10vw@0-.8; y:30vh>-40vh@0-.8; s:.6>3.2@0-.8; r:-20>40@0-.8; o:0>.9@0-.15; o:.9>0@.6-.85">
+      <img class="petal p2" data-slot="petal" alt="" data-a="x:30vw>-20vw@.1-.9; y:40vh>-30vh@.1-.9; s:.4>2.6@.1-.9; r:30>-50@.1-.9; o:0>.8@.1-.25; o:.8>0@.7-.9">
+      <img class="petal p3" data-slot="petal" alt="" data-a="y:50vh>-50vh@.2-1; s:.3>1.6@.2-1; o:0>.7@.2-.35">
+      <div class="whiten" aria-hidden="true" data-a="o:0>1@.45-1"></div>
+      <div class="bubbles up" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <!-- 08 네 사람의 입구 -->
+  <section class="hs end" id="h8" data-len="1.25" data-mlen="1.4" data-rm=".5" aria-label="네 사람">
+    <div class="st people">
+      <div class="four">
+        <img data-slot="m_jinwoo" alt="하진우" style="--h:78%;--z:1">
+        <img data-slot="m_ryuhyeon" alt="채류현" style="--h:86%;--z:3">
+        <img data-slot="m_taejun" alt="문태준" style="--h:92%;--z:4">
+        <img data-slot="m_yuseong" alt="채유성" style="--h:82%;--z:2">
+      </div>
+      <div class="endtext">
+        <p class="k">I · 결락</p>
+        <h1>우리는 닿는 순간부터<br>번지고 있었다</h1>
+        <div class="cta"><a class="tbtn" href="members.html">사람 만나기 →</a><button type="button" class="tbtn ghost" data-title-play>▶ 음악 듣기</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+<button type="button" class="skip" id="skip">건너뛰기 ↓</button>
+<script src="js/home-assets.js"></script>
+<script src="js/home.js"></script>
+<script src="js/toc.js" data-page="home" data-next="1"></script>
+</body>
+</html>

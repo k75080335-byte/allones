@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GYEOLLAK 결락 — 09 PLAY · 게임 모니터 (v15 draft)</title>
+<link rel="stylesheet" href="css/v12.css">
+<link rel="stylesheet" href="css/toc.css">
+<style>
+body{background:radial-gradient(120% 90% at 50% 20%,#F4F8FD,#C9D8EC);min-height:100vh}
+.room{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:84px var(--pad) 40px}
+.wrap{width:min(92vw,1000px,calc((100svh - 230px) * 1.22));display:grid;gap:18px}
+@media (max-width:720px){.wrap{width:92vw}}
+.title{display:flex;justify-content:space-between;align-items:end;gap:16px}
+.title h1{font:400 italic clamp(40px,6vw,84px)/.9 var(--serif);color:#0E1834}
+.title p{font:500 10px/1.8 var(--mono);letter-spacing:.16em;color:#3B4A6B;text-align:right}
+/* 90년대 모니터 */
+.crt{position:relative;padding:4.2% 4.2% 9%;border-radius:22px 22px 18px 18px;
+  /* 투명 아이스블루 본체 (투명 워크맨 레퍼런스) — 안쪽 부품이 비쳐 보인다 */
+  background:linear-gradient(175deg,rgba(226,240,255,.78),rgba(178,212,246,.62) 55%,rgba(140,186,236,.7));
+  backdrop-filter:blur(6px) saturate(1.3);-webkit-backdrop-filter:blur(6px) saturate(1.3);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.55),inset 0 -10px 22px rgba(30,70,140,.18),0 50px 70px -40px rgba(20,40,90,.55)}
+.crt::before{content:"";position:absolute;inset:3% 2.6% 2%;border-radius:18px;pointer-events:none;opacity:.55;
+  background:
+   linear-gradient(90deg,transparent 7.5%,rgba(23,75,255,.35) 7.5% 7.8%,transparent 7.8% 92.2%,rgba(23,75,255,.35) 92.2% 92.5%,transparent 92.5%),
+   radial-gradient(circle at 6% 92%,rgba(255,255,255,.9) 0 1.2%,rgba(110,140,190,.6) 1.3% 2.2%,transparent 2.3%),
+   radial-gradient(circle at 94% 92%,rgba(255,255,255,.9) 0 1.2%,rgba(110,140,190,.6) 1.3% 2.2%,transparent 2.3%),
+   repeating-linear-gradient(0deg,transparent 0 9px,rgba(23,75,255,.12) 9px 10px) 0 88%/100% 10% no-repeat}
+.crt::after{content:"";position:absolute;left:0;right:0;top:0;height:48%;border-radius:22px 22px 0 0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.55),transparent)}
+.crt>*{position:relative;z-index:1}
+.bezel{position:relative;border-radius:16px;padding:2.4%;background:linear-gradient(160deg,rgba(30,52,96,.9),rgba(10,20,44,.95));box-shadow:inset 0 0 0 1px rgba(160,200,255,.35),inset 0 6px 18px rgba(0,0,0,.6)}
+.screen{position:relative;aspect-ratio:4/3;border-radius:22px/30px;overflow:hidden;background:#05070C}
+.screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#F6F8FB;opacity:0;transition:opacity .4s}
+.screen.game iframe{opacity:1}
+.screen::before{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px),radial-gradient(120% 95% at 50% 50%,transparent 62%,rgba(0,0,0,.55));mix-blend-mode:multiply}
+.screen::after{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,.12),transparent 38%);animation:flick 4s steps(60) infinite}
+@keyframes flick{50%{opacity:.85}52%{opacity:1}}
+/* 부팅 화면 */
+.boot{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4%;color:#BFD3FF;font:500 clamp(10px,1.7vw,16px)/1.6 var(--mono);letter-spacing:.14em;text-align:center;
+  background:radial-gradient(80% 70% at 50% 45%,#0D1C49,#03050B);transition:opacity .4s}
+.screen.game .boot{opacity:0;pointer-events:none}
+.boot .logo{font:400 clamp(44px,9vw,104px)/1 "Song Myung",serif;color:#E9F0FF;text-shadow:3px 0 rgba(23,75,255,.8),-2px 0 rgba(143,180,255,.5),0 0 24px rgba(120,160,255,.6)}
+.boot .sub{font-size:.8em;opacity:.7}
+.boot ol{list-style:none;display:grid;gap:.6em;margin-top:2%}
+.boot li button{all:unset;cursor:pointer;padding:.3em .8em}
+.boot li button:focus-visible,.boot li button:hover,.boot li button.sel{background:#174BFF;color:#fff}
+.boot li button[disabled]{opacity:.4;cursor:default;background:none}
+.blink{animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+.power-on{animation:on .9s ease-out both}
+@keyframes on{0%{transform:scale(1,.004);filter:brightness(4)}40%{transform:scale(1,.004)}70%{transform:scale(1,1);filter:brightness(2)}100%{filter:none}}
+/* 하단 조작부 */
+.ctrl{position:absolute;left:5%;right:5%;bottom:2.6%;display:flex;align-items:center;gap:12px;font:500 9.5px/1 var(--mono);letter-spacing:.16em;color:#1E3566}
+.ctrl .led{width:8px;height:8px;border-radius:50%;background:rgba(20,40,80,.4);box-shadow:inset 0 1px 1px rgba(0,0,0,.5)}
+.ctrl .led.on{background:#8FB4FF;box-shadow:0 0 10px #5C8DFF}
+.ctrl button{all:unset;cursor:pointer;padding:8px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.7);background:linear-gradient(rgba(255,255,255,.75),rgba(200,224,250,.6));color:#0E1834;min-height:20px}
+.ctrl button[aria-pressed="true"]{background:#174BFF;color:#fff;border-color:#174BFF}
+.ctrl .brand{margin-left:auto}
+.notes{display:flex;justify-content:space-between;gap:16px;font:500 9.5px/1.8 var(--mono);letter-spacing:.14em;color:#3B4A6B}
+@media (max-width:720px){.title{flex-direction:column;align-items:start}.title p{text-align:left}.ctrl{gap:6px}.ctrl .brand{display:none}.notes{flex-direction:column}}
+</style>
+</head>
+<body>
+<main class="room">
+  <div class="wrap">
+    <div class="title"><h1>Play.</h1><p>V · 놀이 — GYEOLLAK POCKET<br>CRT · 4:3 · 1998 MODE<br>BGM: ORIGINAL CHIPTUNE</p></div>
+    <div class="crt">
+      <div class="bezel"><div class="screen" id="scr">
+        <div class="boot" id="boot">
+          <div class="logo">결락</div>
+          <div class="sub">GYEOLLAK POCKET · v0.2</div>
+          <ol role="menu" aria-label="게임 선택">
+            <li><button type="button" class="sel" data-g="room" role="menuitem">▶ POCKET ROOM · 방 꾸미기</button></li>
+            <li><button type="button" disabled role="menuitem">— 16-BIT 결락 · COMING SOON</button></li>
+          </ol>
+          <div class="blink">PRESS START</div>
+        </div>
+        <iframe id="game" title="결락 포켓 미니룸" data-src="../pocket/index.html?embed=1#room"></iframe>
+      </div></div>
+      <div class="ctrl">
+        <i class="led" id="led"></i><span>POWER</span>
+        <button type="button" id="bgm" aria-pressed="false">♪ BGM</button>
+        <button type="button" id="menu">MENU</button>
+        <span class="brand">GYL-98 · TRINITRON-ISH</span>
+      </div>
+    </div>
+    <div class="notes"><span>클릭/엔터 = START · MENU = 처음 화면 · ♪ = 배경음 켜기/끄기</span><span>BGM은 90년대 게임기 소리(사각파·삼각파·노이즈)로 새로 만든 곡</span></div>
+  </div>
+</main>
+<script>
+(() => {
+  const scr = document.getElementById('scr'), boot = document.getElementById('boot'), fr = document.getElementById('game');
+  const led = document.getElementById('led'), bgmBtn = document.getElementById('bgm');
+  let on = false;
+  function power() { if (on) return; on = true; led.classList.add('on'); scr.classList.add('power-on'); }
+  function start(g) { power(); if (!fr.src) fr.src = fr.dataset.src; scr.classList.add('game'); fr.focus(); if (!bgm.playing) toggle(true); }
+  boot.querySelectorAll('button[data-g]').forEach(b => b.addEventListener('click', () => start(b.dataset.g)));
+  boot.addEventListener('click', e => { if (!e.target.closest('button')) start('room'); });
+  addEventListener('keydown', e => { if (e.key === 'Enter' && !scr.classList.contains('game')) start('room'); });
+  document.getElementById('menu').onclick = () => { power(); scr.classList.remove('game'); };
+
+  /* ── 90s 칩튠 BGM (원곡, Web Audio로 실시간 합성) ── */
+  const bgm = { playing: false, ctx: null, timer: 0, step: 0, next: 0, gain: null };
+  const N = n => 440 * Math.pow(2, (n - 69) / 12);
+  // A단조 · 템포 132 · 16스텝 x 4마디 반복 (비 오는 날 오락실 느낌)
+  const LEAD = [69,0,72,0,76,0,74,72, 71,0,69,0,71,72,74,0, 72,0,76,0,79,0,77,76, 74,0,72,0,71,0,69,0,
+                69,0,72,0,76,0,81,79, 77,0,76,0,74,0,72,74, 76,0,74,72,71,0,72,71, 69,0,0,0,64,0,0,0];
+  const BASS = [45,45,57,45,45,45,57,45, 41,41,53,41,41,41,53,41, 48,48,60,48,48,48,60,48, 43,43,55,43,40,40,52,40];
+  const ARP = [[57,60,64],[53,57,60],[48,52,55],[55,59,62]];
+  function tone(type, f, t, d, v, ctx) {
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .005); g.gain.exponentialRampToValueAtTime(.0008, t + d);
+    o.connect(g); g.connect(bgm.gain); o.start(t); o.stop(t + d + .02);
+  }
+  function noise(t, d, v, ctx) {
+    const b = ctx.createBuffer(1, ctx.sampleRate * d, ctx.sampleRate), x = b.getChannelData(0); for (let i = 0; i < x.length; i++) x[i] = Math.random() * 2 - 1;
+    const s = ctx.createBufferSource(), g = ctx.createGain(), hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 6000;
+    s.buffer = b; g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + d); s.connect(hp); hp.connect(g); g.connect(bgm.gain); s.start(t);
+  }
+  function sched() {
+    const ctx = bgm.ctx, st = 60 / 132 / 4;
+    while (bgm.next < ctx.currentTime + .15) {
+      const i = bgm.step, t = bgm.next, bar = Math.floor(i / 16) % 4;
+      const ln = LEAD[i % 64]; if (ln) tone('square', N(ln), t, st * 1.8, .055, ctx);
+      if (i % 2 === 0) tone('triangle', N(BASS[(i / 2) % 32]), t, st * 1.9, .16, ctx);
+      const ar = ARP[bar]; tone('square', N(ar[i % 3] + 12), t, st * .6, .018, ctx);
+      if (i % 4 === 2) noise(t, .04, .05, ctx); if (i % 8 === 4) noise(t, .12, .09, ctx);
+      bgm.step++; bgm.next += st;
+    }
+  }
+  function toggle(force) {
+    const want = force ?? !bgm.playing;
+    if (want) {
+      if (!bgm.ctx) { bgm.ctx = new (window.AudioContext || window.webkitAudioContext)(); bgm.gain = bgm.ctx.createGain(); bgm.gain.gain.value = .5; bgm.gain.connect(bgm.ctx.destination); }
+      window.dispatchEvent(new CustomEvent('gy:bgm'));
+      bgm.ctx.resume(); bgm.next = bgm.ctx.currentTime + .05; bgm.timer = setInterval(sched, 40); bgm.playing = true;
+    } else { clearInterval(bgm.timer); bgm.ctx && bgm.ctx.suspend(); bgm.playing = false; }
+    bgmBtn.setAttribute('aria-pressed', bgm.playing);
+  }
+  bgmBtn.onclick = () => { power(); toggle(); };
+  addEventListener('gy:music', () => { if (bgm.playing) toggle(false); });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && bgm.playing) toggle(false); });
+})();
+</script>
+<script src="js/toc.js" data-page="play" data-next="1"></script>
+</body>
+</html>
