@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>결락 GYEOLLAK — 스크롤 레퍼런스 시안 v2</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body data-tone="light">
+<header class="hd">
+  <a class="brand" href="#s1" data-go="0"><b>결락</b><span>GYEOLLAK</span></a>
+  <nav aria-label="홈 안에서 이동">
+    <a href="#s1" data-go="0">하늘</a><a class="x" href="#s3" data-go="2">바다</a><a href="#s6" data-go="5">꽃</a><a href="#s8" data-go="7">사람</a><a href="people.html">II 사람 →</a>
+  </nav>
+</header>
+<div class="cnt" id="cnt" aria-live="polite"><b id="cntN">01</b><span>/ 08</span><em id="cntT">하늘</em></div>
+<div class="refbadge">레퍼런스 시안 v2 · v15 반영 전</div>
+
+<div id="stage">
+  <!-- I 하늘 -->
+  <section class="ch" id="c1" data-tone="light" data-t="하늘" style="--bg:var(--white)">
+    <div class="markwrap" id="mark"><img src="../../../v15/img/v12/logo_base.png" alt="결락 로고 결"><img id="markI" src="../../../v15/img/v12/logo_i.png" alt=""></div>
+    <div class="topk k">GYEOLLAK — 結落 / 缺落</div>
+    <div class="hl l"><span class="k">01 — 하늘 · SKY</span><h2>결의 끝에서<br>한 방울이 맺힌다.</h2><p>스크롤을 내리면 방울이 떨어지고, 뒤로 1px 실이 그려진다.</p></div>
+    <div class="cue k" id="cue">SCROLL<i></i></div>
+  </section>
+  <!-- II 낙하 -->
+  <section class="ch" id="c2" data-tone="light" data-t="낙하" style="--bg:var(--pastel)">
+    <div class="speed" id="speed"></div>
+    <svg class="num" data-n="02"></svg>
+    <div class="hl l"><span class="k">02 — 낙하 · DROP</span><h2>한 방울이<br>떨어져 나간다.</h2></div>
+  </section>
+  <!-- III 바다 -->
+  <section class="ch" id="c3" data-tone="dark" data-t="바다" style="--bg:var(--cobalt)">
+    <div class="hz" id="hz"><i></i><i></i><i></i></div>
+    <svg class="num" data-n="03"></svg>
+    <div class="hl r"><span class="k">03 — 바다 · SEA</span><h2>닿는 순간,<br>번지기 시작한다.</h2></div>
+  </section>
+  <!-- IV 수면 아래 -->
+  <section class="ch" id="c4" data-tone="dark" data-t="수면 아래" style="--bg:var(--navy)">
+    <div class="bub" id="bub"></div>
+    <svg class="num" data-n="04"></svg>
+    <div class="hl l"><span class="k">04 — 수면 아래 · UNDER</span><h2>소리가 먼저 사라지고,<br>빛이 남는다.</h2></div>
+  </section>
+  <!-- V 금붕어 -->
+  <section class="ch" id="c5" data-tone="dark" data-t="금붕어" style="--bg:var(--ink)">
+    <svg class="num" data-n="05"></svg>
+    <div class="sphere" id="sph"><i class="glow"></i><img id="fishImg" src="../../../v15/img/home/test/drop/000.webp" alt="물방울 속 은백색 금붕어"></div>
+    <div class="hl r"><span class="k">05 — 금붕어 · GOLDFISH</span><h2>방울 안에서,<br>무언가 헤엄친다.</h2><p><span class="tag test">그록 테스트 droplet.mp4 · 검수 전</span></p></div>
+  </section>
+  <!-- VI 꽃 -->
+  <section class="ch" id="c6" data-tone="light" data-t="꽃" style="--bg:var(--white)">
+    <div id="flowers"></div>
+    <div class="steps k" id="steps"></div>
+  </section>
+  <!-- VII 빛 -->
+  <section class="ch" id="c7" data-tone="light" data-t="빛" style="--bg:var(--sky)">
+    <svg class="num" data-n="07"></svg>
+    <div class="conv" id="conv"><i></i><i></i><i></i><i></i><b id="core"></b></div>
+    <div class="whiten" id="whiten"></div>
+    <div class="hl r"><span class="k">07 — 빛 · LIGHT</span><h2>흩어진 것들이<br>한 곳으로 모인다.</h2></div>
+  </section>
+  <!-- VIII 사람 -->
+  <section class="ch" id="c8" data-tone="light" data-t="사람 · 네 사람의 입구" style="--bg:#DCE5EE">
+    <div class="plate" id="plate">
+      <img id="plBg" src="assets/home08/bg_16x9.webp" alt="흰 정장의 네 사람이 들판에 서 있다">
+      <div class="giant" id="giant" aria-hidden="true">GYEOLLAK</div>
+      <img id="plMem" src="assets/home08/members_16x9.webp" alt="" aria-hidden="true">
+      <svg class="branches" id="branches" preserveAspectRatio="none"></svg>
+      <div id="tags"></div>
+    </div>
+    <div class="topk k dk" id="k8">08 — 사람 · 네 사람의 입구</div>
+    <p class="final" id="fin">우리는 닿는 순간부터<br>번지고 있었다</p>
+    <div class="endcta" id="endcta">
+      <small>선을 따라 한 사람을 누르면 개인 프로필로</small>
+      <a class="btn pri" href="people.html">II 사람으로 들어가기 <span>→</span></a>
+    </div>
+  </section>
+</div>
+
+<svg id="thread" aria-hidden="true"><path id="pD"/></svg>
+<div id="drop" aria-hidden="true"><svg viewBox="0 0 18 24"><defs>
+  <radialGradient id="dg" cx="38%" cy="62%" r="70%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#DCEFFB"/><stop offset="1" stop-color="#9FD8F5"/></radialGradient></defs>
+  <path d="M9 .8C9 .8 1.6 10.4 1.6 15.4a7.4 7.4 0 0 0 14.8 0C16.4 10.4 9 .8 9 .8Z" fill="url(#dg)" stroke="#174BFF" stroke-width="1"/>
+  <ellipse cx="6.4" cy="15.2" rx="1.5" ry="2.4" fill="#fff" opacity=".9"/></svg></div>
+<div id="rings" aria-hidden="true"><i></i><i></i></div>
+<nav id="rail" aria-label="챕터 진행"><div class="tr"></div><div class="fill" id="railFill"></div></nav>
+
+<main id="track">
+  <section id="s1" data-len="1.3" aria-label="01 하늘"></section>
+  <section id="s2" data-len="1.3" aria-label="02 낙하"></section>
+  <section id="s3" data-len="1.3" aria-label="03 바다"></section>
+  <section id="s4" data-len="1.2" aria-label="04 수면 아래"></section>
+  <section id="s5" data-len="1.4" aria-label="05 금붕어"></section>
+  <section id="s6" data-len="4.4" aria-label="06 꽃"></section>
+  <section id="s7" data-len="1.3" aria-label="07 빛"></section>
+  <section id="s8" data-len="3.2" aria-label="08 사람"></section>
+</main>
+<footer class="ft">
+  <div class="ftbig"><span class="k">NEXT — II 사람</span><a href="people.html">네 사람의 입구 <em>→</em></a></div>
+  <div class="ftcols">
+    <div><h3>이 시안에서 보는 것</h3>
+      <p>결의 ㅣ 끝에서 물방울이 떨어지고, 뒤로 1px 코발트 실이 그려진다. 장면마다 물방울이 닿는 자리에서 원형 마스크로 다음 장면이 열리고, 큰 숫자 위를 지날 때는 방울이 렌즈처럼 숫자를 번지게 한다. 오른쪽 I–VIII 레일은 같은 실의 진행도.</p></div>
+    <div><h3>소스 상태</h3><ul>
+      <li>결 로고 · 흰 정장 네 사람(home08 v2) · 멤버 프로필 사진 — 실제 소스</li>
+      <li>05 금붕어 방울 · 백합 개화 — 그록 테스트 소스 <span class="tag test">검수 전</span></li>
+      <li>수국 · 동백 · 능소화 꽃 이미지 — 아직 없음 <span class="tag">꽃 소스 준비 중</span></li></ul></div>
+    <div><h3>이동</h3><ul><li><a href="people.html">II 사람 · 멤버 선택 →</a></li><li><a href="profile.html?m=yuseong">개인 프로필 시안 →</a></li><li><a href="../scroll-ref-v1/">이전 시안 v1 →</a></li></ul></div>
+  </div>
+</footer>
+<script src="js/members-data.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>결락 GYEOLLAK — II 사람 · 멤버 선택 (레퍼런스 시안 v2)</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body class="pg" data-tone="dark">
+<header class="hd">
+  <a class="brand" href="index.html"><b>결락</b><span>GYEOLLAK</span></a>
+  <nav aria-label="사이트"><a href="index.html">I 결락</a><a class="on" href="people.html">II 사람</a><a class="x" href="../../../v15/music.html">III 음악</a></nav>
+</header>
+<div class="refbadge">레퍼런스 시안 v2 · II 사람</div>
+<section class="sel" id="sel" aria-roledescription="carousel" aria-label="네 사람">
+  <div class="bigname" id="bnA" aria-hidden="true"></div>
+  <svg class="thr" id="thr" aria-hidden="true"><path id="thp"/></svg>
+  <div class="drop14" id="pdrop" aria-hidden="true"></div>
+  <div class="car" id="car"></div>
+  <div class="bigname out" id="bnB" aria-hidden="true"></div>
+  <div class="selhd"><span class="k">II — 사람 · PEOPLE</span><h1>네 사람의 입구</h1></div>
+  <div class="selno"><b id="nA">01</b><span>/ 04</span></div>
+  <div class="info" id="info"></div>
+  <div class="nav"><button type="button" id="prev" aria-label="이전 멤버">←</button><div class="dots" id="dots"></div><button type="button" id="next" aria-label="다음 멤버">→</button></div>
+  <p class="tip k">← → · 옆으로 밀기 · 가운데 사람을 누르면 프로필</p>
+</section>
+<script src="js/members-data.js"></script>
+<script>
+(() => {
+const M = GY_M, RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = s => document.getElementById(s);
+let c = +(new URLSearchParams(location.search).get('i') || 0) % 4;
+const car = $('car');
+$('pdrop').innerHTML = GY_DROP('p');
+car.innerHTML = M.map((m, i) => `<a class="it" data-i="${i}" href="profile.html?m=${m.id}" aria-label="${m.kr} 프로필"><img src="assets/cut/${m.id}_white.webp" alt="${m.kr} 흰 정장"></a>`).join('');
+$('dots').innerHTML = M.map(() => '<i></i>').join('');
+const its = [...car.children], dots = [...document.querySelectorAll('#dots i')];
+function lay(anim) {
+  const vw = innerWidth, vh = innerHeight, mob = vw < 760, m = M[c];
+  document.body.style.setProperty('--field', m.field); document.body.dataset.tone = m.tone;
+  its.forEach((el, i) => {
+    let d = (i - c + 4) % 4; if (d === 3) d = -1;
+    const img = el.querySelector('img');
+    const H = (d === 0 ? (mob ? .52 : .66) : (mob ? .4 : .42)) * vh * M[i].cm / 195;
+    img.style.height = H + 'px';
+    const off = d === 0 ? 0 : d * (mob ? 44 : 30) * vw / 100;
+    el.style.transform = `translateX(calc(-50% + ${off}px))`;
+    el.classList.toggle('c', d === 0);
+    el.style.opacity = d === 0 ? 1 : d === 2 ? 0 : (mob ? .7 : .55);
+    el.style.zIndex = d === 0 ? 3 : 1; el.style.filter = d === 0 ? 'none' : 'saturate(.6)';
+    el.setAttribute('aria-hidden', d === 2); el.tabIndex = d === 2 ? -1 : 0;
+  });
+  dots.forEach((x, i) => x.classList.toggle('on', i === c));
+  $('nA').textContent = m.no;
+  ['bnA', 'bnB'].forEach(k => { const e = $(k); e.textContent = m.first; e.style.fontSize = ''; const avail = vw * (mob ? .98 : .94), w = e.scrollWidth; if (w > avail) e.style.fontSize = (parseFloat(getComputedStyle(e).fontSize) * avail / w) + 'px'; });
+  $('info').innerHTML = `<span class="k">${m.no} — ${m.role}</span><h2>${m.kr}</h2><p>${m.cm}cm · ${m.flower} ${m.fk} · ${m.animal}</p><a class="btn pri" href="profile.html?m=${m.id}">프로필 보기 <span>→</span></a>`;
+  // 실: 화면 위에서 가운데 사람 머리 위 물방울까지
+  const H = (mob ? .52 : .66) * vh * m.cm / 195, bottom = mob ? vh * .25 : vh * .06;
+  const hx = vw / 2, hy = vh - bottom - H - 10;
+  const p = $('thp'); p.setAttribute('d', `M${vw * .5 + 50} 0 C ${vw * .5 + 70} ${hy * .4}, ${hx - 40} ${hy * .7}, ${hx} ${hy}`);
+  const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.transition = 'none'; p.style.strokeDashoffset = RM ? 0 : L;
+  requestAnimationFrame(() => requestAnimationFrame(() => { p.style.transition = 'stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)'; p.style.strokeDashoffset = 0; }));
+  const dr = $('pdrop'); dr.style.left = hx + 'px'; dr.style.top = hy + 'px';
+  car.style.bottom = bottom + 'px';
+}
+const go = n => { c = (n + 4) % 4; lay(true); };
+$('prev').onclick = () => go(c - 1); $('next').onclick = () => go(c + 1);
+addEventListener('keydown', e => { if (e.key === 'ArrowLeft') go(c - 1); if (e.key === 'ArrowRight') go(c + 1); });
+its.forEach((el, i) => el.addEventListener('click', e => { if (moved) { e.preventDefault(); return; } if (i !== c) { e.preventDefault(); go(i); } }));
+let sx = null, moved = false;
+car.addEventListener('pointerdown', e => { sx = e.clientX; moved = false; });
+car.addEventListener('pointermove', e => { if (sx != null && Math.abs(e.clientX - sx) > 10) moved = true; });
+car.addEventListener('pointerup', e => { if (sx == null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) go(c + (dx < 0 ? 1 : -1)); setTimeout(() => moved = false, 0); });
+addEventListener('resize', () => lay()); if (document.fonts) document.fonts.ready.then(() => lay()); lay();
+})();
+</script>
+</body>
+</html>
