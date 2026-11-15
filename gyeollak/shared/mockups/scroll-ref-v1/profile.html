@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>결락 GYEOLLAK — 개인 프로필 (레퍼런스 시안 v1)</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="css/ref.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body class="pg">
+<header class="hd">
+  <a class="brand" href="index.html"><b>결락</b><span>GYEOLLAK</span></a>
+  <nav aria-label="프로필 안에서 이동"><a href="#top">PROFILE</a><a href="#details">DETAILS</a><a href="#style">STYLE 360°</a></nav>
+</header>
+<div class="refbadge">REFERENCE MOCKUP v1 · PROFILE</div>
+
+<section class="ph-hero" id="top">
+  <div class="top"><span id="kk">04 / PROFILE</span><a href="people.html" id="back">II 사람</a></div>
+  <div class="bgno" id="bgno" aria-hidden="true">04</div>
+  <div class="bigname thin" id="bn1" aria-hidden="true"></div>
+  <svg class="thr" id="thr" aria-hidden="true"><path id="thp"/></svg>
+  <div class="drop14" id="pdrop" aria-hidden="true"><svg viewBox="0 0 18 24"><defs><radialGradient id="dg4" cx="38%" cy="62%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#DCEFFB"/><stop offset="1" stop-color="#9FD8F5"/></radialGradient></defs><path d="M9 .8C9 .8 1.6 10.4 1.6 15.4a7.4 7.4 0 0 0 14.8 0C16.4 10.4 9 .8 9 .8Z" fill="url(#dg4)" stroke="#174BFF" stroke-width="1"/><ellipse cx="6.4" cy="15.2" rx="1.5" ry="2.4" fill="#fff" opacity=".9"/></svg></div>
+  <div class="figbox" id="figbox" tabindex="0" role="button" aria-label="누르면 스펙 선 보기">
+    <img id="fig" alt="">
+    <svg class="spec" id="spec" aria-hidden="true"></svg>
+    <div class="labs" id="labs" aria-hidden="true"></div>
+  </div>
+  <div class="bigname thin front" id="bn2" aria-hidden="true"></div>
+  <aside class="side">
+    <div class="kn"><h1 id="kr" style="font:inherit">하진우</h1><button type="button" class="plus" id="plus" aria-label="스펙 선 보기" aria-pressed="false">+</button></div>
+    <p class="role" id="role"></p>
+    <p class="copy" id="copy"></p>
+    <p class="qt" id="qt"></p>
+    <dl class="tbl" id="tbl"></dl>
+    <div class="mini"><span class="flc"><img id="flimg" alt=""></span><p id="flp"></p>
+      <a class="kr" id="kring" href="../../../v15/objects.html" title="키링"><img id="krimg" alt=""><span>KEYRING</span></a></div>
+  </aside>
+  <nav class="mtabs" id="mtabs" aria-label="멤버 바꾸기"></nav>
+</section>
+
+<section class="det" id="details">
+  <div class="rv">
+    <div class="hd2"><span class="k" id="dk">02 / DETAILS</span><h2 id="dkr">하진우</h2><p>작은 취향부터 오래된 이야기까지.</p></div>
+    <div class="menu" id="menu"></div>
+  </div>
+  <figure class="cluster rv" id="cluster">
+    <div class="fr a" data-s="-.06"><img data-s=".05" alt=""></div>
+    <div class="fr p" data-s=".1"><img data-s="-.04" alt=""></div>
+    <div class="fr r" data-s="-.16"><img data-s=".06" alt=""></div>
+    <figcaption id="ccap">PROFILE PHOTOS · 3</figcaption>
+  </figure>
+</section>
+
+<section class="sty" id="style">
+  <div class="stage" id="stage" tabindex="0" aria-label="옷 · 360도 보기. 왼쪽 오른쪽 화살표로 바꾸기">
+    <img id="sfig" alt="">
+    <span class="floor" aria-hidden="true"></span><span class="ring360" id="ring" aria-hidden="true"><i id="ringDot"></i></span>
+    <div class="wait" id="swait" hidden>360° 준비 중<br>실제 턴어라운드 컷이 생기면 열림</div>
+  </div>
+  <div class="rv">
+    <span class="k">03 / STYLE · 옷</span>
+    <h2 class="thin">Style 360°</h2>
+    <p class="lead">옷 입는 스타일은 프로필과 따로. 옆으로 밀면 옷이 바뀌고, 360°를 고르면 끌어서 돌려 볼 수 있어.</p>
+    <div class="ctl" id="outfits" role="group" aria-label="옷"></div>
+    <div class="ctl" id="turns" role="group" aria-label="360도"></div>
+    <p class="angle" id="angle"></p>
+    <p class="note" id="snote"></p>
+  </div>
+</section>
+
+<footer class="pft">
+  <div class="marq" aria-hidden="true"><div>우리는 닿는 순간부터 번지고 있었다 · </div><div>우리는 닿는 순간부터 번지고 있었다 · </div></div>
+  <div class="in"><a id="prevM" href="#">←</a><p>GYEOLLAK · PROFILE STUDY · REFERENCE ONLY<br>대체 · 테스트 소스는 화면에 표시</p><a id="nextM" href="#">→</a></div>
+</footer>
+<script src="js/members-data.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>
