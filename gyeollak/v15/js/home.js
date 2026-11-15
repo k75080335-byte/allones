@@ -6,7 +6,9 @@
    - 반복 움직임(물결·기포)은 CSS, 진행형 전환(낙하·확대·개화)은 스크롤 */
 (() => {
   'use strict';
-  const A = window.GY_HOME || {};
+  const SRC_PH = /[?&]src=ph/.test(location.search);
+  const A0 = window.GY_HOME || {}, A = {};
+  Object.keys(A0).forEach(k => { A[k] = SRC_PH && A0[k].ph ? A0[k].ph : A0[k]; });
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches || /[?&]still/.test(location.search);
   const PUBLIC = /[?&]public/.test(location.search);
   const mob = () => innerWidth <= 760;
@@ -20,10 +22,16 @@
   document.querySelectorAll('[data-slot]').forEach(el => {
     const k = el.dataset.slot, s = A[k]; if (!s) return;
     const sec = el.closest('.hs'); if (sec) { if (!used.has(sec)) used.set(sec, new Set()); used.get(sec).add(k); }
-    if (s.blend && !el.classList.contains('seq')) el.style.mixBlendMode = s.blend;
+    if (s.blend && !el.closest('.fl,.fishwrap')) el.style.mixBlendMode = s.blend;
     if (el.classList.contains('seq')) {
-      const fr = s.frames || [s.src]; el._fr = fr.map(src => { const im = new Image(); im.decoding = 'async'; im.src = src; im.alt = ''; el.appendChild(im); return im; });
-      el._fr.forEach((im, i) => im.style.opacity = i ? 0 : 1);
+      const fr = s.frames || [s.src];
+      if (fr.length > 4) { // 긴 연속 프레임 → 캔버스 (장면이 가까워지면 불러옴)
+        const c = document.createElement('canvas'); el.appendChild(c); el._cv = c; el._srcs = fr; el._imgs = null; el._k = 0;
+        const poster = new Image(); poster.src = fr[0]; poster.onload = () => drawSeq(el); el._poster = poster;
+      } else {
+        el._fr = fr.map(src => { const im = new Image(); im.decoding = 'async'; im.src = src; im.alt = ''; el.appendChild(im); return im; });
+        el._fr.forEach((im, i) => im.style.opacity = i ? 0 : 1);
+      }
     } else if (s.video && !RM) {
       const v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; v.poster = s.src || ''; v.src = s.video; v.setAttribute('aria-hidden', 'true');
       v.className = el.className; el.replaceWith(v); v.dataset.a = el.dataset.a || ''; v.dataset.vid = '1';
@@ -35,7 +43,7 @@
     const list = [...set].map(k => A[k]).filter(s => s.status !== 'approved');
     if (!list.length) return;
     const t = document.createElement('div'); t.className = 'ph-tag';
-    t.innerHTML = list.map(s => `<span class="${s.status}">${s.status === 'placeholder' ? '대체' : '임시'} · ${s.note}</span>`).join('');
+    t.innerHTML = list.map(s => `<span class="${s.status}">${({ placeholder: '대체', interim: '임시', test: '테스트' })[s.status] || s.status} · ${s.note}</span>`).join('');
     (sec.querySelector('.st') || sec).appendChild(t);
   });
 
@@ -72,7 +80,22 @@
       if (!CSS.supports('height', '1svh')) S.el.style.height = RM ? 'auto' : (L * innerHeight) + 'px';
     });
   }
+  function loadSeq(l) { if (l._imgs || !l._srcs) return; l._imgs = l._srcs.map((src, i) => { const im = new Image(); im.decoding = 'async'; im.src = src; im.onload = () => { if (Math.abs(i - l._k) < 1.5) drawSeq(l); }; return im; }); }
+  function drawSeq(l) {
+    const c = l._cv, W = l.clientWidth, H = l.clientHeight; if (!W || !H) return;
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    if (c.width !== Math.round(W * dpr)) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); }
+    const x = c.getContext('2d'); x.clearRect(0, 0, c.width, c.height);
+    const n = l._srcs.length, k = clamp(l._k, 0, n - 1), i0 = Math.floor(k), f = k - i0;
+    const get = i => (l._imgs && l._imgs[i] && l._imgs[i].complete && l._imgs[i].naturalWidth) ? l._imgs[i] : (i === 0 && l._poster.complete ? l._poster : null);
+    let a = get(i0); if (!a) { for (let j = i0; j >= 0 && !a; j--) a = get(j); } if (!a) return;
+    const b = f > .02 ? get(Math.min(n - 1, i0 + 1)) : null;
+    const sc = Math.min(c.width / a.naturalWidth, c.height / a.naturalHeight), w = a.naturalWidth * sc, h = a.naturalHeight * sc, ox = (c.width - w) / 2, oy = (c.height - h) / 2;
+    x.globalAlpha = 1; x.drawImage(a, ox, oy, w, h);
+    if (b) { x.globalAlpha = f; x.drawImage(b, ox, oy, w, h); x.globalAlpha = 1; }
+  }
   function setSeq(l, sr, p) {
+    if (l._cv) { const k = clamp((p - sr[0]) / ((sr[1] - sr[0]) || 1), 0, 1) * (l._srcs.length - 1); if (Math.abs(k - l._k) > .01 || !l._drawn) { l._k = k; drawSeq(l); l._drawn = 1; } return; }
     if (!l._fr) return;
     const k = clamp((p - sr[0]) / ((sr[1] - sr[0]) || 1), 0, 1) * (l._fr.length - 1);
     l._fr.forEach((im, i) => im.style.opacity = clamp(1 - Math.abs(k - i), 0, 1));
@@ -113,7 +136,7 @@
         S.st.style.setProperty('--z', i + 1);
       }
       S.el.classList.toggle('near', near);
-      if (near || RM) apply(S, prog(S));
+      if (near || RM) { S.el.querySelectorAll('.seq').forEach(l => l._cv && loadSeq(l)); apply(S, prog(S)); }
       S.vids.forEach(v => { if (near && v.paused) v.play().catch(() => {}); else if (!near && !v.paused) v.pause(); });
     });
     const cur = secs.findIndex(S => { const r = S.el.getBoundingClientRect(); return r.top <= innerHeight * .5 && r.bottom > innerHeight * .5; });
@@ -122,7 +145,7 @@
   }
   const req = () => { if (!raf) raf = requestAnimationFrame(frame); };
   addEventListener('scroll', req, { passive: true });
-  addEventListener('resize', () => { size(); req(); });
+  addEventListener('resize', () => { size(); document.querySelectorAll('.seq').forEach(l => { if (l._cv) { l._drawn = 0; } }); req(); });
 
   /* ── 건너뛰기 · 타이틀 듣기 ── */
   const skip = document.getElementById('skip');

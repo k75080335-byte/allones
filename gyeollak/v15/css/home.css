@@ -33,7 +33,8 @@ body.rm .hs .st{position:relative;opacity:1;visibility:visible}
 /* 02 응결 · 낙하 */
 .ink{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,24,52,0),rgba(14,24,52,.55) 70%,#0E1834)}
 .stroke{position:absolute;left:50%;top:22%;width:6px;height:28vh;translate:-50% 0;border-radius:6px;background:linear-gradient(#24324F,#0E1834);transform-origin:50% 100%}
-.drop{position:absolute;left:50%;top:22%;width:min(30vw,40vh,340px);translate:-50% -50%;mix-blend-mode:screen}
+.seq.dropseq{position:absolute;inset:auto;left:50%;top:50%;height:78vh;height:78svh;aspect-ratio:600/725;width:auto;translate:-50% -50%}
+.seq canvas{position:absolute;inset:0;width:100%;height:100%}
 .line{position:absolute;left:var(--pad);bottom:22vh;z-index:3;font:400 clamp(22px,2.4vw,34px)/1.3 var(--kr);color:#EAF1FB}
 
 /* 03 바다 필름 */
@@ -75,7 +76,7 @@ body.rm .hs .st{position:relative;opacity:1;visibility:visible}
 .f1{left:4%;top:8%;width:min(56vw,72vh)}
 .f2{right:2%;top:16%;width:min(48vw,62vh)}
 .f3{left:14%;top:4%;width:min(38vw,50vh)}
-.f4{left:50%;top:50%;width:min(70vw,90vh);translate:-50% -50%}
+.f4{left:50%;top:50%;width:min(86vw,118vh);aspect-ratio:960/725;translate:-50% -50%}
 
 /* 07 꽃잎 · 빛 */
 .petal{position:absolute;left:50%;top:50%;width:min(40vw,520px);translate:-50% -50%;mix-blend-mode:screen}
@@ -95,6 +96,7 @@ body.rm .hs .st{position:relative;opacity:1;visibility:visible}
 .ph-tag{display:none}
 body.review .ph-tag{display:flex;flex-direction:column;gap:4px;position:absolute;left:var(--pad);bottom:clamp(92px,12vh,120px);z-index:20;max-width:min(520px,70vw);pointer-events:none}
 .ph-tag span{align-self:flex-start;font:500 9px/1.4 var(--mono);letter-spacing:.06em;padding:4px 8px;border-radius:6px;background:rgba(255,236,150,.92);color:#3A2F00}
+.ph-tag span.test{background:rgba(160,200,255,.95);color:#0B1D44}
 .ph-tag span.interim{background:rgba(255,255,255,.85);color:#24324F}
 #h1 .ph-tag,#h8 .ph-tag{bottom:auto;top:120px;left:auto;right:var(--pad);align-items:flex-end}
 #h1 .ph-tag span,#h8 .ph-tag span{align-self:flex-end}
@@ -107,11 +109,11 @@ body.review .ph-tag{display:flex;flex-direction:column;gap:4px;position:absolute
 @media (max-width:760px){
   .markwrap{width:min(56vw,40vh);top:44%}
   .cap.br{left:var(--pad);right:var(--pad);justify-content:flex-start;bottom:96px}
-  .drop{width:min(56vw,40vh)}
+  .seq.dropseq{height:56vh;height:56svh;top:44%}
   .fishwrap{width:92vw}
   .film{clip-path:inset(calc((1 - var(--k))*34%) calc((1 - var(--k))*5%) round calc((1 - var(--k))*6px))}
   .film::after{inset:calc((1 - var(--k))*34%) calc((1 - var(--k))*5%)}
-  .f1{left:-8%;top:6%;width:88vw}.f2{right:-10%;top:20%;width:78vw}.f3{left:4%;top:4%;width:64vw}.f4{width:110vw}
+  .f1{left:-8%;top:6%;width:88vw}.f2{right:-10%;top:20%;width:78vw}.f3{left:4%;top:4%;width:64vw}.f4{width:118vw}
   .petal{width:70vw}
   .four{height:50%}
   .four img{margin:0 -9vw}
