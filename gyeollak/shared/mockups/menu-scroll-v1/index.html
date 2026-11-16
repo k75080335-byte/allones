@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>결락 結落 — The Afterimage Edition · 메뉴 스크롤 v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&family=Nanum+Myeongjo:wght@400;700;800&family=Instrument+Serif:ital@0;1&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-ui="light" data-top="light">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022 0.05" numOctaves="3" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.006 0.3" numOctaves="2" seed="2" result="g"/>
+    <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.6 2.25" result="dry"/>
+    <feComposite in="d" in2="dry" operator="in"/>
+  </filter>
+  <filter id="paperfiber"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.18" numOctaves="2" seed="4"/><feColorMatrix type="saturate" values="0"/></filter>
+</svg>
+
+<canvas id="stage" aria-hidden="true"></canvas>
+<canvas id="cursor" aria-hidden="true"></canvas>
+<div id="grain" aria-hidden="true"></div>
+
+<header class="top">
+  <a class="logo" href="#open" data-go="open"><span class="hj">結落</span><b>결락</b><small>GYEOLLAK</small></a>
+  <p class="edition">(The Afterimage Edition) <span>Winter '26</span></p>
+  <nav class="menu">
+    <a href="#members" data-go="members">MEMBERS</a><a href="#music" data-go="music">MUSIC</a><a href="#world" data-go="world">WORLD</a><a href="#archive" data-go="archive">ARCHIVE</a>
+    <button class="sound" type="button" aria-pressed="false">SOUND <i>(off)</i></button>
+  </nav>
+</header>
+
+<div id="frame" aria-hidden="true">
+  <div class="fr-head">
+    <span class="hj">結落</span>
+    <b>결락 에디션</b>
+    <i>The Afterimage Edition</i>
+  </div>
+  <img class="fr-fish" src="assets/fish_c.webp" alt="">
+  <div class="fr-foot"><span>Vol. 01</span><span>《장마의 잔향》</span></div>
+</div>
+
+<nav id="idx" aria-label="카테고리">
+  <ol>
+    <li data-k="open"><a href="#open" data-go="open"><span class="nm">서막<em>Prologue</em></span><span class="rn">I</span></a></li>
+    <li data-k="members"><a href="#members" data-go="members"><span class="nm">멤버<em>Members</em></span><span class="rn">II</span></a></li>
+    <li data-k="music"><a href="#music" data-go="music"><span class="nm">음악 · 작업물<em>Music &amp; Works</em></span><span class="rn">III</span></a></li>
+    <li data-k="world"><a href="#world" data-go="world"><span class="nm">세계관 · 노트<em>World &amp; Notes</em></span><span class="rn">IV</span></a></li>
+    <li data-k="archive"><a href="#archive" data-go="archive"><span class="nm">기타<em>Goods &amp; Archive</em></span><span class="rn">V</span></a></li>
+  </ol>
+</nav>
+
+<aside id="cap" aria-live="polite"><span class="cap-n">I.</span> <span class="cap-t">먹선 하나가 금붕어의 잔상이 된다. 스크롤하면 번진다.</span></aside>
+
+<main>
+<!-- ===== I. 서막 ===== -->
+<section id="open" class="zone" data-stage="hero" data-key="open" data-tone="light" data-cap="I.|먹선 하나가 금붕어의 잔상이 된다. 스크롤하면 번진다.">
+  <div class="sticky">
+    <img class="obj ink" src="assets/rib_curl.webp" alt="" style="--x:-6vw;--y:62vh;--w:52vw;--d:.45;--r:-4deg">
+    <img class="obj ink" src="assets/fish_c.webp" alt="" style="--x:78vw;--y:14vh;--w:9vw;--d:-.6;--r:24deg">
+    <p class="slogan"><span>우리는 닿는 순간부터</span><span>번지고 있었다</span><small>(We were bleeding from the moment we touched)</small></p>
+    <p class="scroll-hint"><span></span>Scroll</p>
+  </div>
+</section>
+
+<section class="trans" data-trans="hole" data-a="hero" data-b="members" data-key="members" data-tone="dark"></section>
+
+<!-- ===== II. 멤버 ===== -->
+<section id="members" class="cat" data-key="members">
+  <div class="scene zone" data-stage="members" data-tone="dark" data-cap="II.|수면 위, 수면, 떨어지는 것, 수면 아래. 네 사람이 한 물의 단면이 된다.">
+    <div class="sticky">
+      <img class="obj" src="assets/fl_lily.webp" alt="" style="--x:4vw;--y:8vh;--w:13vw;--d:.9;--r:-14deg">
+      <img class="obj" src="assets/fl_camellia.webp" alt="" style="--x:82vw;--y:58vh;--w:12vw;--d:1.3;--r:18deg">
+      <img class="obj" src="assets/fl_hydrangea.webp" alt="" style="--x:74vw;--y:4vh;--w:9vw;--d:.5;--r:8deg">
+      <img class="obj" src="assets/fl_trumpet.webp" alt="" style="--x:12vw;--y:60vh;--w:8vw;--d:1.6;--r:-24deg">
+      <h2 class="huge"><span class="lab">(II) — Members</span><span class="word" data-split>멤버</span></h2>
+      <div class="sub">
+        <p class="swash"><span class="cap">F</span>our people standing at four depths of one water.</p>
+        <p class="ko">수면 위, 수면, 떨어지는 것, 수면 아래 — 네 사람이 한 물의 단면이 된다.</p>
+      </div>
+      <figure class="box box-members">
+        <div class="loop">
+          <img src="assets/cut_taejun.webp" alt="문태준"><img src="assets/cut_yuseong.webp" alt="채유성"><img src="assets/cut_jinwoo.webp" alt="하진우"><img src="assets/cut_ryuhyeon.webp" alt="채류현">
+          <i class="waterline"></i>
+        </div>
+        <figcaption><span>(A9) 멤버 4초 루프 자리</span><span>임시 · 컷 사진 순환</span></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="paper p-light" data-tone="light" data-cap="II.|네 장의 패널. 수평선 높이를 이어 붙이면 한 장의 그림이 된다.">
+    <svg class="tear top" preserveAspectRatio="none"></svg>
+    <div class="paper-in">
+      <div class="p-head">
+        <span class="tag">(II) Members · 패션 에디토리얼</span>
+        <h3 class="swash dark"><span class="cap">A</span>cross one surface</h3>
+        <p class="lede">네 장면을 나란히 놓으면 <b>수면 위</b>(진우), <b>수면</b>(태준), <b>수면으로 떨어지는 것</b>(유성), <b>수면 아래</b>(류현)로 물의 단면이 된다. 패널의 수평선 높이를 이 순서로 맞춰 한 장의 그림으로 잇는다.</p>
+      </div>
+      <div class="panels">
+        <article class="pan" style="--wl:52%" data-m="taejun">
+          <div class="pan-img"><img class="fig" src="assets/cut_taejun.webp" alt="문태준"><img class="flw" src="assets/fl_lily.webp" alt=""></div>
+          <div class="pan-tx"><span class="no">01 · 백합 Lily</span><h4>문태준 <em>Moon Taejun</em></h4><p class="solo">《파문의 안쪽》</p><p>잔잔한 수면 위에 몸을 숙이고, 물 아래 비친 또 하나의 자신을 내려다본다.</p></div>
+        </article>
+        <article class="pan" style="--wl:64%" data-m="yuseong">
+          <div class="pan-img"><img class="fig" src="assets/cut_yuseong.webp" alt="채유성"><img class="flw" src="assets/fl_camellia.webp" alt=""></div>
+          <div class="pan-tx"><span class="no">02 · 동백 Camellia</span><h4>채유성 <em>Chae Yuseong</em></h4><p class="solo">《낙화》</p><p>하늘을 올려다보고 서 있고, 꽃이 송이째 수없이 떨어진다.</p></div>
+        </article>
+        <article class="pan" style="--wl:80%" data-m="jinwoo">
+          <div class="pan-img"><img class="fig" src="assets/cut_jinwoo.webp" alt="하진우"><img class="flw" src="assets/fl_hydrangea.webp" alt=""></div>
+          <div class="pan-tx"><span class="no">03 · 수국 Hydrangea</span><h4>하진우 <em>Ha Jinwoo</em></h4><p class="solo">《수면의 빛》</p><p>빛나는 나비를 따라 얕은 물 위를 달린다. 발밑에서 빛이 흩어진다.</p></div>
+        </article>
+        <article class="pan deep" style="--wl:16%" data-m="ryuhyeon">
+          <div class="pan-img"><img class="fig" src="assets/cut_ryuhyeon.webp" alt="채류현"><img class="flw" src="assets/fl_trumpet.webp" alt=""></div>
+          <div class="pan-tx"><span class="no">04 · 능소화 Trumpet vine</span><h4>채류현 <em>Chae Ryuhyeon</em></h4><p class="solo">《수심》 <small>(제안)</small></p><p>물속으로 천천히 내려가며 위로 손을 뻗는다. 빛이 닿을 듯 닿지 않는다.</p></div>
+        </article>
+      </div>
+    </div>
+    <svg class="tear bottom" preserveAspectRatio="none"></svg>
+  </div>
+</section>
+
+<section class="trans" data-trans="melt" data-a="members" data-b="music" data-key="music" data-tone="dark"></section>
+
+<!-- ===== III. 음악 · 작업물 ===== -->
+<section id="music" class="cat" data-key="music">
+  <div class="scene zone" data-stage="music" data-tone="dark" data-cap="III.|어두운 청음실. 수조 안에서 인트로 필름이 켜진다.">
+    <div class="sticky">
+      <img class="obj inv" src="assets/fish_b.webp" alt="" style="--x:66vw;--y:-6vh;--w:30vw;--d:1.1;--r:-10deg">
+      <img class="obj inv" src="assets/rib_rise.webp" alt="" style="--x:6vw;--y:20vh;--w:7vw;--d:.6;--r:0deg">
+      <h2 class="huge"><span class="lab">(III) — Music &amp; Works</span><span class="word" data-split>음악</span></h2>
+      <div class="sub">
+        <p class="swash"><span class="cap">L</span>isten in the dark room, where the rain left its echo.</p>
+        <p class="ko">어두운 청음실에서, 장마가 남긴 잔향을 듣는다.</p>
+      </div>
+      <figure class="box box-tank">
+        <video src="assets/a1_fish.mp4" poster="assets/a1_poster.jpg" muted loop playsinline autoplay></video>
+        <i class="glass"></i>
+        <figcaption><span>(A1) 금붕어 잔상 · 수조 안 인트로</span><span>4–6s 루프</span></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="paper p-dark" data-tone="dark" data-cap="III.|《장마의 잔향》 10곡. 미리듣기만, 재생 중인 곡은 먹선 파형이 흐른다.">
+    <svg class="tear top" preserveAspectRatio="none"></svg>
+    <div class="paper-in">
+      <div class="p-head">
+        <span class="tag">(III) Music &amp; Works · 청음실</span>
+        <h3 class="swash"><span class="cap">E</span>choes of the rainy season</h3>
+      </div>
+      <div class="album">
+        <div class="cover">
+          <img src="assets/sc_music_sm.webp" alt="">
+          <div class="cv-t"><span class="hj">結落</span><b>장마의 잔향</b><i>Echoes of the Rainy Season</i></div>
+        </div>
+        <ol class="tracks">
+          <li class="on"><span class="n">01</span><b>Intro</b><span class="d">다시 무대에 들어서는 문</span><svg class="wave" viewBox="0 0 160 24"><path d=""/></svg></li>
+          <li><span class="n">02</span><b>Crescent Scar</b><span class="d">같은 노래에 남은, 기억하지 못하는 마음</span><button>▷ 미리듣기</button></li>
+          <li class="wip"><span class="n">03</span><b>능소화</b><span class="d">잊기 전의 밝은 여름</span><button disabled>준비 중</button></li>
+          <li><span class="n">04</span><b>Amnesia</b><span class="d">기억은 없어도 남아 있는 반응</span><button>▷ 미리듣기</button></li>
+          <li><span class="n">05</span><b>상사화</b><span class="d">같은 뿌리에서 엇갈린 두 사람</span><button>▷ 미리듣기</button></li>
+          <li><span class="n">06</span><b>Rewind</b><span class="d">그 계절을 되돌리고 싶은 마음</span><button>▷ 미리듣기</button></li>
+          <li><span class="n">07</span><b>결로</b><span class="d">지워도 다시 맺히는 흔적</span><button>▷ 미리듣기</button></li>
+          <li><span class="n">08</span><b>잔불</b><span class="d">덮어 두었지만 꺼지지 않은 불씨</span><button>▷ 미리듣기</button></li>
+          <li><span class="n">09</span><b>연소</b><span class="d">남은 불씨를 모두 태우는 결심</span><button>▷ 미리듣기</button></li>
+          <li><span class="n">10</span><b>치자 · Hidden</b><span class="d">큰 소리가 끝난 뒤 남는 사적인 고백</span><button>▷ 미리듣기</button></li>
+        </ol>
+      </div>
+      <p class="fine">미리듣기 전용 · 내려받기 없음 · 정식 유통은 Ditto, 유통 후 곡마다 외부 링크</p>
+    </div>
+    <svg class="tear bottom" preserveAspectRatio="none"></svg>
+  </div>
+</section>
+
+<section class="trans" data-trans="hole" data-a="music" data-b="world" data-key="world" data-tone="dark"></section>
+
+<!-- ===== IV. 세계관 · 노트 ===== -->
+<section id="world" class="cat" data-key="world">
+  <div class="scene zone" data-stage="world" data-tone="dark" data-cap="IV.|종이와 기록. 원작은 포스타입에, 사이트에는 지금 활동하는 밴드로.">
+    <div class="sticky">
+      <img class="obj ink" src="assets/rib_right.webp" alt="" style="--x:-8vw;--y:66vh;--w:60vw;--d:.7;--r:3deg">
+      <img class="obj" src="assets/fl_camellia.webp" alt="" style="--x:84vw;--y:10vh;--w:8vw;--d:1.4;--r:-30deg">
+      <h2 class="huge"><span class="lab">(IV) — World &amp; Notes</span><span class="word" data-split>세계관</span></h2>
+      <div class="sub">
+        <p class="swash"><span class="cap">N</span>otes on what could not settle, on paper that remembers.</p>
+        <p class="ko">맺지 못한 것들에 대한 기록. 종이는 번진 자리를 기억한다.</p>
+      </div>
+      <figure class="box box-paper">
+        <video src="assets/a1_fish_b.mp4" muted loop playsinline autoplay></video>
+        <figcaption><span>(A4) 먹 번짐 자리</span><span>임시 · A1 v04</span></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="paper p-hanji" data-tone="light" data-cap="IV.|밴드 소개 → 인터뷰 발췌 → 작업 노트 → 연재 본편 링크.">
+    <svg class="tear top" preserveAspectRatio="none"></svg>
+    <div class="paper-in">
+      <div class="p-head">
+        <span class="tag">(IV) World &amp; Notes · 종이와 기록 <em>— 문구는 가안</em></span>
+        <h3 class="swash dark"><span class="cap">U</span>nfinished rain</h3>
+      </div>
+      <div class="notes">
+        <div class="n-col intro">
+          <span class="k">밴드 소개</span>
+          <p class="big">결락(結落)은 맺지 못하고 떨어진 것들을 노래하는 4인조 밴드다.</p>
+          <p>비가 맺지 못한 것들, 지워도 다시 맺히는 흔적. 네 사람은 서로 다른 깊이의 물에서 같은 노래를 부른다.</p>
+        </div>
+        <div class="n-col qa">
+          <span class="k">인터뷰 발췌</span>
+          <dl>
+            <dt>Q. 첫 앨범 제목이 왜 《장마의 잔향》이에요?</dt><dd><b>태준</b> 비는 그쳐도 냄새는 남잖아요. 남은 쪽을 쓰고 싶었어요.</dd>
+            <dt>Q. 멤버들이 말하는 류현은?</dt><dd><b>류현</b> 어둡다기보단 깊은 쪽이요. 내려가야 보이는 게 있어서.</dd>
+            <dt>Q. 무대에서 제일 좋아하는 소리는?</dt><dd><b>진우</b> 물 튀는 소리요. 그럼 다들 웃어요.</dd>
+          </dl>
+        </div>
+        <div class="n-col note">
+          <span class="k">작업 노트 · Track 07</span>
+          <p class="hand">〈결로〉 — 지워도 다시 맺히는 흔적. 유리창 안쪽에 맺힌 물방울에서 시작한 곡.</p>
+          <img src="assets/fl_lily.webp" alt="" class="pressed">
+          <a class="ext" href="#" onclick="return false">본편 연재 읽기 <span>→ Postype</span></a>
+        </div>
+      </div>
+    </div>
+    <svg class="tear bottom" preserveAspectRatio="none"></svg>
+  </div>
+</section>
+
+<section class="trans" data-trans="melt" data-a="world" data-b="archive" data-key="archive" data-tone="dark"></section>
+
+<!-- ===== V. 기타 ===== -->
+<section id="archive" class="cat" data-key="archive">
+  <div class="scene zone" data-stage="archive" data-tone="dark" data-cap="V.|굿즈 · 아카이브. 레트로퓨처와 Y2K, 전환만 공유한다.">
+    <div class="sticky">
+      <img class="obj inv" src="assets/rib_fan.webp" alt="" style="--x:30vw;--y:-14vh;--w:40vw;--d:.5;--r:180deg">
+      <img class="obj" src="assets/fl_lily.webp" alt="" style="--x:6vw;--y:56vh;--w:9vw;--d:1.2;--r:20deg">
+      <h2 class="huge"><span class="lab">(V) — Goods &amp; Archive · 기타</span><span class="word" data-split>아카이브</span></h2>
+      <div class="sub">
+        <p class="swash"><span class="cap">S</span>mall things to keep, after the music ends.</p>
+        <p class="ko">음악이 끝난 뒤에도 손에 남는 것들.</p>
+      </div>
+      <figure class="box box-cd">
+        <div class="cd3d"><img src="assets/g_cd03.webp" alt="CD 케이스 시안"><i class="iri"></i></div>
+        <figcaption><span>CD 케이스 시안 03 · Liquid Drip</span><span>굿즈 드래프트</span></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="paper p-y2k" data-tone="light" data-cap="V.|CD 케이스 · 키링 · 동반자 인형. 굿즈 드래프트에서 가져옴.">
+    <svg class="tear top" preserveAspectRatio="none"></svg>
+    <div class="paper-in">
+      <div class="p-head">
+        <span class="tag">(V) Goods &amp; Archive · Retro-future / Y2K</span>
+        <h3 class="swash dark"><span class="cap">K</span>eep the afterimage</h3>
+      </div>
+      <div class="goods">
+        <figure><img src="assets/g_cd01.webp" alt=""><figcaption><b>01</b> Clear Archive <span>헥사 링크</span></figcaption></figure>
+        <figure><img src="assets/g_cd04.webp" alt=""><figcaption><b>04</b> X-Ray <span>진우 · 수국</span></figcaption></figure>
+        <figure><img src="assets/g_cd05.webp" alt=""><figcaption><b>05</b> Soft Sleeve <span>유성 · 동백</span></figcaption></figure>
+        <figure><img src="assets/g_cd06.webp" alt=""><figcaption><b>06</b> Sprue Kit <span>태준 · 백합</span></figcaption></figure>
+        <figure><img src="assets/g_cd08.webp" alt=""><figcaption><b>08</b> Vending Capsule <span>구름</span></figcaption></figure>
+        <figure><img src="assets/g_kr6.webp" alt=""><figcaption><b>KR6</b> 꽃 참 4종 <span>키링</span></figcaption></figure>
+        <figure><img src="assets/g_kr7.webp" alt=""><figcaption><b>KR7</b> 미니 인형 4종 <span>곰 · 재규어 · 여우 · 강아지</span></figcaption></figure>
+        <figure><img src="assets/g_kr0.webp" alt=""><figcaption><b>KR0</b> 구름 클립 전체 <span>키링</span></figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="end" data-tone="light" data-key="archive" data-cap="V.|낙관. 우리는 닿는 순간부터 번지고 있었다.">
+  <div class="end-fl" aria-hidden="true"><img src="assets/fl_lily.webp" alt=""><img src="assets/fl_camellia.webp" alt=""><img src="assets/fl_hydrangea.webp" alt=""><img src="assets/fl_trumpet.webp" alt=""></div>
+  <div class="seal" aria-hidden="true"><span>結</span><span>落</span></div>
+  <p class="end-slogan">우리는 닿는 순간부터 번지고 있었다</p>
+  <p class="end-meta">결락 GYEOLLAK · menu-scroll v1 · 시안 (Shopify Editions Winter '26 카테고리 스크롤 구조 참고)</p>
+  <a class="back" href="#open" data-go="open">↑ I. 서막으로</a>
+</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
