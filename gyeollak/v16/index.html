@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>결락 GYEOLLAK</title>
+<meta name="description" content="결락 GYEOLLAK — 네 사람이 함께 만드는 음악. 1집 《장마의 잔향》.">
+<style>
+/* 레이아웃: 고정 UI(로고·SOUND·4줄 메뉴) 아래로 7개 챕터가 세로로 이어진다.
+   SURFACE(거대 워드마크+인물) → 결·락(선언문) → FILM(심연의 수조 액자) → BLOOM(네 송이) → MEMBERS(가로 필름 스트립) → MUSIC(트랙 목록) → WORLD → 낙관 */
+@font-face{font-family:"Instrument Serif";src:url(fonts/InstrumentSerif-Regular.ttf);font-display:swap}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(fonts/InstrumentSerif-Italic.ttf);font-display:swap}
+@font-face{font-family:"Song Myung";src:url(fonts/SongMyung-kr.woff2);font-display:swap}
+@font-face{font-family:"Pretendard";font-weight:100 900;src:url(fonts/PretendardVariable.woff2);font-display:swap}
+@font-face{font-family:"DM Mono";src:url(fonts/DMMono-Regular.ttf);font-display:swap}
+:root{
+  --paper:#EEF1F2; --ink:#0B0D12; --abyss:#0A1730; --rise:#17345E; --silver:#E8ECF0;
+  --mid:#3A3C40; --pale:#9A9DA3; --teal:#5FB8B0; --pearl:#D9CFE8;
+  --bg:var(--paper); --fg:var(--ink); --sub:rgba(11,13,18,.56); --hair:rgba(11,13,18,.16);
+  --f-en:"Instrument Serif","Times New Roman",serif;
+  --f-kr:"Song Myung","Noto Serif KR","Nanum Myeongjo",serif;
+  --f-body:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"DM Mono",ui-monospace,Menlo,monospace;
+  --gut:max(16px,env(safe-area-inset-left,0px),3.2vw);
+  color-scheme:light;
+}
+body[data-theme="abyss"]{--bg:var(--abyss)} body[data-theme="rise"]{--bg:var(--rise)} body[data-theme="ink"]{--bg:var(--ink)}
+body[data-theme="abyss"],body[data-theme="rise"],body[data-theme="ink"]{--fg:var(--silver);--sub:rgba(232,236,240,.6);--hair:rgba(232,236,240,.2)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6;overflow-x:hidden;
+  transition:background-color .9s cubic-bezier(.4,0,.2,1),color .6s;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:1px solid currentColor;outline-offset:4px}
+.mono{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.lab{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--sub)}
+
+#ink{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:var(--ink-o,1);transition:opacity .8s}
+main,footer{position:relative;z-index:1}
+
+/* ── 고정 UI ── */
+.ui{position:fixed;z-index:40;color:#fff;mix-blend-mode:difference}
+.logo{top:calc(18px + env(safe-area-inset-top,0px));left:var(--gut);line-height:1.2}
+.logo b{font-family:var(--f-kr);font-weight:400;font-size:19px;letter-spacing:.06em}
+.logo b i{font-family:var(--f-en);font-style:normal;font-size:17px;letter-spacing:.12em;margin-left:8px}
+.logo span{display:block;margin-top:3px;font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;opacity:.7}
+.sound{top:calc(18px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;padding:6px 0}
+.sound .bars{display:flex;gap:2px;align-items:flex-end;height:10px}
+.sound .bars i{width:2px;height:3px;background:#fff}
+.sound.on .bars i{animation:bar .9s ease-in-out infinite alternate}
+.sound.on .bars i:nth-child(2){animation-delay:.2s}.sound.on .bars i:nth-child(3){animation-delay:.45s}
+@keyframes bar{to{height:10px}}
+.nav{top:calc(18px + env(safe-area-inset-top,0px));right:var(--gut);display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.nav a{position:relative;padding:1px 0}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:#fff;transform:scaleX(0);transform-origin:right;transition:transform .4s cubic-bezier(.6,0,.2,1)}
+.nav a:hover::after,.nav a.cur::after{transform:scaleX(1);transform-origin:left}
+.dot{display:none;top:calc(14px + env(safe-area-inset-top,0px));right:var(--gut);width:40px;height:40px;align-items:center;justify-content:flex-end}
+.dot::before{content:"";width:10px;height:10px;border-radius:50%;background:#fff;transition:transform .4s}
+.dot[aria-expanded="true"]::before{transform:scale(.4)}
+.chap{bottom:calc(16px + env(safe-area-inset-bottom,0px));left:var(--gut)}
+.prog{bottom:calc(16px + env(safe-area-inset-bottom,0px));right:var(--gut);font-variant-numeric:tabular-nums}
+.cur{position:fixed;z-index:60;left:0;top:0;pointer-events:none;mix-blend-mode:difference;color:#fff;display:none}
+.cur i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:#fff;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.cur span{position:absolute;left:0;top:0;transform:translate(-50%,-50%) scale(.6);opacity:0;transition:.3s;white-space:nowrap;color:#000;font-family:var(--f-mono);font-size:10px;letter-spacing:.14em}
+.cur.big i{transform:scale(9)} .cur.big span{opacity:1;transform:translate(-50%,-50%) scale(1)}
+@media (hover:hover) and (pointer:fine){.cur{display:block}}
+.wipe{position:fixed;inset:0;z-index:80;background:var(--ink);pointer-events:none;clip-path:circle(0 at 50% 50%)}
+.toast{position:fixed;z-index:70;left:50%;bottom:calc(64px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px);opacity:0;transition:.4s;
+  background:var(--ink);color:var(--silver);padding:9px 16px;border:1px solid rgba(232,236,240,.25);pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.menu{position:fixed;inset:0;z-index:35;background:var(--ink);color:var(--silver);display:flex;flex-direction:column;justify-content:center;gap:6px;
+  padding:0 var(--gut);clip-path:circle(0 at calc(100% - 36px) 34px);transition:clip-path .7s cubic-bezier(.7,0,.2,1);visibility:hidden}
+.menu.on{clip-path:circle(150% at calc(100% - 36px) 34px);visibility:visible}
+.menu a{font-family:var(--f-en);font-size:17vw;line-height:1;letter-spacing:-.02em}
+.menu a small{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;vertical-align:top;margin-left:8px;opacity:.6}
+
+/* ── 공통 ── */
+.pin{position:relative;height:calc(var(--len,200) * 1vh)}
+.stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.wrap{padding-left:var(--gut);padding-right:max(16px,env(safe-area-inset-right,0px),3.2vw)}
+.rv{opacity:.12;transform:translateY(26px);transition:opacity .9s,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ── 01 SURFACE ── */
+.hero-meta{position:absolute;top:calc(128px + env(safe-area-inset-top,0px));left:var(--gut);right:var(--gut);display:flex;justify-content:space-between;gap:16px}
+.wm{position:absolute;left:0;right:0;top:46%;text-align:center;font-family:var(--f-en);font-weight:400;font-size:18vw;line-height:.8;letter-spacing:-.035em;white-space:nowrap;will-change:transform}
+.wm .l{display:inline-block;overflow:hidden;vertical-align:top;padding:.08em 0 .12em}
+.wm .l b{display:inline-block;font-weight:400;animation:up 1.2s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 55ms + 80ms)}
+@keyframes up{from{transform:translateY(105%)}}
+.figs{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:flex-end;--fh:74svh;pointer-events:none}
+.figs img{height:var(--fh);width:auto;max-width:none;margin-inline:calc(var(--fh) * -.012);animation:figin 1.4s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 110ms + 350ms);
+  filter:drop-shadow(0 30px 40px rgba(11,13,18,.14))}
+@keyframes figin{from{opacity:0;transform:translateY(8%)}}
+.hero-kr{position:absolute;right:var(--gut);top:30%;writing-mode:vertical-rl;font-family:var(--f-kr);font-size:clamp(20px,2.2vw,34px);letter-spacing:.5em}
+.hero-line{position:absolute;left:var(--gut);bottom:calc(52px + env(safe-area-inset-bottom,0px));max-width:15em;font-family:var(--f-kr);font-size:clamp(17px,1.7vw,26px);line-height:1.45}
+.hero-line span{display:block;margin-top:10px}
+.cue{position:absolute;right:var(--gut);bottom:calc(52px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px}
+.cue::after{content:"";width:1px;height:44px;background:currentColor;animation:cue 2s cubic-bezier(.7,0,.2,1) infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ── 02 결·락 ── */
+#about{padding-block:24vh 20vh;position:relative;overflow:hidden}
+.glyph{position:absolute;right:-4vw;top:8vh;font-family:var(--f-kr);font-size:min(78vh,62vw);line-height:1;color:transparent;-webkit-text-stroke:1px var(--hair);pointer-events:none;will-change:transform}
+.state{font-family:var(--f-kr);font-weight:400;font-size:clamp(34px,7.4vw,128px);line-height:1.16;letter-spacing:-.02em;margin-top:5vh;max-width:11em;position:relative}
+.state span{opacity:.12;transition:opacity .5s}
+.state span.on{opacity:1}
+.defs{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:16vh;position:relative}
+.defs div{grid-column:span 3}
+.defs div:first-child{grid-column:6/span 3}
+.defs h3{font-family:var(--f-kr);font-weight:400;font-size:clamp(40px,5vw,84px);line-height:1}
+.defs h3 small{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;vertical-align:top;color:var(--sub);margin-left:10px}
+.defs p{margin-top:14px;max-width:22em;color:var(--sub)}
+
+/* ── 03 FILM ── */
+.film{display:flex;align-items:center;justify-content:center;perspective:1400px}
+.tank{position:relative;width:min(74vw,calc(70svh * 16 / 9));aspect-ratio:16/9;max-width:100%;will-change:transform}
+.tank-in{position:absolute;inset:0;overflow:hidden;background:#061022}
+.tank-in img,.tank-in video{position:absolute;inset:-3%;width:106%;height:106%;max-width:none;object-fit:cover;will-change:transform}
+.tank-in::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,23,48,.05),rgba(10,23,48,.55));mix-blend-mode:multiply}
+.tank svg{position:absolute;inset:-9%;width:118%;height:118%;overflow:visible;pointer-events:none}
+.tank svg *{fill:none;stroke:var(--silver);stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:var(--d,1)}
+.tank svg .back{opacity:.4}
+.tank-hit{position:absolute;inset:0;width:100%;height:100%}
+.film-cap{position:absolute;left:var(--gut);bottom:calc(56px + env(safe-area-inset-bottom,0px));max-width:min(30em,70vw)}
+.film-cap h2{font-family:var(--f-kr);font-weight:400;font-size:clamp(26px,3.4vw,56px);line-height:1.15;margin:10px 0 12px}
+.film-cap p{color:var(--sub);font-size:13px}
+.film-no{position:absolute;right:var(--gut);bottom:calc(56px + env(safe-area-inset-bottom,0px));font-family:var(--f-en);font-style:italic;font-size:clamp(40px,7vw,110px);line-height:.8}
+.theater{position:fixed;inset:0;z-index:75;background:#03070F;display:none;align-items:center;justify-content:center;flex-direction:column;gap:18px;padding:16px;color:var(--silver)}
+.theater.on{display:flex}
+.theater img,.theater video{max-width:min(100%,160vh);max-height:78vh;object-fit:contain}
+.theater button{position:absolute;top:calc(18px + env(safe-area-inset-top,0px));right:var(--gut);padding:10px 0}
+
+/* ── 04 BLOOM ── */
+.bloom h2{position:absolute;top:calc(96px + env(safe-area-inset-top,0px));left:var(--gut);font-family:var(--f-kr);font-weight:400;font-size:clamp(26px,3.6vw,60px);line-height:1.2}
+.bloom h2 + p{position:absolute;top:calc(96px + env(safe-area-inset-top,0px));right:var(--gut);text-align:right}
+.fls{position:absolute;left:var(--gut);right:var(--gut);top:54%;transform:translateY(-50%);display:grid;grid-template-columns:repeat(4,1fr);gap:2vw}
+.fl{position:relative;display:block;text-align:left}
+.fl .im{position:relative;aspect-ratio:1;width:100%;will-change:transform}
+.fl img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;will-change:transform,opacity}
+.fl .rip{position:absolute;left:50%;top:86%;width:70%;aspect-ratio:5/1;border:1px solid rgba(232,236,240,.5);border-radius:50%;transform:translate(-50%,-50%) scale(.2);opacity:0}
+.fl.open .rip{animation:rip 4.2s ease-out infinite}
+.fl.open .rip:nth-of-type(2){animation-delay:2.1s}
+@keyframes rip{0%{transform:translate(-50%,-50%) scale(.2);opacity:.7}100%{transform:translate(-50%,-50%) scale(1.5);opacity:0}}
+.fl .nm{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-top:8px;padding-top:10px;border-top:1px solid var(--hair);opacity:var(--o,0)}
+.fl .nm b{font-family:var(--f-kr);font-weight:400;font-size:clamp(17px,1.7vw,26px);letter-spacing:.2em;writing-mode:vertical-rl;height:5.2em}
+.fl .nm span{text-align:right;line-height:1.8}
+.fl:hover img.o{filter:drop-shadow(0 0 22px var(--teal)) drop-shadow(0 0 44px var(--pearl))}
+
+/* ── 05 MEMBERS ── */
+#members{background:var(--paper);color:var(--ink);--sub:rgba(11,13,18,.56);--hair:rgba(11,13,18,.16)}
+.track{display:flex;height:100%;width:max-content;will-change:transform}
+.mi{flex:0 0 auto;width:62vw;height:100%;position:relative;padding:calc(110px + env(safe-area-inset-top,0px)) var(--gut) 60px;display:flex;flex-direction:column;justify-content:space-between}
+.mi h2{font-family:var(--f-en);font-weight:400;font-style:italic;font-size:clamp(64px,13vw,230px);line-height:.8;letter-spacing:-.03em}
+.mi h2 sup{font-family:var(--f-mono);font-style:normal;font-size:12px;letter-spacing:.14em;vertical-align:top;margin-left:10px}
+.mi p{max-width:24em;color:var(--sub)}
+.modes{display:flex;gap:18px;margin-top:22px}
+.modes button{opacity:.4;padding:4px 0;border-bottom:1px solid transparent}
+.modes button[aria-pressed="true"]{opacity:1;border-color:currentColor}
+.mp{flex:0 0 auto;width:100vw;height:100%;position:relative;overflow:hidden;background:var(--tint);color:var(--mfg);--sub:var(--msub);--hair:var(--mhair)}
+.mp-photo{position:absolute;inset:0;opacity:0;transition:opacity .8s}
+.mp-photo img,.mp-photo video{width:100%;height:100%;object-fit:cover;object-position:50% 22%}
+.mp-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,12,26,.35),rgba(6,12,26,.1) 40%,rgba(6,12,26,.72))}
+.mp-name{position:absolute;left:0;right:0;top:50%;text-align:center;font-family:var(--f-en);font-size:20vw;line-height:.8;letter-spacing:-.03em;white-space:nowrap;transform:translateY(-58%);will-change:transform}
+.mp-name span{display:inline-block}
+.mp-fig{position:absolute;left:50%;bottom:0;height:86svh;width:auto;max-width:none;transform:translateX(-50%);filter:drop-shadow(0 30px 44px rgba(11,13,18,.18));transition:opacity .6s;will-change:transform}
+.mp-no{position:absolute;left:var(--gut);top:calc(96px + env(safe-area-inset-top,0px));display:flex;gap:14px;align-items:baseline}
+.mp-no b{font-family:var(--f-en);font-style:italic;font-weight:400;font-size:clamp(40px,5vw,84px);line-height:.8}
+.mp-kr{position:absolute;right:var(--gut);top:calc(128px + env(safe-area-inset-top,0px));writing-mode:vertical-rl;font-family:var(--f-kr);font-size:clamp(20px,2.5vw,42px);letter-spacing:.24em;white-space:nowrap}
+.mp-kr small{font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;color:var(--sub);margin-top:14px}
+.mp-meta{position:absolute;left:var(--gut);bottom:calc(58px + env(safe-area-inset-bottom,0px));width:min(26em,30vw);display:grid;grid-template-columns:6.5em 1fr;font-size:13px}
+.mp-meta dt,.mp-meta dd{padding:7px 0;border-top:1px solid var(--hair)}
+.mp-meta dt{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;color:var(--sub);padding-top:10px}
+.mp-meta dd.q{font-family:var(--f-kr);font-size:15px;line-height:1.5}
+.mp-crops{position:absolute;right:var(--gut);bottom:calc(58px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;align-items:flex-end}
+.mp-crops figure{overflow:hidden;width:13vw;aspect-ratio:3/4}
+.mp-crops figure + figure{width:8.5vw;aspect-ratio:1}
+.mp-crops img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.mp-crops figure:hover img{transform:scale(1.14)}
+.mp-crops figure + figure img{object-position:50% 18%;transform:scale(1.9);transform-origin:50% 26%}
+body.footage .mp{color:var(--silver);--sub:rgba(232,236,240,.66);--hair:rgba(232,236,240,.26)}
+body.footage .mp-photo{opacity:1} body.footage .mp-fig{opacity:0} body.footage .mp-crops{visibility:hidden}
+
+/* ── 06 MUSIC ── */
+#music{padding-block:20vh 18vh}
+.mu{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
+.mu-l{grid-column:1/span 5;position:sticky;top:calc(96px + env(safe-area-inset-top,0px))}
+.mu-l h2{font-family:var(--f-kr);font-weight:400;font-size:clamp(44px,6.6vw,116px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 22px}
+.mu-l figure{width:min(100%,460px);aspect-ratio:1003/480;overflow:hidden;margin-bottom:16px}
+.mu-l figure img{width:100%;height:100%;object-fit:cover}
+.mu-l p{color:var(--sub);max-width:26em;font-size:13px}
+.tl{grid-column:7/span 6;list-style:none;border-bottom:1px solid var(--hair)}
+.tr{display:grid;grid-template-columns:3em 1fr auto;gap:12px;align-items:baseline;width:100%;text-align:left;padding:18px 0;border-top:1px solid var(--hair);transition:opacity .4s,padding .5s cubic-bezier(.2,.7,.2,1)}
+.tr .n{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--sub)}
+.tr .t{font-family:var(--f-en);font-size:clamp(28px,3.4vw,56px);line-height:1;letter-spacing:-.01em;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.tr .t:lang(ko){font-family:var(--f-kr);font-size:clamp(25px,3vw,50px)}
+.tr .t em{display:block;font-family:var(--f-body);font-style:normal;font-size:13px;letter-spacing:0;color:var(--sub);margin-top:9px;line-height:1.4}
+.tr .s{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;white-space:nowrap}
+.tr:disabled{cursor:default}.tr:disabled .t{opacity:.42}.tr:disabled .s{color:var(--sub)}
+.tl:hover .tr{opacity:.4}.tl .tr:hover,.tl .tr.play{opacity:1}
+.tr:not(:disabled):hover .t,.tr.play .t{transform:translateX(14px)}
+.tr.play .s{color:var(--teal)}
+.player{position:fixed;z-index:45;left:0;right:0;bottom:0;background:var(--ink);color:var(--silver);border-top:1px solid rgba(232,236,240,.2);
+  display:flex;align-items:center;gap:16px;padding:12px var(--gut) calc(12px + env(safe-area-inset-bottom,0px));transform:translateY(102%);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.player.on{transform:none}
+.player b{font-family:var(--f-kr);font-weight:400;font-size:16px;white-space:nowrap}
+.player .bar{flex:1;height:18px;position:relative;min-width:0}
+.player canvas{width:100%;height:100%;display:block}
+
+/* ── 07 WORLD ── */
+#world{padding-block:22vh 20vh}
+.wd{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.wd h2{grid-column:1/span 12;font-family:var(--f-en);font-weight:400;font-size:clamp(56px,12vw,210px);line-height:.82;letter-spacing:-.03em;margin:10px 0 9vh}
+.wd h2 i{font-family:var(--f-kr);font-style:normal;font-size:.36em;letter-spacing:.1em;vertical-align:.5em;margin-left:.3em}
+.wd .intro{grid-column:1/span 4;color:var(--sub)}
+.qs{grid-column:6/span 7;display:grid;gap:8vh}
+.qs blockquote{font-family:var(--f-kr);font-size:clamp(24px,3.3vw,54px);line-height:1.3;letter-spacing:-.01em}
+.qs cite{display:block;margin-top:14px;font-style:normal}
+.notes{grid-column:1/span 12;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:12vh}
+.notes div{border-top:1px solid var(--hair);padding-top:14px;min-height:8em;display:flex;flex-direction:column;justify-content:space-between;gap:20px}
+.notes h3{font-family:var(--f-kr);font-weight:400;font-size:22px}
+
+/* ── FOOTER ── */
+footer{padding-block:16vh calc(64px + env(safe-area-inset-bottom,0px));overflow:hidden}
+.fwm{font-family:var(--f-en);font-style:italic;font-size:18vw;line-height:.8;letter-spacing:-.04em;white-space:nowrap;text-align:center}
+.fgrid{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:9vh;flex-wrap:wrap}
+.fgrid nav{display:flex;gap:22px;flex-wrap:wrap}
+.seal{width:58px;height:58px;border:1px solid var(--silver);display:grid;place-items:center;font-family:var(--f-kr);font-size:20px;line-height:1.05;writing-mode:vertical-rl;letter-spacing:.06em;
+  background:linear-gradient(135deg,rgba(95,184,176,.28),rgba(217,207,232,.28));transform:rotate(-3deg)}
+.fnote{margin-top:26px;color:var(--sub);font-size:12px;max-width:52em}
+
+@media (max-width:760px){
+  .nav,.sound .t{display:none}.dot{display:flex}
+  .sound{left:auto;right:calc(var(--gut) + 44px);transform:none;top:calc(22px + env(safe-area-inset-top,0px))}
+  .hero-meta span:last-child{display:none}
+  .wm{top:12%;line-height:.78}.wm .row{display:block}
+  .figs{--fh:42svh;bottom:108px}.figs img{margin-inline:calc(var(--fh) * -.045)}
+  .hero-kr{top:auto;bottom:calc(42svh + 122px);right:var(--gut);font-size:18px}
+  .hero-meta{top:calc(76px + env(safe-area-inset-top,0px))}
+  .hero-line{bottom:calc(46px + env(safe-area-inset-bottom,0px));font-size:15px;max-width:none;line-height:1.3}
+  .hero-line span{margin-top:5px;font-size:10px}
+  .cue{display:none}
+  .defs{grid-template-columns:1fr;margin-top:10vh}.defs div,.defs div:first-child{grid-column:auto}
+  .glyph{font-size:92vw;top:30vh;right:-18vw}
+  .tank{width:86vw;aspect-ratio:4/5;margin-top:-12svh}
+  .film-cap{bottom:calc(48px + env(safe-area-inset-bottom,0px))}.film-no{display:none}
+  .bloom h2 + p{display:none}
+  .fls{grid-template-columns:repeat(2,1fr);gap:10px 14px;top:56%}
+  .fl .im{width:78%;margin:0 auto}.fl .nm b{height:4.4em;font-size:15px}.fl .nm{margin-top:0;padding-top:6px}.fl .nm span{font-size:9px}
+  .mi{width:88vw}
+  .mp-name{top:31%}
+  .mp-fig{height:62svh;left:63%}
+  .mp-kr{right:auto;left:var(--gut);top:39%;font-size:17px;letter-spacing:.12em}.mp-kr small{display:none}
+  .mp-meta dt:first-of-type,.mp-meta dd:first-of-type{display:none}
+  .mp-meta{width:52vw;font-size:12px;grid-template-columns:1fr;bottom:calc(46px + env(safe-area-inset-bottom,0px))}
+  .mp-meta dt{padding:8px 0 0;border-top:1px solid var(--hair)}.mp-meta dd{border:0;padding:1px 0 7px}
+  .mp-meta dd.q{font-size:13px;text-shadow:0 0 10px var(--tint)}
+  .mp-crops{display:none}
+  .mu{grid-template-columns:1fr}.mu-l,.tl{grid-column:auto}.mu-l{position:static}
+  .tr{grid-template-columns:2.2em 1fr auto;padding:15px 0}
+  .wd{grid-template-columns:1fr}.wd > *{grid-column:auto !important}.notes{grid-template-columns:1fr;margin-top:8vh}
+  .player b{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01s !important;transition-duration:.01s !important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body data-theme="paper">
+<canvas id="ink" aria-hidden="true"></canvas>
+
+<a class="ui logo" href="#top" data-go="top"><b>결락<i>GYEOLLAK</i></b><span>4인조 밴드</span></a>
+<button class="ui sound mono" id="sound" aria-pressed="false" data-cur="SOUND"><span class="bars"><i></i><i></i><i></i></span><span class="t">Sound</span> <span id="soundS">Off</span></button>
+<nav class="ui nav mono" aria-label="주 메뉴">
+  <a href="#members" data-go="members">Members</a><a href="#music" data-go="music">Music</a><a href="#world" data-go="world">World</a><a href="#archive" data-go="archive">Archive</a>
+</nav>
+<button class="ui dot" id="dot" aria-label="메뉴 열기" aria-expanded="false"></button>
+<div class="menu" id="menu">
+  <a href="#members" data-go="members">Members<small>04</small></a><a href="#music" data-go="music">Music<small>10</small></a>
+  <a href="#world" data-go="world">World</a><a href="#archive" data-go="archive">Archive</a>
+</div>
+<div class="ui chap mono" id="chap">( 01 / 07 — Surface )</div>
+<div class="ui prog mono" id="prog">000</div>
+<div class="cur" id="cur"><i></i><span></span></div>
+<div class="wipe" id="wipe"></div>
+<div class="toast mono" id="toast" role="status"></div>
+
+<main>
+<!-- 01 -->
+<section class="pin" id="top" data-theme="paper" data-ch="Surface" style="--len:210">
+  <div class="stick hero">
+    <div class="hero-meta lab"><span>( 4-Piece Band — Seoul )</span><span>( 1st Album 《장마의 잔향》 — 10 Tracks )</span></div>
+    <h1 class="wm" id="wm" aria-label="GYEOLLAK"></h1>
+    <div class="figs" id="figs" aria-hidden="true">
+      <img src="assets/cut/taejun_white.webp" alt="" style="--i:0"><img src="assets/cut/yuseong_white.webp" alt="" style="--i:1">
+      <img src="assets/cut/jinwoo_white.webp" alt="" style="--i:2"><img src="assets/cut/ryuhyeon_white.webp" alt="" style="--i:3">
+    </div>
+    <p class="hero-kr" aria-hidden="true">결락</p>
+    <p class="hero-line">네 사람이 함께 만드는 음악.<span class="lab">( 문태준 · 채유성 · 하진우 · 채류현 )</span></p>
+    <div class="cue lab" aria-hidden="true">Scroll</div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="about" class="wrap" data-theme="paper" data-ch="Gyeol · Lak">
+  <div class="glyph" id="glyph" aria-hidden="true">결</div>
+  <p class="lab">( 결락 )</p>
+  <h2 class="state" id="state">우리는 닿는 순간부터 번지고 있었다.</h2>
+  <div class="defs">
+    <div class="rv"><h3>결<small>( Gyeol )</small></h3><p>물의 결, 숨의 결. 선이 지나간 자리에 남는 무늬.</p></div>
+    <div class="rv"><h3>락<small>( Lak )</small></h3><p>떨어지는 꽃, 그리고 음악. 즐기는 쪽의 락.</p></div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="pin" id="film" data-theme="abyss" data-ch="Film" style="--len:330">
+  <div class="stick film">
+    <div class="tank" id="tank">
+      <div class="tank-in" id="tankIn">
+        <picture><source media="(max-width:760px)" srcset="assets/group/bg_9x16.webp"><img src="assets/group/bg_16x9.webp" alt="짙은 청록 풀밭" id="tkBg"></picture>
+        <picture><source media="(max-width:760px)" srcset="assets/group/members_9x16.webp"><img src="assets/group/members_16x9.webp" alt="흰 옷을 입고 풀밭에 선 결락 네 사람" id="tkFg"></picture>
+      </div>
+      <svg viewBox="0 0 118 118" preserveAspectRatio="none" aria-hidden="true">
+        <rect class="back" x="17" y="17" width="84" height="84" pathLength="1"/>
+        <path class="back" d="M0 0L17 17M118 0L101 17M0 118L17 101M118 118L101 101" pathLength="1"/>
+        <path d="M9 0V118M109 0V118M0 9H118M0 109H118" pathLength="1"/>
+      </svg>
+      <button class="tank-hit" id="tankHit" data-cur="PLAY" aria-label="인트로 필름 크게 보기"></button>
+    </div>
+    <div class="film-cap" id="filmCap">
+      <p class="lab">( Intro Film — 1부 )</p>
+      <h2>못: 비가 맺히지<br>않는 곳</h2>
+      <p>수조를 누르면 크게 봅니다. 영상은 준비 중이라 지금은 스틸 한 장이 들어 있습니다.</p>
+    </div>
+    <div class="film-no" id="filmNo" aria-hidden="true">Nº 1</div>
+  </div>
+</section>
+<div class="theater" id="theater" role="dialog" aria-label="인트로 필름">
+  <button class="mono" id="theaterX">Close ✕</button>
+  <picture><source media="(max-width:760px)" srcset="assets/group/bg_9x16.webp"><img src="assets/group/bg_16x9.webp" alt="인트로 필름 스틸"></picture>
+  <p class="lab">( 못: 비가 맺히지 않는 곳 — 영상 준비 중 )</p>
+</div>
+
+<!-- 04 -->
+<section class="pin" id="bloom" data-theme="rise" data-ch="Bloom" style="--len:300">
+  <div class="stick bloom">
+    <h2>떨어진 꽃도<br>결국 떠 있다.</h2>
+    <p class="lab">( 백합 — 동백 — 수국 — 능소화 )<br>꽃을 누르면 그 사람에게 갑니다</p>
+    <div class="fls" id="fls"></div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="pin" id="members" data-theme="paper" data-ch="Members">
+  <div class="stick"><div class="track" id="track">
+    <div class="mi">
+      <div><p class="lab">( The Members )</p></div>
+      <div>
+        <h2>Members<sup>( 04 )</sup></h2>
+      </div>
+      <div>
+        <p>꽃이 핀 순서대로. 백합, 동백, 수국, 그리고 가장 깊은 곳에서 올라온 능소화.</p>
+        <div class="modes mono" role="group" aria-label="보기 방식">
+          <button id="mPoster" aria-pressed="true">( Poster )</button><button id="mFootage" aria-pressed="false">( Footage )</button>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 06 -->
+<section id="music" class="wrap" data-theme="ink" data-ch="Music">
+  <div class="mu">
+    <div class="mu-l">
+      <p class="lab">( Music — 1st Album )</p>
+      <h2>장마의<br>잔향</h2>
+      <figure><img src="assets/case.webp" alt="《장마의 잔향》 CD 케이스" loading="lazy"></figure>
+      <p>사이트에서는 30초 미리듣기만 됩니다. 내려받기는 없고, 정식 음원은 유통 뒤에 곡마다 링크를 붙입니다.</p>
+    </div>
+    <ol class="tl" id="tl"></ol>
+  </div>
+</section>
+
+<!-- 07 -->
+<section id="world" class="wrap" data-theme="paper" data-ch="World">
+  <div class="wd">
+    <p class="lab" style="grid-column:1/span 12">( World · Notes )</p>
+    <h2>Notes<i>기록</i></h2>
+    <p class="intro rv">인터뷰에서 흘린 말, 작업 노트, 곡 소개를 여기에 모읍니다. 지금은 원고가 있는 두 사람의 말만 먼저 실었습니다.</p>
+    <div class="qs">
+      <blockquote class="rv">“애들아, 날아보자!”<cite class="lab">( 채유성 — 동백 )</cite></blockquote>
+      <blockquote class="rv">“오늘도 맑고 내일도 맑을 거예요! 우리 같이 나갈래요?”<cite class="lab">( 하진우 — 수국 )</cite></blockquote>
+    </div>
+    <div class="notes">
+      <div class="rv"><h3>밴드 소개</h3><span class="lab">( 원고 준비 중 )</span></div>
+      <div class="rv"><h3>《장마의 잔향》 작업 노트</h3><span class="lab">( 원고 준비 중 )</span></div>
+      <div class="rv"><h3>연재 본편</h3><span class="lab">( 포스타입 링크 연결 예정 )</span></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="wrap" data-theme="abyss" data-ch="Seal">
+  <div class="fwm" id="fwm">Gyeollak</div>
+  <div class="fgrid">
+    <nav class="mono"><a href="#members" data-go="members">( Members )</a><a href="#music" data-go="music">( Music )</a><a href="#world" data-go="world">( World )</a><a href="#archive" data-go="archive">( Archive )</a><a href="#top" data-go="top">( Top ↑ )</a></nav>
+    <div class="seal" aria-label="결락 낙관">결락</div>
+  </div>
+  <p class="fnote">© 2026 GYEOLLAK. v16 프로토타입 — 인물·풀밭·꽃 이미지는 기존 테스트 소스이고, 인트로 필름과 멤버 루프 영상 자리는 비어 있습니다.</p>
+</footer>
+
+<div class="player" id="player" aria-live="polite">
+  <button class="mono" id="plBtn" aria-label="일시정지">❙❙</button><b id="plT"></b>
+  <div class="bar"><canvas id="plC"></canvas></div><span class="mono" id="plS">0:00</span>
+  <button class="mono" id="plX" aria-label="재생 막대 닫기">✕</button>
+</div>
+
+<script>
+(function(){
+'use strict';
+/* ── 소스 자리. 힉스필드에서 뽑은 파일을 v16/assets 에 넣고 경로만 적으면 바뀐다 ── */
+const SOURCES={
+  film:{video:'',videoMobile:''},                 // 인트로 필름 (16:9 / 4:5·9:16). 비우면 스틸
+  loops:{taejun:'',yuseong:'',jinwoo:'',ryuhyeon:''} // 멤버 4초 루프 (FOOTAGE 모드). 비우면 사진
+};
+const MEMBERS=[
+  {id:'taejun',no:'01',en:'TAEJUN',full:'MOON TAEJUN',kr:'문태준',flower:'백합',hj:'百合',fk:'lily',title:'파문의 안쪽',role:'LEADER · DRUM',line:'묵묵한 겉과 달리 안쪽에서 퍼지는 흔들림.',tint:'#EEF1F2',dark:0,ph:[1,3]},
+  {id:'yuseong',no:'02',en:'YUSEONG',full:'CHAE YUSEONG',kr:'채유성',flower:'동백',hj:'冬柏',fk:'camellia',title:'낙화',role:'—  확인 후 입력',line:'빛나기 전에 떨어지는 것의 아름다움.',tint:'#F1E7E6',dark:0,ph:[1,4]},
+  {id:'jinwoo',no:'03',en:'JINWOO',full:'HA JINWOO',kr:'하진우',flower:'수국',hj:'水菊',fk:'hydrangea',title:'수면의 빛',role:'—  확인 후 입력',line:'가장 밝은 사람.',tint:'#DFE9F5',dark:0,ph:[1,2]},
+  {id:'ryuhyeon',no:'04',en:'RYUHYEON',full:'CHAE RYUHYEON',kr:'채류현',flower:'능소화',hj:'凌霄',fk:'trumpet',title:'수심',role:'VOCAL',line:'깊은 수심 같은 사람.',tint:'#10254A',dark:1,ph:[1,3]}
+];
+const TRACKS=[
+  ['Intro','다시 무대에 들어서는 문','intro'],['Crescent Scar','같은 노래에 남은, 기억하지 못하는 마음',''],
+  ['능소화','잊기 전의 밝은 여름','','수정 중'],['Amnesia','기억은 없어도 남아 있는 반응','amnesia'],
+  ['상사화','같은 뿌리에서 엇갈린 두 사람','sangsahwa'],['Rewind','그 계절을 되돌리고 싶은 마음','rewind'],
+  ['결로','지워도 다시 맺히는 흔적','gyeolro'],['잔불','덮어 두었지만 꺼지지 않은 불씨',''],
+  ['연소','남은 불씨를 모두 태우는 결심',''],['치자 · Hidden','큰 소리가 끝난 뒤 남는 사적인 고백','chija']
+];
+const $=id=>document.getElementById(id), qa=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), seg=(a,b,v)=>clamp((v-a)/(b-a),0,1), ease=v=>v*v*(3-2*v), lerp=(a,b,t)=>a+(b-a)*t;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isM=()=>innerWidth<=760;
+let W=innerWidth,H=innerHeight;
+
+/* ── 워드마크 ── */
+const wm=$('wm');
+function buildWm(){
+  const rows=isM()?['GYEOL','LAK']:['GYEOLLAK'];let i=0;
+  wm.innerHTML=rows.map(r=>'<span class="row">'+r.split('').map(c=>`<span class="l"><b style="--i:${i++}">${c}</b></span>`).join('')+'</span>').join('');
+}
+function fitAll(){
+  buildWm();qa('.row',wm).forEach(r=>r.style.display=isM()?'block':'inline-block');
+  wm.style.fontSize='100px';const w=Math.max(...qa('.row',wm).map(r=>{r.style.display='inline-block';const x=r.offsetWidth;if(isM())r.style.display='block';return x}));
+  wm.style.fontSize=(100*(W*(isM()?.9:.95))/w)+'px';
+  qa('.mp-name').forEach(n=>{n.style.fontSize='100px';const s=n.firstElementChild.offsetWidth;n.style.fontSize=(100*(W*(isM()?.9:.8))/s)+'px'});
+  const f=$('fwm');f.innerHTML='<span>Gyeollak</span>';f.style.fontSize='100px';f.style.fontSize=(100*f.clientWidth*.9/Math.max(1,f.firstChild.offsetWidth))+'px';
+}
+
+/* ── 선언문 글자 ── */
+const state=$('state');state.innerHTML=state.textContent.split('').map(c=>c===' '?' ':`<span>${c}</span>`).join('');
+const stSp=qa('span',state);
+
+/* ── 꽃 ── */
+$('fls').innerHTML=MEMBERS.map((m,i)=>`<a class="fl" href="#members" data-m="${i}" data-cur="${m.en}" aria-label="${m.kr} — ${m.flower}">
+  <div class="im"><img class="b" src="assets/flower/${m.fk}_bud.webp" alt=""><img class="o" src="assets/flower/${m.fk}_open.webp" alt=""><i class="rip"></i><i class="rip"></i></div>
+  <div class="nm"><b>${m.kr}</b><span class="lab">${m.no} / 04<br>${m.flower} ${m.hj}<br>《${m.title}》</span></div></a>`).join('');
+const fls=qa('.fl');
+
+/* ── 멤버 패널 ── */
+$('track').insertAdjacentHTML('beforeend',MEMBERS.map(m=>{
+  const loop=SOURCES.loops[m.id];
+  return `<article class="mp" id="m-${m.id}" style="--tint:${m.tint};--mfg:${m.dark?'#E8ECF0':'#0B0D12'};--msub:${m.dark?'rgba(232,236,240,.62)':'rgba(11,13,18,.56)'};--mhair:${m.dark?'rgba(232,236,240,.22)':'rgba(11,13,18,.16)'}">
+  <div class="mp-photo">${loop?`<video src="${loop}" muted loop playsinline preload="none"></video>`:`<img src="assets/photo/${m.id}_${m.ph[0]}.webp" alt="" loading="lazy">`}</div>
+  <div class="mp-name" aria-hidden="true"><span>${m.en}</span></div>
+  <img class="mp-fig" src="assets/cut/${m.id}_white.webp" alt="${m.kr} 전신" loading="lazy">
+  <div class="mp-no"><b>${m.no}</b><span class="lab">/ 04 — ${m.flower} ${m.hj}</span></div>
+  <h3 class="mp-kr">《${m.title}》<small>${m.full}</small></h3>
+  <dl class="mp-meta"><dt>NAME</dt><dd>${m.kr}</dd><dt>FLOWER</dt><dd>${m.flower} ${m.hj}</dd><dt>ROLE</dt><dd>${m.role}</dd><dt>NOTE</dt><dd class="q">${m.line}</dd></dl>
+  <div class="mp-crops"><figure><img src="assets/photo/${m.id}_${m.ph[0]}.webp" alt="${m.kr} 초상" loading="lazy"></figure><figure><img src="assets/photo/${m.id}_${m.ph[1]}.webp" alt="" loading="lazy"></figure></div>
+  </article>`}).join(''));
+const mps=qa('.mp'),track=$('track'),memSec=$('members');
+function setMode(f){document.body.classList.toggle('footage',f);$('mPoster').setAttribute('aria-pressed',!f);$('mFootage').setAttribute('aria-pressed',f);
+  qa('.mp-photo video').forEach(v=>f?v.play().catch(()=>{}):v.pause());
+  if(f&&!Object.values(SOURCES.loops).some(Boolean))toast('루프 영상 자리 — 지금은 사진')}
+$('mPoster').onclick=()=>setMode(false);$('mFootage').onclick=()=>setMode(true);
+
+/* ── 트랙 ── */
+$('tl').innerHTML=TRACKS.map((t,i)=>`<li><button class="tr" data-i="${i}" ${t[2]?'data-cur="PLAY"':'disabled'}>
+  <span class="n">${String(i+1).padStart(2,'0')}</span><span class="t" ${/[가-힣]/.test(t[0])?'lang="ko"':''}>${t[0]}<em>${t[1]}</em></span>
+  <span class="s">${t[2]?'( Preview 0:30 )':'( '+(t[3]||'준비 중')+' )'}</span></button></li>`).join('');
+const audio=new Audio();audio.preload='none';let cur=-1;
+const pl=$('player'),plC=$('plC'),pctx=plC.getContext('2d');
+function playTrack(i){
+  const t=TRACKS[i],rows=qa('.tr');
+  if(cur===i){audio.paused?audio.play():audio.pause();return}
+  cur=i;audio.src='audio/'+t[2]+'.mp3';audio.play().catch(()=>toast('재생을 시작하지 못했어요'));
+  rows.forEach(r=>{const on=+r.dataset.i===i;r.classList.toggle('play',on);if(TRACKS[r.dataset.i][2])r.querySelector('.s').textContent=on?'( Playing )':'( Preview 0:30 )'});
+  $('plT').textContent=String(i+1).padStart(2,'0')+'  '+t[0];pl.classList.add('on');
+}
+function stopTrack(){audio.pause();cur=-1;pl.classList.remove('on');qa('.tr.play').forEach(r=>{r.classList.remove('play');r.querySelector('.s').textContent='( Preview 0:30 )'})}
+$('tl').addEventListener('click',e=>{const b=e.target.closest('.tr');if(b&&!b.disabled)playTrack(+b.dataset.i)});
+$('plBtn').onclick=()=>audio.paused?audio.play():audio.pause();$('plX').onclick=stopTrack;
+audio.addEventListener('play',()=>{$('plBtn').textContent='❙❙';duck(true)});audio.addEventListener('pause',()=>{$('plBtn').textContent='▶';duck(false)});
+audio.addEventListener('ended',stopTrack);
+function drawPlayer(t){ // 재생 위치를 먹선 파형으로
+  const r=plC.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);if(plC.width!==Math.round(r.width*d)){plC.width=Math.round(r.width*d);plC.height=Math.round(r.height*d)}
+  const w=plC.width,h=plC.height,p=audio.duration?audio.currentTime/audio.duration:0;pctx.clearRect(0,0,w,h);
+  for(let k=0;k<2;k++){pctx.beginPath();pctx.lineWidth=d;pctx.strokeStyle=k?'#5FB8B0':'rgba(232,236,240,.3)';
+    const end=k?w*p:w;for(let x=0;x<=end;x+=3*d){const a=(k&&!audio.paused?1:.35)*h*.36*(.5+.5*Math.sin(x*.011+1.7));
+      const y=h/2+Math.sin(x*.05/d-t*5)*a*Math.sin(x*.004/d+t*.6);x?pctx.lineTo(x,y):pctx.moveTo(x,y)}pctx.stroke()}
+  const s=Math.floor(audio.currentTime||0);$('plS').textContent='0:'+String(s).padStart(2,'0');
+}
+
+/* ── 소리: 임시 빗소리 (심연에서는 먹먹하게) ── */
+let ac,rainG,rainF,soundOn=false;
+function initAudio(){ac=new (window.AudioContext||window.webkitAudioContext)();const n=ac.sampleRate*2,b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(.6+.4*Math.random());
+  const s=ac.createBufferSource();s.buffer=b;s.loop=true;const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=500;
+  rainF=ac.createBiquadFilter();rainF.type='lowpass';rainF.frequency.value=7000;rainG=ac.createGain();rainG.gain.value=0;
+  s.connect(hp);hp.connect(rainF);rainF.connect(rainG);rainG.connect(ac.destination);s.start()}
+function duck(d){if(ac&&soundOn)rainG.gain.setTargetAtTime(d?.012:.05,ac.currentTime,.4)}
+$('sound').onclick=()=>{soundOn=!soundOn;if(!ac)initAudio();ac.resume();rainG.gain.setTargetAtTime(soundOn?(audio.paused?.05:.012):0,ac.currentTime,.5);
+  $('sound').classList.toggle('on',soundOn);$('sound').setAttribute('aria-pressed',soundOn);$('soundS').textContent=soundOn?'On':'Off';if(soundOn)toast('임시 빗소리 — 배경음은 미정')};
+
+/* ── 안내, 이동, 메뉴 ── */
+let toastT;function toast(s){const t=$('toast');t.textContent=s;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2200)}
+function yOf(key,mi){
+  if(key==='top')return 0;const el=$(key);if(!el)return null;const top=el.getBoundingClientRect().top+scrollY;
+  if(key==='members'&&mi!=null)return top+Math.min(mps[mi].offsetLeft,track.scrollWidth-W);
+  return top+(key==='music'||key==='world'?H*.08:0);
+}
+function go(key,e,mi){
+  if(key==='archive'){toast('Archive — 굿즈·아카이브는 따로 만듭니다');return}
+  const y=yOf(key,mi);if(y==null)return;closeMenu();
+  const w=$('wipe'),x=e&&e.clientX?e.clientX:W/2,y0=e&&e.clientY?e.clientY:H/2;
+  if(reduce){scrollTo(0,y);return}
+  w.style.transition='none';w.style.opacity=1;w.style.clipPath=`circle(0 at ${x}px ${y0}px)`;w.offsetWidth;
+  w.style.transition='clip-path .7s cubic-bezier(.7,0,.2,1)';w.style.clipPath=`circle(150% at ${x}px ${y0}px)`;
+  setTimeout(()=>{scrollTo(0,y);sm.forEach(o=>o.v=null);w.style.transition='opacity .8s .15s';w.style.opacity=0},720);
+}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-go]');if(a){e.preventDefault();go(a.dataset.go,e)}
+  const f=e.target.closest('.fl');if(f){e.preventDefault();go('members',e,+f.dataset.m)}});
+const dot=$('dot'),menu=$('menu');
+function closeMenu(){menu.classList.remove('on');dot.setAttribute('aria-expanded','false')}
+dot.onclick=()=>{const on=!menu.classList.contains('on');menu.classList.toggle('on',on);dot.setAttribute('aria-expanded',on)};
+const th=$('theater');
+$('tankHit').onclick=()=>{th.classList.add('on');const v=th.querySelector('video');if(v)v.play().catch(()=>{})};
+$('theaterX').onclick=()=>{th.classList.remove('on');const v=th.querySelector('video');if(v)v.pause()};
+addEventListener('keydown',e=>{if(e.key==='Escape'){th.classList.remove('on');closeMenu()}});
+/* 인트로 필름 소스가 있으면 스틸 대신 넣는다 */
+(function(){const src=(isM()&&SOURCES.film.videoMobile)||SOURCES.film.video;if(!src)return;
+  $('tankIn').innerHTML=`<video id="tkV" src="${src}" muted loop playsinline preload="none"></video>`;
+  th.querySelector('picture').outerHTML=`<video src="${src}" controls playsinline preload="none"></video>`})();
+
+/* ── 커서 ── */
+const M={x:W/2,y:H/2,cx:W/2,cy:H/2,on:false};
+const curEl=$('cur');
+addEventListener('pointermove',e=>{M.x=e.clientX;M.y=e.clientY;M.on=true;
+  const t=e.target.closest&&e.target.closest('[data-cur]');curEl.classList.toggle('big',!!t);if(t)curEl.lastElementChild.textContent=t.dataset.cur},{passive:true});
+addEventListener('pointerdown',e=>{if($('about').contains(e.target)||$('top').contains(e.target))blots.push({x:e.clientX,y:e.clientY,r:4,a:.5})},{passive:true});
+
+/* ── 먹선 캔버스: 종이=리본, 심연=기포, 음악=장마 ── */
+const cv=$('ink'),ctx=cv.getContext('2d');let DPR=1,mode='paper',P=[];const blots=[];
+const STREAMS=[[.3,.10,0],[.56,.07,2.1],[.8,.09,4.4]];
+function seed(q,fresh){
+  q.s=Math.floor(Math.random()*3);q.off=(Math.random()*2-1);q.off*=Math.abs(q.off);q.sp=2.2+Math.random()*2.6;q.a=.1+Math.random()*.38;q.w=.5+Math.random()*.8;
+  if(mode==='paper'){q.x=fresh?Math.random()*W:-20;q.y=null}
+  else if(mode==='ink'){q.x=Math.random()*(W+200);q.y=fresh?Math.random()*H:-40;q.sp=11+Math.random()*9;q.len=16+Math.random()*44}
+  else{q.x=Math.random()*W;q.y=fresh?Math.random()*H:H+20;q.sp=.3+Math.random()*1.3;q.r=.8+Math.random()*3.2}
+  q.px=q.x;q.py=q.y}
+function resize(){W=innerWidth;H=innerHeight;DPR=Math.min(devicePixelRatio||1,1.5);cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+  const n=reduce?0:(isM()?240:620);P=[];for(let i=0;i<n;i++){const q={};seed(q,true);P.push(q)}
+  fitAll();memSec.style.height=(H+Math.max(0,track.scrollWidth-W))+'px'}
+function setMode2(m){if(m===mode)return;mode=m;P.forEach(q=>seed(q,true));ctx.clearRect(0,0,W,H)}
+function ribbonY(q,x,t){const s=STREAMS[q.s],u=x/W;
+  let y=H*(s[0]+s[1]*Math.sin(u*3.1+s[2]+t*.13)+.035*Math.sin(u*7.3-t*.21+s[2]*2));
+  y+=q.off*(10+42*(.5+.5*Math.sin(u*5.2+t*.3+s[2])))*(H/900+.4);
+  if(M.on){const dx=x-M.x,dy=y-M.y,d2=dx*dx+dy*dy;if(d2<32000)y+=(dy<0?-1:1)*70*Math.pow(1-d2/32000,2)}
+  return y}
+function drawInk(t,vel){
+  const dark=document.body.dataset.theme!=='paper',col=dark?'232,236,240':'11,13,18';
+  ctx.globalCompositeOperation='destination-out';ctx.fillStyle=`rgba(0,0,0,${mode==='paper'?.05:.28})`;ctx.fillRect(0,0,W,H);ctx.globalCompositeOperation='source-over';
+  const boost=1+Math.min(vel*.06,3);
+  for(const q of P){
+    if(mode==='paper'){q.px=q.x;q.py=q.y;q.x+=q.sp*boost;q.y=ribbonY(q,q.x,t);if(q.py==null){q.px=q.x;q.py=q.y}
+      if(q.x>W+20){seed(q,false);continue}
+      ctx.strokeStyle=`rgba(${col},${q.a})`;ctx.lineWidth=q.w;ctx.beginPath();ctx.moveTo(q.px,q.py);ctx.lineTo(q.x,q.y);ctx.stroke()}
+    else if(mode==='ink'){q.y+=q.sp;q.x-=q.sp*.14;if(q.y>H+60){seed(q,false);continue}
+      ctx.strokeStyle=`rgba(${col},${q.a*.5})`;ctx.lineWidth=q.w;ctx.beginPath();ctx.moveTo(q.x,q.y);ctx.lineTo(q.x+q.len*.14,q.y-q.len);ctx.stroke()}
+    else{q.y-=q.sp*boost;q.x+=Math.sin(t*1.3+q.r*9+q.y*.01)*.4;if(q.y<-20){seed(q,false);continue}
+      ctx.strokeStyle=`rgba(${col},${q.a*.8})`;ctx.lineWidth=.8;ctx.beginPath();ctx.arc(q.x,q.y,q.r,0,6.283);ctx.stroke()}
+  }
+  for(let i=blots.length-1;i>=0;i--){const b=blots[i];b.r+=1.6;b.a*=.94;ctx.strokeStyle=`rgba(95,184,176,${b.a})`;ctx.lineWidth=1;
+    ctx.beginPath();ctx.ellipse(b.x,b.y,b.r*2,b.r*.6,0,0,6.283);ctx.stroke();if(b.a<.02)blots.splice(i,1)}
+}
+
+/* ── 스크롤에 묶인 것들 ── */
+const secs=qa('[data-theme][data-ch]');
+const sm=[{v:null},{v:null},{v:null},{v:null}]; // 부드럽게 따라가는 진행률: hero, film, bloom, members
+const pinP=el=>{const r=el.getBoundingClientRect();return clamp(-r.top/(r.height-H),0,1)};
+const S=(o,t)=>{o.v=o.v==null||reduce?t:o.v+(t-o.v)*.12;return o.v};
+const figs=qa('#figs img'),tank=$('tank'),tkSvg=qa('#tank svg *');
+let lastY=scrollY,vel=0,lastHud=0;
+function frame(ms){
+  requestAnimationFrame(frame);const t=ms/1000;
+  vel+=(Math.abs(scrollY-lastY)-vel)*.2;lastY=scrollY;
+  M.cx+=(M.x-M.cx)*.2;M.cy+=(M.y-M.cy)*.2;curEl.style.transform=`translate(${M.cx}px,${M.cy}px)`;
+  const mx=(M.cx/W-.5),my=(M.cy/H-.5);
+
+  /* 챕터와 테마 */
+  let ci=0;for(let i=0;i<secs.length;i++){const r=secs[i].getBoundingClientRect();if(r.top<=H*.5)ci=i}
+  const th=secs[ci].dataset.theme;if(document.body.dataset.theme!==th){document.body.dataset.theme=th;
+    if(rainF)rainF.frequency.setTargetAtTime(th==='abyss'||th==='rise'?520:7000,ac.currentTime,.5)}
+  setMode2(th==='paper'?'paper':th==='ink'?'ink':'bubble');
+  cv.style.setProperty('--ink-o',ci===0?1:ci===1?.55:ci===4?0:ci===6?.3:.8);
+  if(ms-lastHud>120){lastHud=ms;const n=Math.min(ci+1,7);
+    $('chap').textContent=`( ${String(n).padStart(2,'0')} / 07 — ${secs[ci].dataset.ch} )`;
+    const max=document.documentElement.scrollHeight-H;$('prog').textContent=String(Math.round(scrollY/max*100)).padStart(3,'0');
+    qa('.nav a').forEach(a=>a.classList.toggle('cur',a.dataset.go===secs[ci].id))}
+
+  /* 01 */
+  const hp=S(sm[0],pinP(secs[0]));
+  if(hp<1){const out=1-ease(seg(.62,.98,hp));
+    wm.style.transform=`translate3d(${mx*-14}px,${-hp*H*.16}px,0) scale(${1+hp*.22})`;wm.style.opacity=out;
+    figs.forEach((f,i)=>{f.style.translate=`${(i-1.5)*hp*W*.05+mx*(8+i*5)}px ${-hp*H*(.03+.035*((i*2)%3))}px`;f.style.opacity=out});
+    qa('.hero-kr,.hero-line,.cue,.hero-meta').forEach(e=>e.style.opacity=1-seg(.08,.4,hp))}
+
+  /* 02 */
+  const ar=state.getBoundingClientRect(),sp=seg(H*.86,H*.3,ar.top+ar.height*.3),nOn=Math.round(sp*stSp.length);
+  for(let i=0;i<stSp.length;i++)stSp[i].classList.toggle('on',i<nOn);
+  $('glyph').style.transform=`translate3d(0,${($('about').getBoundingClientRect().top)*-.12}px,0)`;
+
+  /* 03 수조 */
+  const fp=S(sm[1],pinP($('film')));
+  const d1=1-ease(seg(.02,.3,fp)),grow=ease(seg(.16,.56,fp)),lit=ease(seg(.42,.66,fp)),gone=ease(seg(.9,1,fp));
+  tank.style.transform=`translate3d(0,${(1-grow)*H*.06}px,0) rotateX(${(1-grow)*10+my*-3}deg) rotateY(${(1-grow)*-16+mx*5}deg) scale(${lerp(.3,1,grow)})`;
+  tank.style.opacity=1-gone;tkSvg.forEach(e=>e.style.setProperty('--d',d1));
+  $('tankIn').style.opacity=lit;$('tankIn').style.filter=`brightness(${.35+.65*lit})`;
+  const bg=$('tkBg'),fg=$('tkFg');if(bg){bg.style.transform=`translate3d(${mx*-10}px,${my*-6}px,0) scale(${1.02+fp*.05})`;fg.style.transform=`translate3d(${mx*-26}px,${my*-14}px,0) scale(${1.02+fp*.09})`}
+  const tv=$('tkV');if(tv){const want=lit>.5&&fp<.99;if(want&&tv.paused)tv.play().catch(()=>{});else if(!want&&!tv.paused)tv.pause()}
+  const co=ease(seg(.5,.64,fp))*(1-gone);$('filmCap').style.opacity=co;$('filmCap').style.transform=`translateY(${(1-co)*20}px)`;$('filmNo').style.opacity=co;
+  $('tankHit').style.pointerEvents=lit>.6?'auto':'none';
+
+  /* 04 꽃 */
+  const bp=S(sm[2],pinP($('bloom')));
+  fls.forEach((f,i)=>{const late=i===3?.07:0,b=ease(seg(.08+i*.15+late,.34+i*.15+late,bp)),bud=f.querySelector('.b'),op=f.querySelector('.o'),im=f.querySelector('.im');
+    const rise=i===3?(1-ease(seg(.3,.66,bp)))*H*.55:(1-ease(seg(.02+i*.12,.3+i*.12,bp)))*H*.14;
+    im.style.transform=`translate3d(0,${rise+Math.sin(t*.7+i*1.7)*5*b}px,0)`;
+    bud.style.opacity=(1-b)*seg(.0+i*.1,.1+i*.1,bp+(i===3?-.2:0));bud.style.transform=`scale(${.5+.3*b})`;
+    op.style.opacity=b;op.style.transform=`scale(${.45+.55*b}) rotate(${(1-b)*-24}deg)`;
+    const flash=Math.sin(Math.PI*b);if(!f.matches(':hover'))op.style.filter=flash>.02?`drop-shadow(0 0 ${flash*26}px rgba(95,184,176,${flash})) drop-shadow(0 0 ${flash*50}px rgba(217,207,232,${flash*.8}))`:'';
+    f.classList.toggle('open',b>.96);f.querySelector('.nm').style.setProperty('--o',ease(seg(.8,1,b)))});
+
+  /* 05 가로 스트립 */
+  const mr=memSec.getBoundingClientRect(),over=Math.max(0,track.scrollWidth-W),mpx=S(sm[3],clamp(-mr.top,0,over));
+  track.style.transform=`translate3d(${-mpx}px,0,0)`;
+  if(mr.top<H&&mr.bottom>0)mps.forEach(p=>{const k=(p.offsetLeft-mpx)/W;if(k>-1.1&&k<1.1){
+    p.querySelector('.mp-name span').style.transform=`translate3d(${k*W*(isM()?.08:.2)}px,0,0)`;
+    p.querySelector('.mp-fig').style.translate=`${k*W*-.06}px 0`;p.querySelector('.mp-kr').style.translate=`${k*W*.08}px 0`}});
+
+  drawInk(t,vel);if(pl.classList.contains('on'))drawPlayer(t);
+}
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -12% 0px'});
+qa('.rv').forEach(e=>io.observe(e));
+let rT;addEventListener('resize',()=>{clearTimeout(rT);rT=setTimeout(()=>{if(Math.abs(innerWidth-W)>2||Math.abs(innerHeight-H)>120)resize()},120)});
+resize();requestAnimationFrame(frame);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{fitAll();memSec.style.height=(H+Math.max(0,track.scrollWidth-W))+'px'});
+})();
+</script>
+</body>
+</html>
