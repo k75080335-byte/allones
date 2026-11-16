@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>結落 GYEOLLAK — Typography v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Noto+Serif+KR:wght@200;300;500;900&family=JetBrains+Mono:wght@300;400&display=block" rel="stylesheet">
+<style>
+:root{--hanji:#F4F1EA;--nong:#0B0B0C;--jung:#3A3C40;--dam:#9A9DA3;--cheong:#1F2A3A;--eun:#E8ECF0;--teal:#5FB8B0;--pearl:#D9CFE8;--hud:#0B0B0C}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--hanji)}
+body{font-family:"Noto Serif KR",serif;color:var(--nong);background:var(--hanji);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.dark{--hud:#E8ECF0}
+.mono{font-family:"JetBrains Mono",monospace;font-weight:300;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+/* HUD */
+.hud{position:fixed;inset:0;pointer-events:none;z-index:50;color:var(--hud);transition:color .6s}
+.hud .tl{position:absolute;left:32px;top:26px;display:flex;gap:14px;align-items:baseline}
+.hud .tl b{font-family:"Bodoni Moda",serif;font-weight:500;font-size:20px;letter-spacing:.02em}
+.hud .tr{position:absolute;right:32px;top:28px;display:flex;gap:22px;align-items:center;pointer-events:auto}
+.hud .chips{display:flex;gap:6px}
+.hud .chip{width:26px;height:26px;border:1px solid currentColor;border-radius:50%;display:grid;place-items:center;opacity:.35;cursor:pointer;transition:opacity .3s,background .3s;font-size:9px;letter-spacing:0}
+.hud .chip.on{opacity:1}
+.hud button{all:unset;cursor:pointer;border:1px solid currentColor;border-radius:99px;padding:8px 16px 8px 14px;display:flex;gap:8px;align-items:center}
+.hud button:hover{background:currentColor}
+.hud button:hover span{filter:invert(1)}
+.hud .bl{position:absolute;left:32px;bottom:26px;max-width:340px;line-height:1.7;opacity:.75}
+.hud .br{position:absolute;right:32px;bottom:26px;text-align:right;opacity:.75}
+.hud .bar{position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;opacity:.12}
+.hud .bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:currentColor;opacity:1}
+.grain{position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:.09;mix-blend-mode:multiply;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");animation:gr 1.2s steps(6) infinite}
+body.dark .grain{mix-blend-mode:screen;opacity:.06;filter:invert(1)}
+@keyframes gr{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-4%)}60%{transform:translate(-4%,-1%)}80%{transform:translate(3%,3%)}}
+section{position:relative}
+.stick{position:sticky;top:0;height:100vh;overflow:hidden}
+/* S1 */
+#s1{height:520vh;background:var(--hanji)}
+#s1 svg.line{position:absolute;inset:0;width:100%;height:100%}
+#s1 .glyph{position:absolute;left:50%;top:52%;height:min(78vh,64vw);aspect-ratio:1;transform:translate(-50%,-50%)}
+#s1 .side{position:absolute;left:32px;top:50%;transform:translateY(-50%);width:250px}
+#s1 .side h3{font-family:"Bodoni Moda",serif;font-weight:400;font-size:46px;line-height:1;margin:10px 0 6px}
+#s1 .side h3 em{font-family:"Noto Serif KR";font-style:normal;font-weight:200;font-size:40px;margin-right:10px}
+#s1 .side p{font-size:13px;line-height:1.8;color:var(--jung);font-weight:300}
+#s1 .order{display:flex;gap:10px;margin-top:22px;align-items:center}
+#s1 .order span{font-size:26px;font-weight:300;color:var(--dam);transition:color .4s}
+#s1 .order span.on{color:var(--nong)}
+#s1 .order i{width:22px;height:1px;background:var(--dam)}
+#s1 .count{position:absolute;right:32px;top:50%;transform:translateY(-50%);text-align:right}
+#s1 .count b{display:block;font-family:"Bodoni Moda",serif;font-weight:400;font-size:88px;line-height:1;font-variant-numeric:lining-nums}
+#s1 .cap{position:absolute;left:50%;bottom:9vh;transform:translateX(-50%);text-align:center;color:var(--jung);white-space:nowrap}
+/* S2 */
+#s2{height:340vh;background:linear-gradient(var(--hanji),var(--eun))}
+#s2 .stick{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1vh}
+#s2 svg.en{width:92vw;max-height:30vh}
+#s2 .row{display:flex;width:92vw;align-items:flex-end;justify-content:space-between}
+#s2 svg.ko{width:min(62vw,96vh);cursor:crosshair}
+#s2 .meta{width:22vw;padding-bottom:6vh;line-height:1.9}
+#s2 .meta p{font-size:13px;color:var(--jung);font-weight:300;margin-top:14px;text-transform:none;letter-spacing:.02em;font-family:"Noto Serif KR"}
+#s2 .sw{display:flex;gap:6px;margin-top:16px}
+#s2 .sw i{width:18px;height:18px;border-radius:50%}
+/* S3 */
+#s3{height:380vh;background:linear-gradient(var(--eun),#dfe4ea 60%,var(--eun))}
+#s3 svg.water{position:absolute;inset:0;width:100%;height:100%}
+#s3 .slogan{position:absolute;left:0;right:0;top:27vh;text-align:center;font-weight:300;font-size:clamp(34px,5.4vw,92px);line-height:1.28;letter-spacing:-.01em;color:var(--nong)}
+#s3 .slogan .c{display:inline-block;opacity:0;will-change:filter,transform,opacity}
+#s3 .slogan .br{display:block}
+#s3 .refl{top:auto;bottom:0;transform-origin:top;pointer-events:none}
+#s3 .mark{position:absolute;font-family:"Noto Serif KR";font-weight:200;font-size:clamp(40px,6vw,100px);color:var(--dam)}
+#s3 .tag{position:absolute;left:50%;transform:translateX(-50%);top:17vh;color:var(--jung)}
+/* S4 */
+#s4{height:460vh;background:var(--nong);color:var(--eun)}
+#s4 svg{position:absolute;inset:0;width:100%;height:100%}
+#s4 .flowers{position:absolute;left:0;right:0;bottom:11vh;display:grid;grid-template-columns:repeat(4,1fr);padding:0 8vw;text-align:center}
+#s4 .fl{opacity:0}
+#s4 .fl .k{font-size:clamp(22px,2.4vw,38px);font-weight:200;letter-spacing:.06em}
+#s4 .fl .e{font-family:"Bodoni Moda";font-style:italic;font-size:15px;color:var(--dam);margin:6px 0 10px}
+#s4 .fl .n{color:var(--eun);opacity:.7}
+#s4 .fl .dot{width:7px;height:7px;border-radius:50%;margin:0 auto 18px;background:var(--pearl);box-shadow:0 0 18px 4px rgba(217,207,232,.6)}
+#s4 .fl:last-child .dot{background:var(--teal);box-shadow:0 0 22px 6px rgba(95,184,176,.7)}
+#s4 .head{position:absolute;left:50%;top:13vh;transform:translateX(-50%);text-align:center;color:var(--dam)}
+footer{height:40vh;background:var(--nong);color:var(--dam);display:grid;place-items:center}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="hud">
+  <div class="tl"><b>結落</b><span class="mono">Gyeollak — Typography System v1</span></div>
+  <div class="tr mono">
+    <div class="chips"><span class="chip" data-s="0">01</span><span class="chip" data-s="1">02</span><span class="chip" data-s="2">03</span><span class="chip" data-s="3">04</span></div>
+    <button id="replay"><span>↻ Replay</span></button>
+  </div>
+  <div class="bl mono" id="hudNote">Scroll — 금붕어의 잔상이 선이 되고, 선이 결이 된다.</div>
+  <div class="br mono"><span id="hudScene">01 · 획 STROKE</span><br><span id="hudPct">000%</span></div>
+  <div class="bar"><i id="bar"></i></div>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <!-- 비백 dry brush: horizontal / vertical streaks -->
+  <filter id="dryH" x="-10%" y="-30%" width="120%" height="160%" color-interpolation-filters="sRGB">
+   <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="edge"/>
+   <feDisplacementMap in="SourceGraphic" in2="edge" scale="9" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+   <feTurbulence type="fractalNoise" baseFrequency="0.006 0.16" numOctaves="3" seed="11" result="st"/>
+   <feColorMatrix in="st" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  9 0 0 0 -6.3" result="holes"/>
+   <feComposite in="rough" in2="holes" operator="out"/>
+  </filter>
+  <filter id="dryV" x="-30%" y="-10%" width="160%" height="120%" color-interpolation-filters="sRGB">
+   <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="7" result="edge"/>
+   <feDisplacementMap in="SourceGraphic" in2="edge" scale="9" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+   <feTurbulence type="fractalNoise" baseFrequency="0.16 0.006" numOctaves="3" seed="23" result="st"/>
+   <feColorMatrix in="st" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  9 0 0 0 -6.3" result="holes"/>
+   <feComposite in="rough" in2="holes" operator="out"/>
+  </filter>
+  <!-- 먹 번짐 bleed: blur + goo + wet edge -->
+  <filter id="bleed" x="-20%" y="-20%" width="140%" height="140%">
+   <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="2" result="t"/>
+   <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b"/>
+   <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 16 -6" result="goo"/>
+   <feDisplacementMap in="goo" in2="t" scale="34" xChannelSelector="R" yChannelSelector="B" result="d"/>
+   <feGaussianBlur in="d" stdDeviation="2.5"/>
+  </filter>
+  <filter id="dryWipe" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1700" height="1000">
+   <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4" result="edge"/>
+   <feDisplacementMap in="SourceGraphic" in2="edge" scale="22" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+   <feTurbulence type="fractalNoise" baseFrequency="0.004 0.12" numOctaves="3" seed="11" result="st"/>
+   <feColorMatrix in="st" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  9 0 0 0 -6.3" result="holes"/>
+   <feComposite in="rough" in2="holes" operator="out"/>
+  </filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="1.2"/></filter>
+  <filter id="inkedge" x="-5%" y="-20%" width="110%" height="140%">
+   <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="3" seed="9" result="t"/>
+   <feDisplacementMap in="SourceGraphic" in2="t" scale="40" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="pearl" x="0" y="0" width="100%" height="100%">
+   <feTurbulence id="pearlT" type="fractalNoise" baseFrequency="0.004 0.011" numOctaves="2" seed="5" result="t"/>
+   <feDisplacementMap in="SourceGraphic" in2="t" scale="160" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="dissolve" x="-20%" y="-30%" width="140%" height="160%">
+   <feTurbulence type="fractalNoise" baseFrequency="0.008 0.02" numOctaves="3" seed="3" result="t"/>
+   <feDisplacementMap id="dissolveD" in="SourceGraphic" in2="t" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <linearGradient id="nacre" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="420" y2="160" spreadMethod="reflect">
+   <stop offset="0" stop-color="#5FB8B0"/><stop offset=".18" stop-color="#9FDCD3"/><stop offset=".34" stop-color="#E8ECF0"/>
+   <stop offset=".5" stop-color="#D9CFE8"/><stop offset=".66" stop-color="#B9C8EA"/><stop offset=".82" stop-color="#F4F1EA"/><stop offset="1" stop-color="#5FB8B0"/>
+  </linearGradient>
+  <linearGradient id="dropG" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3A3C40"/><stop offset=".55" stop-color="#1F2A3A"/><stop offset="1" stop-color="#0B0B0C"/></linearGradient>
+ </defs>
+</svg>
+
+<!-- SCENE 1 : line → 결 -->
+<section id="s1"><div class="stick">
+  <svg class="line" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"><g id="lineG"></g></svg>
+  <div class="side">
+    <div class="mono" style="color:var(--dam)">01 — Stroke / 획</div>
+    <h3><em>결</em>Gyeol</h3>
+    <p>나뭇결, 물결, 숨결.<br>남겨진 흔적이 만드는 무늬.<br><span style="color:var(--dam)">n. grain — the texture that remains.</span></p>
+    <div class="order"><span id="o1">ㄱ</span><i></i><span id="o2">ㅕ</span><i></i><span id="o3">ㄹ</span></div>
+  </div>
+  <svg class="glyph" viewBox="0 0 1000 1000" id="glyph">
+    <g id="grid" stroke="#9A9DA3" stroke-width="1" fill="none" opacity="0">
+      <rect x="40" y="40" width="920" height="920"/><path d="M500 40V960M40 500H960" stroke-dasharray="4 8"/>
+      <path d="M40 40L960 960M960 40L40 960" stroke-dasharray="2 10" opacity=".5"/>
+      <circle cx="500" cy="500" r="460" stroke-dasharray="1 9" opacity=".6"/>
+    </g>
+    <g id="bleedG" filter="url(#bleed)" fill="#3A3C40" opacity="0"></g>
+    <g id="strokesG" fill="#0B0B0C"></g>
+    <g id="labelsG" class="mono" font-size="15" fill="#3A3C40"></g>
+    <g id="seal" opacity="0" transform="translate(858 862)">
+      <rect x="0" y="0" width="74" height="74" fill="#1F2A3A"/><text x="37" y="48" text-anchor="middle" font-size="30" font-family="Noto Serif KR" font-weight="500" fill="#F4F1EA">結</text>
+    </g>
+  </svg>
+  <div class="count mono"><b id="cnt">00</b>/ 07 Strokes</div>
+  <div class="cap mono" id="cap1">One ink line — 하나의 먹선</div>
+</div></section>
+
+<!-- SCENE 2 : display -->
+<section id="s2"><div class="stick">
+  <div class="mono" style="position:absolute;top:12vh;left:4vw;color:var(--dam)">02 — Display / 표제</div>
+  <div class="mono" style="position:absolute;top:12vh;right:4vw;color:var(--dam)">Bodoni Moda × Noto Serif KR 900</div>
+  <svg class="en" viewBox="0 0 1600 330" id="en">
+    <defs>
+      <clipPath id="enLine"><rect x="0" y="0" width="1600" height="312"/></clipPath>
+      <clipPath id="enClip"></clipPath>
+    </defs>
+    <g clip-path="url(#enClip)"><path id="enInk" fill="#0B0B0C" filter="url(#inkedge)"/></g>
+    <g clip-path="url(#enLine)" id="enLetters" fill="none" stroke="#3A3C40" stroke-width="1.2"></g>
+  </svg>
+  <div class="row">
+    <div class="meta mono">
+      缺落 / 결락<br><span style="color:var(--dam)">absence · omission · the part that fell away</span>
+      <p>닿는 순간 번지는 먹처럼, 빈자리도 무늬가 된다. 글자 위에 커서를 올리면 자개빛이 일어난다.</p>
+      <div class="sw"><i style="background:#0B0B0C"></i><i style="background:#3A3C40"></i><i style="background:#9A9DA3"></i><i style="background:#1F2A3A"></i><i style="background:#5FB8B0"></i><i style="background:#D9CFE8"></i></div>
+    </div>
+    <svg class="ko" viewBox="0 0 1200 560" id="ko">
+      <defs>
+        <clipPath id="koClip"><text x="600" y="470" text-anchor="middle" font-family="Noto Serif KR" font-weight="900" font-size="470" letter-spacing="-10">결락</text></clipPath>
+        <mask id="koWipe" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="560"><g id="koWipeG"></g></mask>
+        <radialGradient id="mouseG"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+        <linearGradient id="sweepG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="300" id2="">
+          <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity="1"/><stop offset=".56" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <mask id="koNacreMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="560">
+          <rect id="sweepR" x="-1200" y="0" width="3600" height="560" fill="url(#sweepG)"/>
+          <circle id="mouseC" cx="-500" cy="-500" r="300" fill="url(#mouseG)"/>
+        </mask>
+      </defs>
+      <text x="600" y="470" text-anchor="middle" font-family="Noto Serif KR" font-weight="900" font-size="470" letter-spacing="-10" fill="none" stroke="#9A9DA3" stroke-width="1" stroke-dasharray="3 5">결락</text>
+      <g clip-path="url(#koClip)">
+        <g mask="url(#koWipe)"><rect width="1200" height="560" fill="#0B0B0C"/></g>
+        <g mask="url(#koNacreMask)" id="nacreG"><rect x="-200" y="-200" width="1600" height="960" fill="url(#nacre)" filter="url(#pearl)"/></g>
+      </g>
+    </svg>
+  </div>
+  <div class="mono" style="position:absolute;bottom:9vh;left:50%;transform:translateX(-50%);color:var(--dam)">Hover — 자개 Mother-of-pearl</div>
+</div></section>
+
+<!-- SCENE 3 : slogan + droplet -->
+<section id="s3"><div class="stick">
+  <svg class="water" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="deep" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8ECF0" stop-opacity="0"/><stop offset="1" stop-color="#1F2A3A" stop-opacity=".22"/></linearGradient></defs>
+    <rect x="0" y="600" width="1600" height="300" fill="url(#deep)"/>
+    <path id="surface" fill="none" stroke="#3A3C40" stroke-width="1"/>
+    <g id="rings" fill="none"></g>
+    <g id="splash" fill="#1F2A3A"></g>
+    <g id="drop"><path d="M0,-46 C10,-24 22,-6 22,8 C22,22 12,32 0,32 C-12,32 -22,22 -22,8 C-22,-6 -10,-24 0,-46Z" fill="url(#dropG)"/><ellipse cx="-8" cy="4" rx="4" ry="8" fill="#E8ECF0" opacity=".7"/></g>
+  </svg>
+  <div class="tag mono">03 — Drop / 닿는 순간</div>
+  <div class="slogan" id="slogan"></div>
+  <div class="slogan refl" id="refl" aria-hidden="true"></div>
+</div></section>
+
+<!-- SCENE 4 : abyss -->
+<section id="s4"><div class="stick">
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" id="abyss">
+    <g id="abText" filter="url(#dissolve)">
+      <text id="abKo" x="800" y="560" text-anchor="middle" font-family="Noto Serif KR" font-weight="200" font-size="400" fill="none" stroke="#E8ECF0" stroke-width="1.1">결락</text>
+      <text x="800" y="640" text-anchor="middle" class="mono" font-family="JetBrains Mono" font-size="14" letter-spacing="8" fill="#9A9DA3">GYEOLLAK — 缺落 — THE ABYSS</text>
+    </g>
+    <g id="ribbons" fill="none" stroke-linecap="round"></g>
+  </svg>
+  <div class="head mono">04 — Abyss / 심연 · 가라앉고, 다시 떠오른다</div>
+  <div class="flowers">
+    <div class="fl"><div class="dot"></div><div class="k">백합</div><div class="e">Lily</div><div class="n mono">태준 · 파문의 안쪽</div></div>
+    <div class="fl"><div class="dot"></div><div class="k">동백</div><div class="e">Camellia</div><div class="n mono">유성 · 낙화</div></div>
+    <div class="fl"><div class="dot"></div><div class="k">수국</div><div class="e">Hydrangea</div><div class="n mono">진우 · 수면의 빛</div></div>
+    <div class="fl"><div class="dot"></div><div class="k">능소화</div><div class="e">Trumpet vine</div><div class="n mono">류현 · 수심</div></div>
+  </div>
+</div></section>
+<footer class="mono">結落 — Typography v1 · 2026.11</footer>
+
+<script>
+(()=>{
+const NS='http://www.w3.org/2000/svg';
+const $=s=>document.querySelector(s);
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const seg=(p,a,b)=>clamp((p-a)/(b-a));
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const eo=t=>1-Math.pow(1-t,3);
+const lerp=(a,b,t)=>a+(b-a)*t;
+function rng(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+
+/* ---------- brush engine: centerline → variable-width filled outline ---------- */
+function catmull(pts,n=20){const P=[pts[0],...pts,pts[pts.length-1]],o=[];
+ for(let i=1;i<P.length-2;i++){const[a,b,c,d]=[P[i-1],P[i],P[i+1],P[i+2]];
+  for(let j=0;j<n;j++){const t=j/n,t2=t*t,t3=t2*t;o.push([0,1].map(k=>.5*(2*b[k]+(-a[k]+c[k])*t+(2*a[k]-5*b[k]+4*c[k]-d[k])*t2+(-a[k]+3*b[k]-3*c[k]+d[k])*t3)))}}
+ o.push(pts[pts.length-1]);return o}
+function resample(pts,N){const L=[0];for(let i=1;i<pts.length;i++)L.push(L[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+ const T=L[L.length-1],o=[];let j=0;for(let i=0;i<N;i++){const d=T*i/(N-1);while(j<L.length-2&&L[j+1]<d)j++;const u=(d-L[j])/((L[j+1]-L[j])||1);
+ o.push([lerp(pts[j][0],pts[j+1][0],u),lerp(pts[j][1],pts[j+1][1],u)])}return o}
+const g=(t,c,s)=>Math.exp(-Math.pow((t-c)/s,2));
+function brush(raw,o){const{w=60,nib=-.7,seed=1,tail='press',head=.45,N=160}=o;const c=resample(catmull(raw),N),r=rng(seed);
+ const Lp=[],Rp=[];let j=0;
+ for(let i=0;i<N;i++){const t=i/(N-1),a=c[Math.max(0,i-2)],b=c[Math.min(N-1,i+2)],ang=Math.atan2(b[1]-a[1],b[0]-a[0]);
+  j=j*.9+(r()-.5)*.09;
+  let pr=.8+head*g(t,.045,.055);
+  if(tail==='press')pr+=.22*g(t,.92,.06),pr*=t>.96?1-(t-.96)/.04*.45:1;
+  else pr*=t>.55?Math.pow(1-(t-.55)/.45,1.25)*.94+.06:1;
+  if(t<.02)pr*=.75+t/.02*.25;
+  const dir=.82+.18*Math.abs(Math.sin(ang-nib));
+  const hw=w*.5*pr*dir*(1+j),nx=-Math.sin(ang),ny=Math.cos(ang),sk=.08*Math.sin(t*11+seed);
+  Lp.push([c[i][0]+nx*hw*(1+sk),c[i][1]+ny*hw*(1+sk)]);Rp.push([c[i][0]-nx*hw*(1-sk),c[i][1]-ny*hw*(1-sk)]);}
+ const cap=(ctr,from,to,ang0,dirSign)=>{const o=[],rr=Math.hypot(from[0]-ctr[0],from[1]-ctr[1])*.5+Math.hypot(to[0]-ctr[0],to[1]-ctr[1])*.5;
+  const a0=Math.atan2(from[1]-ctr[1],from[0]-ctr[0]);for(let k=1;k<8;k++){const a=a0+dirSign*Math.PI*k/8;o.push([ctr[0]+Math.cos(a)*rr,ctr[1]+Math.sin(a)*rr])}return o};
+ const f=x=>x.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L');
+ const endCap=cap(c[N-1],Lp[N-1],Rp[N-1],0,-1),startCap=cap(c[0],Rp[0],Lp[0],0,-1);
+ const d='M'+f(Lp)+' L'+f(endCap)+' L'+f([...Rp].reverse())+' L'+f(startCap)+'Z';
+ const center='M'+f(c);return{d,center,w}}
+
+/* ---------- SCENE 1 ---------- */
+const lineG=$('#lineG');
+const LINE=[[-60,560],[160,500],[360,540],[560,470],[780,520],[980,450],[1160,488],[1330,430],[1450,392],[1530,330],[1552,268],[1520,226],[1478,244]];
+const lb=brush(LINE,{w:30,nib:-1.1,seed:8,tail:'taper',head:.6,N:260});
+const lmask=el('mask',{id:'lm',maskUnits:'userSpaceOnUse',x:-200,y:0,width:2000,height:900},lineG);
+const lmp=el('path',{d:lb.center,stroke:'#fff','stroke-width':60,fill:'none','stroke-linecap':'round'},lmask);
+const ghosts=[];for(let k=1;k<=5;k++){ghosts.push(el('path',{d:lb.center,fill:'none',stroke:k%2?'#9A9DA3':'#3A3C40','stroke-width':k==1?1.2:.7,opacity:.5/k,transform:`translate(${-k*26} ${k*14})`},lineG))}
+el('path',{d:lb.d,fill:'#0B0B0C',mask:'url(#lm)',filter:'url(#dryH)'},lineG);
+const lLen=lmp.getTotalLength();lmp.style.strokeDasharray=lLen;ghosts.forEach(p=>p.style.strokeDasharray=lLen);
+
+const STROKES=[ // 결 : ㄱ → ㅕ(─ ─ │) → ㄹ(ㄱ ─ ㄴ)
+ {j:'ㄱ',pts:[[178,214],[300,203],[430,192],[536,180],[556,188],[562,212],[556,290],[534,376],[498,440],[440,500]],w:68,tail:'press',f:'dryH',seed:3},
+ {j:'ㅕ',pts:[[606,268],[680,264],[752,262]],w:58,f:'dryH',seed:5,head:.6},
+ {j:'ㅕ',pts:[[606,412],[680,408],[752,406]],w:58,f:'dryH',seed:6,head:.6},
+ {j:'ㅕ',pts:[[782,104],[785,250],[785,400],[782,520],[777,616]],w:72,tail:'taper',f:'dryV',seed:9,nib:-.2},
+ {j:'ㄹ',pts:[[252,676],[450,668],[650,660],[766,654],[788,664],[792,700],[788,782]],w:60,f:'dryH',seed:12},
+ {j:'ㄹ',pts:[[268,792],[480,788],[640,785],[772,783]],w:56,f:'dryH',seed:14},
+ {j:'ㄹ',pts:[[262,786],[262,846],[262,898],[280,914],[430,912],[620,906],[818,898]],w:60,f:'dryH',seed:16},
+];
+const sg=$('#strokesG'),bg=$('#bleedG'),lab=$('#labelsG'),gl=$('#glyph');
+STROKES.forEach((s,i)=>{const b=brush(s.pts,{w:s.w,tail:s.tail||'press',seed:s.seed,head:s.head??.45,nib:s.nib??-.7});
+ const m=el('mask',{id:'sm'+i,maskUnits:'userSpaceOnUse',x:0,y:0,width:1000,height:1000},gl);
+ const mp=el('path',{d:b.center,stroke:'#fff','stroke-width':s.w*1.9,fill:'none','stroke-linecap':'round'},m);
+ const len=mp.getTotalLength();mp.style.strokeDasharray=len;mp.style.strokeDashoffset=len;
+ const gg=el('g',{filter:`url(#${s.f})`},sg);el('path',{d:b.d,mask:`url(#sm${i})`},gg);
+ el('path',{d:b.d,mask:`url(#sm${i})`},bg);
+ const lt=el('text',{x:s.pts[0][0]-34,y:s.pts[0][1]-46,opacity:0},lab);lt.textContent=String(i+1).padStart(2,'0')+' '+s.j;
+ const tick=el('circle',{cx:s.pts[0][0],cy:s.pts[0][1],r:3,fill:'#5FB8B0',opacity:0},lab);
+ s.mp=mp;s.len=len;s.lt=lt;s.tick=tick;});
+const S1={grid:$('#grid'),bleed:bg,seal:$('#seal'),cnt:$('#cnt'),cap:$('#cap1'),o:[$('#o1'),$('#o2'),$('#o3')],svgLine:$('#s1 svg.line')};
+const ST0=.24,STD=.08;
+function scene1(p){
+ const lp=ease(seg(p,.02,.22));lmp.style.strokeDashoffset=lLen*(1-lp);
+ ghosts.forEach((gp,k)=>gp.style.strokeDashoffset=lLen*(1-ease(seg(p,.02+(k+1)*.012,.24+(k+1)*.01))));
+ const out=seg(p,.22,.34);S1.svgLine.style.opacity=1-out;S1.svgLine.style.transform=`translateY(${-out*6}vh) scaleY(${1-out*.4})`;S1.svgLine.style.filter=`blur(${out*3}px)`;
+ S1.grid.setAttribute('opacity',(seg(p,.2,.3)*.55-seg(p,.86,.96)*.4).toFixed(3));
+ let n=0;STROKES.forEach((s,i)=>{const a=ST0+i*STD,q=ease(seg(p,a,a+STD*.92));s.mp.style.strokeDashoffset=s.len*(1-q);
+  if(q>0)n=i+1;const on=seg(p,a-.01,a+.02)*(1-seg(p,.84,.9));s.lt.setAttribute('opacity',on);s.tick.setAttribute('opacity',on)});
+ const sd=seg(p,.2,.3);document.querySelector('#s1 .side').style.opacity=sd;document.querySelector('#s1 .count').style.opacity=sd;
+ S1.cnt.textContent=String(n).padStart(2,'0');
+ const jam=n==0?-1:n==1?0:n<=4?1:2;S1.o.forEach((o,k)=>o.classList.toggle('on',k<=jam));
+ S1.bleed.setAttribute('opacity',(seg(p,.3,.9)*.32).toFixed(3));
+ S1.seal.setAttribute('opacity',eo(seg(p,.86,.93)));S1.seal.setAttribute('transform',`translate(858 ${862+18*(1-eo(seg(p,.86,.93)))})`);
+ S1.cap.textContent=p<.23?'One ink line — 하나의 먹선, 금붕어의 잔상':p<.86?'Stroke order — ㄱ → ㅕ → ㄹ':'結 — 선이 결이 되었다';
+}
+
+/* ---------- SCENE 2 ---------- */
+const S2={letters:[],ink:$('#enInk')};
+function buildS2(){
+ const lettersG=$('#enLetters'),clip=$('#enClip'),word='GYEOLLAK',fs=280,base=262;
+ const probe=el('text',{'font-family':'Bodoni Moda','font-size':fs,'font-weight':400},$('#en'));
+ const ws=[...word].map(ch=>{probe.textContent=ch;return probe.getComputedTextLength()});probe.remove();
+ const track=14,total=ws.reduce((a,b)=>a+b,0)+track*(word.length-1);let x=(1600-total)/2;
+ [...word].forEach((ch,i)=>{const t=el('text',{x:x.toFixed(1),y:base,'font-family':'Bodoni Moda','font-size':fs,'font-weight':400},lettersG);t.textContent=ch;
+  const c=el('text',{x:x.toFixed(1),y:base,'font-family':'Bodoni Moda','font-size':fs,'font-weight':400},clip);c.textContent=ch;
+  S2.letters.push({t,c});x+=ws[i]+track});
+ // brush wipe mask for 결락
+ const W=$('#koWipeG');S2.wipes=[];
+ [[[-60,160],[300,140],[700,170],[1260,130]],[[-60,330],[400,345],[800,320],[1260,345]],[[-60,495],[350,485],[760,510],[1260,485]]].forEach((pts,i)=>{
+  const c=resample(catmull(pts),80);const mp=el('path',{d:'M'+c.map(q=>q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' L'),stroke:'#fff','stroke-width':290,fill:'none','stroke-linecap':'round',filter:'url(#dryWipe)'},W);
+  const len=mp.getTotalLength();mp.style.strokeDasharray=len;mp.style.strokeDashoffset=len;S2.wipes.push({mp,len})});
+}
+function scene2(p,t){
+ S2.letters.forEach((L,i)=>{const q=eo(seg(p,.02+i*.022,.16+i*.022));L.t.setAttribute('transform',`translate(0 ${((1-q)*300).toFixed(1)})`);L.c.setAttribute('transform',`translate(0 ${((1-q)*300).toFixed(1)})`)});
+ const f=ease(seg(p,.22,.58)),lvl=lerp(340,-30,f);let d=`M-40 ${lvl}`;for(let x=-40;x<=1640;x+=40){d+=` L${x} ${(lvl+Math.sin(x*.012+t*1.6)*10*(1-f*.6)+Math.sin(x*.031-t*2.3)*5).toFixed(1)}`}d+=' L1640 400 L-40 400Z';S2.ink.setAttribute('d',d);
+ S2.wipes.forEach((w,i)=>{const q=ease(seg(p,.34+i*.09,.52+i*.09));w.mp.style.strokeDashoffset=w.len*(1-q)});
+ const sx=((t*.12)%1)*3600-2400;$('#sweepR').setAttribute('x',sx.toFixed(0));
+ $('#nacre').setAttribute('gradientTransform',`rotate(${(t*8)%360} 600 280) translate(${(t*40)%840} 0)`);
+ $('#nacreG').setAttribute('opacity',(seg(p,.6,.75)).toFixed(3));
+}
+const ko=$('#ko'),mc=$('#mouseC');let hover=0,mx=-500,my=-500,tmx=-500,tmy=-500;
+ko.addEventListener('pointermove',e=>{const r=ko.getBoundingClientRect();tmx=(e.clientX-r.left)/r.width*1200;tmy=(e.clientY-r.top)/r.height*560;hover=1});
+ko.addEventListener('pointerleave',()=>hover=0);
+
+/* ---------- SCENE 3 ---------- */
+const S3={chars:[],rchars:[]};
+(function(){const lines=['우리는 닿는 순간부터','번지고 있었다'];const sl=$('#slogan'),rf=$('#refl');
+ lines.forEach((ln,li)=>{const b=document.createElement('span');b.className='br';const rb=b.cloneNode();
+  [...ln].forEach(ch=>{const c=document.createElement('span');c.className='c';c.textContent=ch===' '?'\u00a0':ch;b.appendChild(c);const rc=c.cloneNode(true);rb.appendChild(rc);S3.chars.push(c);S3.rchars.push(rc)});
+  if(li==0){const m=document.createElement('span');m.className='c';m.textContent='「';b.prepend(m);S3.chars.unshift(m);const rm=m.cloneNode(true);rb.prepend(rm);S3.rchars.unshift(rm)}
+  if(li==1){const m=document.createElement('span');m.className='c';m.textContent='」';b.appendChild(m);S3.chars.push(m);const rm=m.cloneNode(true);rb.appendChild(rm);S3.rchars.push(rm)}
+  sl.appendChild(b);rf.appendChild(rb)})})();
+const rings=$('#rings'),RN=7;S3.rings=[...Array(RN)].map((_,i)=>el('ellipse',{cx:800,cy:600,rx:0,ry:0,stroke:i==2?'#5FB8B0':i%2?'#9A9DA3':'#1F2A3A'},rings));
+const spl=[...Array(9)].map((_,i)=>({e:el('circle',{r:2+(i%3)*1.6},$('#splash')),vx:(i-4)*38+((i*37)%11)-5,vy:-(120+((i*53)%90))}));
+const SY=600;
+function scene3(p,t){
+ const fall=seg(p,.0,.18),y=lerp(-80,SY,fall*fall);const dr=$('#drop');
+ const st=1+fall*.35;dr.setAttribute('transform',`translate(800 ${y-32*st}) scale(${1/Math.sqrt(st)} ${st})`);dr.setAttribute('opacity',fall<1?1:0);
+ const imp=Math.max(0,p-.18);
+ S3.rings.forEach((r,i)=>{const q=clamp((imp-i*.045)/.55);const e=eo(q);r.setAttribute('rx',(e*900).toFixed(1));r.setAttribute('ry',(e*95).toFixed(1));r.setAttribute('stroke-width',(lerp(2.4,.3,e)).toFixed(2));r.setAttribute('opacity',q>0?((1-q)*(i==2?.9:.7)).toFixed(3):0)});
+ const sq=seg(p,.18,.32);spl.forEach(s=>{const tt=sq*1.1;s.e.setAttribute('cx',(800+s.vx*tt).toFixed(1));s.e.setAttribute('cy',(SY+s.vy*tt+260*tt*tt).toFixed(1));s.e.setAttribute('opacity',sq>0&&sq<1?(1-sq):0)});
+ let d='M-20 '+SY;const amp=imp>0?28*Math.exp(-imp*4):0;for(let x=-20;x<=1620;x+=16){const dx=x-800,r=Math.abs(dx);d+=` L${x} ${(SY+amp*Math.sin(r*.035-imp*60)*Math.exp(-r/420)+Math.sin(x*.01+t)*1.2).toFixed(1)}`}$('#surface').setAttribute('d',d);
+ const N=S3.chars.length;S3.chars.forEach((c,i)=>{const a=.22+i/N*.5,q=seg(p,a,a+.12),e=eo(q);
+  c.style.opacity=e;c.style.filter=`blur(${((1-e)*14).toFixed(2)}px)`;c.style.transform=`translateY(${((1-e)*-0.35).toFixed(3)}em) scale(${(1+(1-e)*.25).toFixed(3)})`;
+  c.style.textShadow=`0 0 ${(4+(1-e)*30).toFixed(1)}px rgba(31,42,58,${(.5*(1-e)+.08).toFixed(2)})`;
+  const r=S3.rchars[i];r.style.opacity=e*.14;r.style.filter=`blur(${(3+(1-e)*10).toFixed(1)}px)`});
+ const rf=$('#refl'),sl=$('#slogan'),rr=sl.getBoundingClientRect(),vh=innerHeight;const surfY=vh*(SY/900);
+ // reflection mirrored below the surface line (approx in viewport units for slice scaling)
+ const sc=Math.max(innerWidth/1600,vh/900),sy=vh/2+(SY-450)*sc;rf.style.top=(2*sy-rr.bottom)+'px';rf.style.transform=`scaleY(-1) skewX(${Math.sin(t*.8)*1.5}deg)`;
+}
+
+/* ---------- SCENE 4 ---------- */
+const S4={seeds:[],ribbons:[],fl:[...document.querySelectorAll('.fl')]};
+function buildS4(){const cv=document.createElement('canvas');cv.width=1600;cv.height=900;const cx=cv.getContext('2d');
+ cx.font='200 400px "Noto Serif KR"';cx.textAlign='center';cx.lineWidth=3;cx.strokeStyle='#fff';cx.strokeText('결락',800,560);
+ const id=cx.getImageData(0,0,1600,900).data,pts=[];for(let y=0;y<900;y+=3)for(let x=0;x<1600;x+=3)if(id[(y*1600+x)*4+3]>120)pts.push([x,y]);
+ const r=rng(77);const G=$('#ribbons');const NR=54;
+ for(let i=0;i<NR;i++){const s=pts.length?pts[Math.floor(r()*pts.length)]:[800+r()*400-200,450];const col=i%11==0?'#5FB8B0':i%7==0?'#D9CFE8':'#E8ECF0';
+  const lines=[...Array(4)].map(()=>el('path',{stroke:col,'stroke-width':col=='#E8ECF0'?.55:.8,opacity:col=='#E8ECF0'?.5:.85},G));
+  S4.ribbons.push({s,lines,ph:r()*6.28,sp:.7+r()*.6,len:40+r()*50})}}
+function field(x,y,t){return Math.sin(x*.0024+t*.15)*1.7+Math.cos(y*.0042-t*.11)*1.3+Math.sin((x-y)*.0015+1.3)*.9}
+function scene4(p,t){
+ const draw=seg(p,0,.14);const ak=$('#abKo');ak.style.strokeDasharray='2400';ak.style.strokeDashoffset=(2400*(1-ease(draw))).toFixed(0);
+ const dis=ease(seg(p,.22,.62));$('#dissolveD').setAttribute('scale',(dis*170).toFixed(1));$('#abText').setAttribute('opacity',(1-dis*.96).toFixed(3));
+ const grow=ease(seg(p,.18,.6)),rise=ease(seg(p,.62,.95)),fade=1-seg(p,.86,1)*.6;
+ const G=$('#ribbons');G.setAttribute('opacity',(seg(p,.16,.24)*fade).toFixed(3));G.setAttribute('transform',`translate(0 ${(-rise*160).toFixed(1)})`);
+ if(grow>0)S4.ribbons.forEach(R=>{const n=Math.max(2,Math.floor(R.len*grow*R.sp+2));let x=R.s[0],y=R.s[1];const P=[[x,y]];
+  for(let k=0;k<n;k++){const a=field(x,y,t)+R.ph*.3;x+=Math.cos(a)*9;y+=Math.sin(a)*9+lerp(.6,-3,rise);P.push([x,y])}
+  R.lines.forEach((ln,j)=>{let d='';for(let k=0;k<P.length;k++){const a=P[Math.max(0,k-1)],b=P[Math.min(P.length-1,k+1)],an=Math.atan2(b[1]-a[1],b[0]-a[0]);
+   const off=(j-1.5)*4.2*Math.cos(k*.11+R.ph+t*.7)*(.3+.7*Math.sin(Math.PI*k/(P.length-1||1)));d+=(k?'L':'M')+(P[k][0]-Math.sin(an)*off).toFixed(1)+' '+(P[k][1]+Math.cos(an)*off).toFixed(1)}
+   ln.setAttribute('d',d)})});
+ S4.fl.forEach((f,i)=>{const q=eo(seg(p,.66+i*.06,.8+i*.06));f.style.opacity=q;f.style.transform=`translateY(${(1-q)*60}px)`;f.style.filter=`blur(${(1-q)*8}px)`});
+}
+
+/* ---------- loop ---------- */
+const secs=['#s1','#s2','#s3','#s4'].map(s=>$(s)),names=['01 · 획 STROKE','02 · 표제 DISPLAY','03 · 닿음 DROP','04 · 심연 ABYSS'],notes=['Scroll — 금붕어의 잔상이 선이 되고, 선이 결이 된다.','결은 글자가 되고, 먹이 글자를 채운다. 결락 위에 커서를 올려 자개빛을.','떨어지고, 닿고, 번진다.','가라앉은 선은 리본이 되어, 네 송이 꽃으로 떠오른다.'];
+const prog=i=>{const s=secs[i],r=s.getBoundingClientRect();return clamp(-r.top/(s.offsetHeight-innerHeight))};
+const fns=[scene1,scene2,scene3,scene4];let ready=false;
+window.GY={starts:()=>secs.map(s=>s.offsetTop),lens:()=>secs.map(s=>s.offsetHeight-innerHeight),ready:()=>ready,T:null};
+function frame(now){const t=GY.T??now/1000;
+ mx+=(tmx-mx)*.15;my+=(tmy-my)*.15;mc.setAttribute('cx',mx.toFixed(1));mc.setAttribute('cy',my.toFixed(1));mc.setAttribute('r',hover?320:0);
+ let cur=0;secs.forEach((s,i)=>{const r=s.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)fns[i](prog(i),t);if(r.top<=innerHeight*.5)cur=i});
+ document.body.classList.toggle('dark',cur==3);$('#hudScene').textContent=names[cur];$('#hudNote').textContent=notes[cur];
+ document.querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('on',i==cur));
+ const tot=document.documentElement.scrollHeight-innerHeight,pc=clamp(scrollY/tot);$('#bar').style.width=(pc*100)+'%';$('#hudPct').textContent=String(Math.round(pc*100)).padStart(3,'0')+'%';
+ if(tour)tourStep(now);requestAnimationFrame(frame)}
+/* replay tour */
+let tour=null;const btn=$('#replay');
+function tourStep(now){const el2=(now-tour.t0)/1000,D=34,q=clamp(el2/D);scrollTo(0,q*(document.documentElement.scrollHeight-innerHeight));if(q>=1)stopTour()}
+function stopTour(){tour=null;btn.firstChild.textContent='↻ Replay'}
+btn.addEventListener('click',()=>{if(tour){stopTour();return}scrollTo(0,0);tour={t0:performance.now()+600};btn.firstChild.textContent='■ Stop'});
+addEventListener('wheel',()=>tour&&stopTour(),{passive:true});addEventListener('touchstart',()=>tour&&stopTour(),{passive:true});
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{stopTour();const i=+c.dataset.s;scrollTo({top:secs[i].offsetTop+(i==0?0:(secs[i].offsetHeight-innerHeight)*.55),behavior:'smooth'})}));
+document.fonts.ready.then(()=>Promise.all([document.fonts.load('400 280px "Bodoni Moda"'),document.fonts.load('200 400px "Noto Serif KR"','결락'),document.fonts.load('900 400px "Noto Serif KR"','결락'),document.fonts.load('300 40px "Noto Serif KR"','우리는닿는순간부터번지고있었다')])).catch(()=>{}).then(()=>{buildS2();buildS4();ready=true;requestAnimationFrame(frame)});
+})();
+</script>
+</body>
+</html>
