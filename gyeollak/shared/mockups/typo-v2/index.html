@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>結落 GYEOLLAK — Typography v2 · Brush</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Noto+Serif+KR:wght@200;300;500;900&family=JetBrains+Mono:wght@300;400&display=block" rel="stylesheet">
+<style>
+:root{--hanji:#F4F1EA;--nong:#0B0B0C;--jung:#3A3C40;--dam:#9A9DA3;--cheong:#1F2A3A;--eun:#E8ECF0;--teal:#5FB8B0;--pearl:#D9CFE8;--hud:#0B0B0C;--paper:none}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--hanji)}
+body{font-family:"Noto Serif KR",serif;color:var(--nong);background:var(--hanji);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.dark{--hud:#E8ECF0}
+.mono{font-family:"JetBrains Mono",monospace;font-weight:300;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.hud{position:fixed;inset:0;pointer-events:none;z-index:50;color:var(--hud);transition:color .6s}
+.hud .tl{position:absolute;left:32px;top:26px;display:flex;gap:14px;align-items:baseline}
+.hud .tl b{font-family:"Bodoni Moda",serif;font-weight:500;font-size:20px}
+.hud .tr{position:absolute;right:32px;top:28px;display:flex;gap:22px;align-items:center;pointer-events:auto}
+.hud .chips{display:flex;gap:6px}
+.hud .chip{width:26px;height:26px;border:1px solid currentColor;border-radius:50%;display:grid;place-items:center;opacity:.35;cursor:pointer;transition:opacity .3s;font-size:9px;letter-spacing:0}
+.hud .chip.on{opacity:1}
+.hud button{all:unset;cursor:pointer;border:1px solid currentColor;border-radius:99px;padding:8px 16px 8px 14px}
+.hud button:hover{background:currentColor}.hud button:hover span{filter:invert(1)}
+.hud .bl{position:absolute;left:32px;bottom:26px;max-width:360px;line-height:1.7;opacity:.75}
+.hud .br{position:absolute;right:32px;bottom:26px;text-align:right;opacity:.75}
+.hud .bar{position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;opacity:.12}
+.hud .bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:currentColor}
+.grain{position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:.07;mix-blend-mode:multiply;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");animation:gr 1.2s steps(6) infinite}
+body.dark .grain{mix-blend-mode:screen;opacity:.05;filter:invert(1)}
+@keyframes gr{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-4%)}60%{transform:translate(-4%,-1%)}80%{transform:translate(3%,3%)}}
+section{position:relative}
+.stick{position:sticky;top:0;height:100vh;overflow:hidden}
+.paper{background-color:var(--hanji);background-image:var(--paper);background-size:640px 640px}
+canvas.ink{mix-blend-mode:multiply;display:block}
+/* S1 */
+#s1{height:560vh}
+#s1 .lw{position:absolute;left:0;top:50%;width:100vw;aspect-ratio:16/9;transform:translateY(-50%)}
+#s1 .lw>*{position:absolute;inset:0;width:100%;height:100%}
+#s1 .glyph{position:absolute;left:50%;top:52%;height:min(80vh,64vw);aspect-ratio:1;transform:translate(-50%,-50%)}
+#s1 .glyph>*{position:absolute;inset:0;width:100%;height:100%}
+#s1 .side{position:absolute;left:32px;top:50%;transform:translateY(-50%);width:250px}
+#s1 .side h3{font-family:"Bodoni Moda",serif;font-weight:400;font-size:46px;line-height:1;margin:10px 0 6px}
+#s1 .side h3 em{font-family:"Noto Serif KR";font-style:normal;font-weight:200;font-size:40px;margin-right:10px}
+#s1 .side p{font-size:13px;line-height:1.8;color:var(--jung);font-weight:300}
+#s1 .order{display:flex;gap:10px;margin-top:22px;align-items:center}
+#s1 .order span{font-size:26px;font-weight:300;color:var(--dam);transition:color .4s}
+#s1 .order span.on{color:var(--nong)}
+#s1 .order i{width:22px;height:1px;background:var(--dam)}
+#s1 .count{position:absolute;right:32px;top:50%;transform:translateY(-50%);text-align:right}
+#s1 .count b{display:block;font-family:"Bodoni Moda",serif;font-weight:400;font-size:88px;line-height:1}
+#s1 .cap{position:absolute;left:50%;bottom:7vh;transform:translateX(-50%);text-align:center;color:var(--jung);white-space:nowrap}
+/* S2 */
+#s2{height:360vh}
+#s2 .stick{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:0;background-image:var(--paper),linear-gradient(var(--hanji),var(--eun));background-size:640px 640px,100% 100%;background-blend-mode:multiply}
+#s2 svg.en{width:90vw;max-height:26vh}
+#s2 .row{display:flex;width:92vw;align-items:center;justify-content:space-between}
+#s2 .ko{position:relative;width:min(66vw,118vh);aspect-ratio:2/1;cursor:crosshair}
+#s2 .ko canvas{position:absolute;inset:0;width:100%;height:100%}
+#s2 .ko canvas.nac{mix-blend-mode:normal}
+#s2 .meta{width:20vw;line-height:1.9}
+#s2 .meta p{font-size:13px;color:var(--jung);font-weight:300;margin-top:14px;text-transform:none;letter-spacing:.02em;font-family:"Noto Serif KR"}
+#s2 .sw{display:flex;gap:6px;margin-top:16px}#s2 .sw i{width:18px;height:18px;border-radius:50%}
+/* S3 */
+#s3{height:360vh;background:linear-gradient(var(--eun),#dfe4ea 60%,var(--eun))}
+#s3 svg.water{position:absolute;inset:0;width:100%;height:100%}
+#s3 .slogan{position:absolute;left:0;right:0;top:27vh;text-align:center;font-weight:300;font-size:clamp(34px,5.4vw,92px);line-height:1.28;letter-spacing:-.01em}
+#s3 .slogan .c{display:inline-block;opacity:0}
+#s3 .slogan .br{display:block}
+#s3 .refl{top:auto;pointer-events:none}
+#s3 .tag{position:absolute;left:50%;transform:translateX(-50%);top:17vh;color:var(--jung)}
+/* Transition: ink bloom */
+#tr{height:240vh;background:var(--eun)}
+#tr canvas{position:absolute;inset:0;width:100%;height:100%}
+#tr .menu{position:absolute;right:9vw;top:24vh;text-align:right;font-family:"Bodoni Moda";font-size:clamp(28px,3.4vw,54px);line-height:1.25;color:var(--eun);opacity:0}
+#tr .menu div{transform:translateY(20px)}
+#tr .lbl{position:absolute;left:4vw;top:12vh;color:var(--jung)}
+/* S4 */
+#s4{height:560vh;background:var(--nong);color:var(--eun)}
+#s4 canvas,#s4 svg{position:absolute;inset:0;width:100%;height:100%}
+#s4 .flowers{position:absolute;left:0;right:0;bottom:10vh;display:grid;grid-template-columns:repeat(4,1fr);padding:0 8vw;text-align:center}
+#s4 .fl{opacity:0}
+#s4 .fl .k{font-size:clamp(22px,2.4vw,38px);font-weight:200;letter-spacing:.06em}
+#s4 .fl .e{font-family:"Bodoni Moda";font-style:italic;font-size:15px;color:var(--dam);margin:6px 0 10px}
+#s4 .fl .n{color:var(--eun);opacity:.7}
+#s4 .fl .dot{width:7px;height:7px;border-radius:50%;margin:0 auto 18px;background:var(--pearl);box-shadow:0 0 18px 4px rgba(217,207,232,.6)}
+#s4 .fl:last-child .dot{background:var(--teal);box-shadow:0 0 22px 6px rgba(95,184,176,.7)}
+#s4 .head{position:absolute;left:50%;top:12vh;transform:translateX(-50%);text-align:center;color:var(--dam)}
+#s4 .studio{position:absolute;left:6vw;bottom:14vh;max-width:300px;color:var(--eun);font-size:13px;line-height:1.8;font-weight:300;opacity:0}
+#s4 .studio b{display:block;font-family:"Bodoni Moda";font-weight:400;font-size:30px;margin-bottom:10px}
+footer{height:40vh;background:var(--nong);color:var(--dam);display:grid;place-items:center}
+
+@media(max-width:700px){
+ .hud .tl{left:18px;top:20px;gap:8px}.hud .tl .mono{font-size:8px;max-width:125px;line-height:1.5}
+ .hud .tr{right:16px;top:20px;gap:10px}.hud .chips{gap:4px}.hud .chip{width:19px;height:19px;font-size:7px}.hud button{font-size:8px;padding:6px 10px}
+ .hud .bl{left:18px;bottom:20px;max-width:240px;font-size:8px}.hud .br{right:18px;bottom:20px;font-size:8px}
+ #s1 .glyph{height:auto;width:100vw;top:49%}#s1 .side{top:14vh;left:22px;transform:none;width:80vw;display:flex;align-items:baseline;gap:12px}
+ #s1 .side h3{font-size:32px;white-space:nowrap}#s1 .side h3 em{font-size:26px}#s1 .side>.mono{position:absolute;top:-24px;font-size:8px}#s1 .side p{display:none}#s1 .order{margin-top:0;gap:8px}#s1 .order span{font-size:22px}#s1 .order i{width:12px}
+ #s1 .count{top:auto;bottom:12vh;right:22px;transform:none;font-size:8px}#s1 .count b{font-size:48px}#s1 .cap{font-size:8px;bottom:8vh}
+ #s2 .stick>div.mono{font-size:8px;max-width:160px;top:12vh!important}#s2 .stick>div.mono:last-child{display:none}#s2 .stick>div.mono:nth-child(2){text-align:right}
+ #s2 .row{flex-direction:column-reverse;align-items:stretch;width:100vw}#s2 .ko{width:100vw}#s2 .meta{width:80vw;align-self:center;margin-top:30px;font-size:8px}#s2 .meta p{font-size:11px;max-width:300px;margin-top:8px}#s2 svg.en{width:94vw}#s2 .sw i{height:12px;width:12px}
+ #s3 .slogan{font-size:7vw;top:33vh}#s3 .tag{font-size:8px;top:23vh;white-space:nowrap}
+ #tr .menu{top:35vh;font-size:32px}#tr .lbl{font-size:8px}
+ #s4 .head{font-size:8px;width:90vw;white-space:nowrap}#s4 .studio{bottom:12vh;left:25px;width:220px;font-size:11px}#s4 .studio b{font-size:25px;margin-bottom:6px}
+ #s4 .flowers{padding:0 4vw;bottom:18vh;gap:5px}#s4 .fl .k{font-size:21px}#s4 .fl .e{font-size:12px}#s4 .fl .n{font-size:7px;line-height:1.8}
+}
+@media(prefers-reduced-motion:reduce){.grain{animation:none}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="hud">
+  <div class="tl"><b>結落</b><span class="mono">Gyeollak — Typography v2 · Brush</span></div>
+  <div class="tr mono">
+    <div class="chips"><span class="chip" data-s="0">01</span><span class="chip" data-s="1">02</span><span class="chip" data-s="2">03</span><span class="chip" data-s="4">04</span></div>
+    <button id="replay"><span>↻ Replay</span></button>
+  </div>
+  <div class="bl mono" id="hudNote"></div>
+  <div class="br mono"><span id="hudScene"></span><br><span id="hudPct">000%</span></div>
+  <div class="bar"><i id="bar"></i></div>
+</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="inkedge" x="-5%" y="-20%" width="110%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="3" seed="9" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="40" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <linearGradient id="dropG" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3A3C40"/><stop offset=".55" stop-color="#1F2A3A"/><stop offset="1" stop-color="#0B0B0C"/></linearGradient>
+  <linearGradient id="nacreLine" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="900"><stop offset="0" stop-color="#5FB8B0"/><stop offset=".35" stop-color="#E8ECF0"/><stop offset=".6" stop-color="#D9CFE8"/><stop offset="1" stop-color="#5FB8B0"/></linearGradient>
+</defs></svg>
+
+<!-- 01 획 -->
+<section id="s1"><div class="stick paper">
+  <div class="lw"><svg viewBox="0 0 1600 900" id="ghostSvg"><g id="ghosts" fill="none"></g></svg><canvas class="ink" id="lineCv"></canvas></div>
+  <div class="side">
+    <div class="mono" style="color:var(--dam)">01 — Stroke / 획</div>
+    <h3><em>결</em>Gyeol</h3>
+    <p>나뭇결, 물결, 숨결.<br>남겨진 흔적이 만드는 무늬.<br><span style="color:var(--dam)">n. grain — the texture that remains.</span></p>
+    <div class="order"><span id="o1">ㄱ</span><i></i><span id="o2">ㅕ</span><i></i><span id="o3">ㄹ</span></div>
+  </div>
+  <div class="glyph">
+    <svg viewBox="0 0 1000 1000"><g id="grid" stroke="#9A9DA3" stroke-width="1" fill="none" opacity="0">
+      <rect x="40" y="40" width="920" height="920"/><path d="M500 40V960M40 500H960" stroke-dasharray="4 8"/><path d="M40 40L960 960M960 40L40 960" stroke-dasharray="2 10" opacity=".5"/><circle cx="500" cy="500" r="460" stroke-dasharray="1 9" opacity=".6"/></g></svg>
+    <canvas class="ink" id="gyCv"></canvas>
+    <svg viewBox="0 0 1000 1000"><g id="labels" font-family="JetBrains Mono" font-size="15" fill="#3A3C40"></g>
+      <g id="seal" opacity="0"><rect x="862" y="866" width="70" height="70" fill="#1F2A3A"/><text x="897" y="912" text-anchor="middle" font-size="30" font-family="Noto Serif KR" font-weight="500" fill="#F4F1EA">結</text></g></svg>
+  </div>
+  <div class="count mono"><b id="cnt">00</b>/ 07 Strokes</div>
+  <div class="cap mono" id="cap1"></div>
+</div></section>
+
+<!-- 02 표제 -->
+<section id="s2"><div class="stick">
+  <div class="mono" style="position:absolute;top:12vh;left:4vw;color:var(--dam)">02 — Display / 표제</div>
+  <div class="mono" style="position:absolute;top:12vh;right:4vw;color:var(--dam)">Bodoni Moda × 手書 Brush 13 strokes</div>
+  <svg class="en" viewBox="0 0 1600 330" id="en"><defs><clipPath id="enLine"><rect x="0" y="0" width="1600" height="312"/></clipPath><clipPath id="enClip"></clipPath></defs>
+    <g clip-path="url(#enClip)"><path id="enInk" fill="#0B0B0C" filter="url(#inkedge)"/></g>
+    <g clip-path="url(#enLine)" id="enLetters" fill="none" stroke="#3A3C40" stroke-width="1.2"></g></svg>
+  <div class="row">
+    <div class="meta mono">缺落 / 결락<br><span style="color:var(--dam)">absence · omission · the part that fell away</span>
+      <p>폰트가 아니라 붓으로 쓴 결락. 커서를 올리면 먹 위로 자개빛이 일어난다.</p>
+      <div class="sw"><i style="background:#0B0B0C"></i><i style="background:#3A3C40"></i><i style="background:#9A9DA3"></i><i style="background:#1F2A3A"></i><i style="background:#5FB8B0"></i><i style="background:#D9CFE8"></i></div></div>
+    <div class="ko" id="ko"><canvas class="ink" id="koCv"></canvas><canvas class="nac" id="nacCv"></canvas></div>
+  </div>
+  <div class="mono" style="position:absolute;bottom:8vh;left:50%;transform:translateX(-50%);color:var(--dam)">Hover — 자개 Mother-of-pearl</div>
+</div></section>
+
+<!-- 03 닿음 -->
+<section id="s3"><div class="stick">
+  <svg class="water" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="deep" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8ECF0" stop-opacity="0"/><stop offset="1" stop-color="#1F2A3A" stop-opacity=".22"/></linearGradient></defs>
+    <rect x="0" y="600" width="1600" height="300" fill="url(#deep)"/><path id="surface" fill="none" stroke="#3A3C40" stroke-width="1"/>
+    <g id="rings" fill="none"></g><g id="splash" fill="#1F2A3A"></g>
+    <g id="drop"><path d="M0,-46 C10,-24 22,-6 22,8 C22,22 12,32 0,32 C-12,32 -22,22 -22,8 C-22,-6 -10,-24 0,-46Z" fill="url(#dropG)"/><ellipse cx="-8" cy="4" rx="4" ry="8" fill="#E8ECF0" opacity=".7"/></g>
+  </svg>
+  <div class="tag mono">03 — Drop / 닿는 순간</div>
+  <div class="slogan" id="slogan"></div><div class="slogan refl" id="refl" aria-hidden="true"></div>
+</div></section>
+
+<!-- 전환: 먹 번짐 -->
+<section id="tr"><div class="stick">
+  <div class="lbl mono">— Ink bloom / 먹이 번져 심연으로</div>
+  <canvas id="trCv"></canvas>
+  <div class="menu" id="menu"><div>The Abyss</div><div>Members</div><div>Discography</div><div>Archive</div></div>
+</div></section>
+
+<!-- 04 심연 -->
+<section id="s4"><div class="stick">
+  <canvas id="abCv"></canvas>
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"><g id="ribbons" fill="none" stroke-linecap="round"></g></svg>
+  <div class="head mono">04 — Abyss / 심연 · 가라앉고, 다시 떠오른다</div>
+  <div class="studio" id="studio"><b>The Abyss</b>수면 아래로 가라앉은 결은 흰 먹이 되어 다시 쓰인다. 비친 글자는 물결에 흔들리고, 가장자리엔 자개빛이 남는다.</div>
+  <div class="flowers">
+    <div class="fl"><div class="dot"></div><div class="k">백합</div><div class="e">Lily</div><div class="n mono">태준 · 파문의 안쪽</div></div>
+    <div class="fl"><div class="dot"></div><div class="k">동백</div><div class="e">Camellia</div><div class="n mono">유성 · 낙화</div></div>
+    <div class="fl"><div class="dot"></div><div class="k">수국</div><div class="e">Hydrangea</div><div class="n mono">진우 · 수면의 빛</div></div>
+    <div class="fl"><div class="dot"></div><div class="k">능소화</div><div class="e">Trumpet vine</div><div class="n mono">류현 · 수심</div></div>
+  </div>
+</div></section>
+<footer class="mono">結落 — Typography v2 · Brush · 2026.11</footer>
+<script>
+/* source: brush.js */
+/* 結落 brush engine v2 — bristle simulation on Canvas2D (no WebGL) */
+(function(G){
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const gs=(x,c,s)=>Math.exp(-Math.pow((x-c)/s,2));
+function rng(seed){let s=seed>>>0||1;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+function hash(a,b,c){let h=(a*374761393+b*668265263+c*1442695041)|0;h=Math.imul(h^(h>>>13),1274126177);h^=h>>>16;return (h>>>0)/4294967296}
+function noise1(r){const N=256,v=new Float32Array(N);for(let i=0;i<N;i++)v[i]=r();return x=>{const i=Math.floor(x),f=x-i,a=v[((i%N)+N)%N],b=v[(((i+1)%N)+N)%N],s=f*f*(3-2*f);return a+(b-a)*s}}
+function catmull(pts,n=16){const P=[pts[0],...pts,pts[pts.length-1]],o=[];
+ for(let i=1;i<P.length-2;i++){const a=P[i-1],b=P[i],c=P[i+1],d=P[i+2];
+  for(let j=0;j<n;j++){const t=j/n,t2=t*t,t3=t2*t;o.push([0,1].map(k=>.5*(2*b[k]+(-a[k]+c[k])*t+(2*a[k]-5*b[k]+4*c[k]-d[k])*t2+(-a[k]+3*b[k]-3*c[k]+d[k])*t3)))}}
+ o.push(pts[pts.length-1]);return o}
+function plen(p){let L=0;for(let i=1;i<p.length;i++)L+=Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]);return L}
+function resample(pts,N){const L=[0];for(let i=1;i<pts.length;i++)L.push(L[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+ const T=L[L.length-1],o=[];let j=0;for(let i=0;i<N;i++){const d=T*i/(N-1);while(j<L.length-2&&L[j+1]<d)j++;const u=(d-L[j])/((L[j+1]-L[j])||1);
+ o.push([lerp(pts[j][0],pts[j+1][0],u),lerp(pts[j][1],pts[j+1][1],u)])}return o}
+
+class Stroke{
+ constructor(raw,o){
+  o=this.o=Object.assign({w:60,seed:1,tail:'press',dry:.7,B:60,entry:true,ink:[11,11,12],splat:1,fiber:1},o);
+  const w=o.w,r=rng(o.seed*7919+13);
+  let pts=raw.slice();if(o.entry){const d0=[raw[1][0]-raw[0][0],raw[1][1]-raw[0][1]],dl0=Math.hypot(...d0)||1,ux=d0[0]/dl0,uy=d0[1]/dl0;pts=[[raw[0][0]-ux*w*.3+uy*w*.2,raw[0][1]-uy*w*.3-ux*w*.2],...raw]}
+  let c=catmull(pts,16);const L=plen(c);const N=Math.max(30,Math.round(L/1.6));c=resample(c,N);
+  const step=L/(N-1),ext=o.tail==='taper'?Math.round(w*.85/step):0;
+  const A=c[N-1],Bp=c[N-6],dx=A[0]-Bp[0],dy=A[1]-Bp[1],dl=Math.hypot(dx,dy)||1;
+  for(let i=1;i<=ext;i++)c.push([A[0]+dx/dl*step*i,A[1]+dy/dl*step*i]);
+  const M=c.length;this.c=c;this.N=N;this.M=M;this.L=L;
+  const ang=new Float32Array(M),s=new Float32Array(M);
+  for(let i=0;i<M;i++){const p=c[Math.max(0,i-3)],q=c[Math.min(M-1,i+3)];ang[i]=Math.atan2(q[1]-p[1],q[0]-p[0]);if(i)s[i]=s[i-1]+Math.hypot(c[i][0]-c[i-1][0],c[i][1]-c[i-1][1])}
+  const win=Math.max(3,Math.round(w*.3/step)),turn=new Float32Array(M);
+  for(let i=0;i<M;i++){let d=ang[Math.min(M-1,i+win)]-ang[Math.max(0,i-win)];d=Math.atan2(Math.sin(d),Math.cos(d));turn[i]=clamp(Math.abs(d)/1.0)}
+  const W=new Float32Array(M),wob=noise1(r);const Ltot=s[M-1];
+  for(let i=0;i<M;i++){const sE=s[i],sR=L-sE;let pr=.9+.32*gs(sE,w*.38,w*.32)+.24*turn[i];
+   if(o.tail==='press'){pr+=.22*gs(sR,w*.42,w*.3);if(sR<w*.2)pr*=.5+.5*Math.max(0,sR)/(w*.2)}
+   else{const u=clamp((sE-L*.42)/(Ltot-L*.42));pr*=1-Math.pow(u,1.25)*.985}
+   if(sE<w*.16)pr*=.3+.7*sE/(w*.16);
+   pr*=1+(wob(sE*.014)-.5)*.18;W[i]=Math.max(.4,w*pr)}
+  this.ang=ang;this.s=s;this.turn=turn;this.W=W;
+  this.br=[];for(let k=0;k<o.B;k++){let u=(r()+r()-1)*1.05;u=clamp(u,-1,1);
+   const dryB=r()<.28;this.br.push({u,load:dryB?.62+.25*r():.95+.35*r(),a:.5+.45*r(),lw:.7+.8*r(),nz:noise1(r),f:(1+2.2*Math.abs(u)*Math.abs(u))/(8+30*r()),ph:r()*300,split:r()<.2?(u>=0?1:-1)*(.5+r()):0,jit:r()*6.28})}
+  this.iE=0;while(this.iE<N-1&&s[this.iE]<w*.5)this.iE++;
+  this.iP=N-1;while(this.iP>0&&L-s[this.iP]<w*.45)this.iP--;
+  this.pools=[];for(let i=win;i<N-win;i++)if(turn[i]>.45&&turn[i]>=turn[i-1]&&turn[i]>turn[i+1])this.pools.push(i);
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;const mw=Math.max(...W)*.9+w*1.3;c.forEach(p=>{x0=Math.min(x0,p[0]);y0=Math.min(y0,p[1]);x1=Math.max(x1,p[0]);y1=Math.max(y1,p[1])});
+  this.bx=x0-mw;this.by=y0-mw;this.bw=x1-x0+2*mw;this.bh=y1-y0+2*mw;this.drawn=0;this.q=0;
+ }
+ alloc(k){this.k=k;this.cv=document.createElement('canvas');this.cv.width=Math.ceil(this.bw*k);this.cv.height=Math.ceil(this.bh*k);this.ctx=this.cv.getContext('2d');this.clear()}
+ clear(){const x=this.ctx;x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,this.cv.width,this.cv.height);x.setTransform(this.k,0,0,this.k,-this.bx*this.k,-this.by*this.k);x.lineCap='round';x.lineJoin='round';this.drawn=0}
+ lv(b,i){const o=this.o,t=this.s[i]/this.L,s=this.s[i],ss=(a,b2,x)=>{const u=clamp((x-a)/(b2-a));return u*u*(3-2*u)};let v=b.load*(1-o.dry*ss(.4,1.08,t))-.38*Math.abs(b.u)*ss(.25,1,t)-.32*Math.pow(Math.abs(b.u),3)+.4*this.turn[i]+(s<o.w*1.5?.6*(1-s/(o.w*1.5)):0);
+  if(o.tail==='press'&&this.L-s<o.w*.6)v+=.3;return v}
+ pos(b,i){const o=this.o,W=this.W[i];let off=b.u*W*(.5-.06*b.u*b.u);
+  if(b.split){const tt=o.tail==='taper'?clamp((this.s[i]-this.L*.66)/(this.s[this.M-1]-this.L*.66)):clamp((this.s[i]-(this.L-o.w*.7))/(o.w*.7))*.35;off+=b.split*o.w*.15*tt*tt}
+  const eu=Math.abs(b.u);off+=Math.sin(this.s[i]*(.035+eu*.05)+b.jit)*W*(.014+.02*eu*eu)*(1+b.nz(this.s[i]*.08+b.ph)-.5);const a=this.ang[i];return[this.c[i][0]-Math.sin(a)*off,this.c[i][1]+Math.cos(a)*off]}
+ blob(x,y,R,rot,alpha,seed,ring){const c=this.ctx,[r0,g0,b0]=this.o.ink;c.beginPath();const n=28;
+  for(let k=0;k<=n;k++){const a=k/n*6.2832,rr=R*(1+.13*(hash(seed,k%n,3)-.5)+.08*Math.sin(a*3+seed))*(1+.18*Math.cos(2*(a-rot)));const px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;k?c.lineTo(px,py):c.moveTo(px,py)}
+  c.fillStyle=`rgba(${r0},${g0},${b0},${alpha})`;c.fill();if(ring){c.lineWidth=R*.06;c.strokeStyle=`rgba(${r0},${g0},${b0},${ring})`;c.stroke()}}
+ dots(i,n,spread,fwd,seed){const c=this.ctx,[r0,g0,b0]=this.o.ink,a=this.ang[i],w=this.o.w;for(let k=0;k<n;k++){const h1=hash(seed,i,k*4),h2=hash(seed,i,k*4+1),h3=hash(seed,i,k*4+2),h4=hash(seed,i,k*4+3);
+  const f=(fwd+(h1-.3)*1.2)*w,sd=(h2-.5)*spread*w,x=this.c[i][0]+Math.cos(a)*f-Math.sin(a)*sd,y=this.c[i][1]+Math.sin(a)*f+Math.cos(a)*sd,R=(.5+Math.pow(h3,2.2)*3.2)*w/60;
+  c.beginPath();c.ellipse(x,y,R,R*(.7+.3*h4),h4*3,0,6.2832);c.fillStyle=`rgba(${r0},${g0},${b0},${.55+.4*h4})`;c.fill()}}
+ drawRange(i0,i1){const c=this.ctx,o=this.o,B=o.B,[r0,g0,b0]=o.ink;c.strokeStyle=`rgb(${r0},${g0},${b0})`;
+  // pre-effects: entry press blob, pools, end press
+  if(i0<=this.iE&&i1>=this.iE){const p=this.c[this.iE];this.blob(p[0],p[1],this.W[this.iE]*.27,this.ang[this.iE]+.8,.4,o.seed,0);o.splat&&this.dots(this.iE,3,1.6,-.6,o.seed+5)}
+  for(const pi of this.pools)if(i0<=pi&&i1>=pi){const p=this.c[pi];this.blob(p[0],p[1],this.W[pi]*.32,this.ang[pi],.3,o.seed+pi,0);o.splat&&this.dots(pi,4,1.8,.4,o.seed+pi)}
+  if(o.tail==='press'&&i0<=this.iP&&i1>=this.iP){const p=this.c[this.iP];this.blob(p[0],p[1],this.W[this.iP]*.3,this.ang[this.iP]+.6,.34,o.seed+99,0)}
+  c.strokeStyle=`rgb(${r0},${g0},${b0})`;c.lineCap='butt';for(const b of this.br){let open=false,cnt=0,lws=0,lvl=1,CH=28+((b.ph*7)|0)%20;c.beginPath();
+   for(let i=Math.max(1,i0);i<=i1;i++){const l=this.lv(b,i);lvl=l;const vis=b.nz(this.s[i]*b.f+b.ph)<l&&!(i>=this.N&&!b.split&&hash(o.seed,i,b.ph|0)>.25);
+    if(vis){if(!open){const p=this.pos(b,i-1);c.moveTo(p[0],p[1]);open=true}const p=this.pos(b,i);c.lineTo(p[0],p[1]);cnt++;lws+=this.W[i]}else open=false;
+    if(cnt>=CH||i==i1){if(cnt){c.lineWidth=Math.max(.3,lws/cnt*2.3/B*b.lw);c.globalAlpha=b.a*(1-.55*b.u*b.u)*(.55+.45*clamp(lvl))*(.82+.18*b.nz(this.s[i]*.006+50));c.stroke()}c.beginPath();if(open){const p=this.pos(b,i);c.moveTo(p[0],p[1])}cnt=0;lws=0}}}
+  c.globalAlpha=1;c.lineCap='round';
+  // fibers: ink wicking into hanji fibers along both edges
+  if(o.fiber){c.lineWidth=.45;for(let i=Math.max(1,i0);i<=Math.min(i1,this.N-1);i++)for(const sd of[-1,1]){const h=hash(o.seed,i,sd+7);if(h>.07)continue;
+   const a=this.ang[i],W=this.W[i],e=W*.5*(.8+.25*hash(o.seed,i,sd+11)),bx=this.c[i][0]-Math.sin(a)*e*sd,by=this.c[i][1]+Math.cos(a)*e*sd;
+   const da=a+sd*(1.57+(hash(o.seed,i,sd+13)-.5)*1.7),ln=(1.5+Math.pow(hash(o.seed,i,sd+17),2)*9)*Math.min(1.3,W/55);
+   c.beginPath();c.moveTo(bx,by);c.quadraticCurveTo(bx+Math.cos(da)*ln*.5+(hash(o.seed,i,21)-.5)*3,by+Math.sin(da)*ln*.5,bx+Math.cos(da)*ln,by+Math.sin(da)*ln);
+   c.strokeStyle=`rgba(${r0},${g0},${b0},${.12+.2*hash(o.seed,i,sd+19)})`;c.stroke()}}
+  if(o.splat&&i0<this.M-1&&i1>=this.M-1)this.dots(this.M-1,o.tail==='taper'?6:4,1.4,o.tail==='taper'?.9:.5,o.seed+77);
+ }
+}
+
+let FIBER=null;
+function fiberTile(){if(FIBER)return FIBER;const cv=document.createElement('canvas');cv.width=cv.height=320;const x=cv.getContext('2d'),r=rng(41);
+ const id=x.createImageData(320,320);for(let i=0;i<id.data.length;i+=4){id.data[i]=id.data[i+1]=id.data[i+2]=0;id.data[i+3]=80+r()*120}x.putImageData(id,0,0);
+ x.lineCap='round';for(let k=0;k<420;k++){const px=r()*320,py=r()*320,a=r()*6.28,l=10+r()*70;x.strokeStyle=`rgba(0,0,0,${r()<.6?1:.05})`;x.lineWidth=.6+r()*1.6;x.beginPath();x.moveTo(px,py);x.quadraticCurveTo(px+Math.cos(a+.5)*l*.5,py+Math.sin(a+.5)*l*.5,px+Math.cos(a)*l,py+Math.sin(a)*l);x.stroke()}
+ FIBER=cv;return cv}
+
+class InkCanvas{
+ constructor(cv,LW,LH,defs,o){this.cv=cv;this.LW=LW;this.LH=LH;this.defs=defs;this.o=Object.assign({ink:[11,11,12],bleed:.24,blur:9,tipHi:'rgba(255,255,255,.22)'},o);this.layout()}
+ layout(pxW){const dpr=Math.min(2,G.devicePixelRatio||1);const w=pxW||Math.max(2,Math.round(this.cv.getBoundingClientRect().width*dpr));
+  this.cv.width=w;this.cv.height=Math.round(w*this.LH/this.LW);this.k=w/this.LW;this.ctx=this.cv.getContext('2d');
+  this.strokes=this.defs.map(d=>new Stroke(d.pts,Object.assign({ink:this.o.ink},d)));this.strokes.forEach(s=>s.alloc(this.k));
+  this.bl=document.createElement('canvas');this.bl.width=Math.ceil(w/2);this.bl.height=Math.ceil(this.cv.height/2);this.blx=this.bl.getContext('2d');this.pat=this.blx.createPattern(fiberTile(),'repeat');this.dirty=true;this.ver=0}
+ render(qs,t=0){let ch=this.dirty,tip=false;this.dirty=false;
+  this.strokes.forEach((s,i)=>{const q=clamp(qs[i]||0),tg=q<=0?0:Math.round(q*(s.M-1));if(tg<s.drawn){s.clear();ch=true}if(tg>s.drawn){s.drawRange(s.drawn,tg);s.drawn=tg;ch=true}s.q=q;if(q>0&&q<1)tip=true});
+  if(!ch&&!tip)return false;this.ver++;
+  const c=this.ctx,k=this.k,W=this.cv.width,H=this.cv.height,b=this.blx;c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,W,H);
+  b.setTransform(1,0,0,1,0,0);b.globalCompositeOperation='source-over';b.clearRect(0,0,this.bl.width,this.bl.height);b.filter=`blur(${this.o.blur*k*.5}px)`;
+  this.strokes.forEach(s=>s.drawn&&b.drawImage(s.cv,s.bx*k*.5,s.by*k*.5,s.cv.width*.5,s.cv.height*.5));b.filter='none';
+  b.globalCompositeOperation='destination-in';b.fillStyle=this.pat;b.fillRect(0,0,this.bl.width,this.bl.height);b.globalCompositeOperation='source-over';
+  c.globalAlpha=this.o.bleed;c.drawImage(this.bl,0,0,W,H);c.globalAlpha=1;
+  this.strokes.forEach(s=>s.drawn&&c.drawImage(s.cv,s.bx*k,s.by*k));
+  const[r0,g0,b0]=this.o.ink;c.setTransform(k,0,0,k,0,0);
+  this.strokes.forEach(s=>{if(!(s.q>0&&s.q<1))return;const i=s.drawn,p=s.c[i],R=s.W[i]*.56*(1+.05*Math.sin(t*9));
+   const gr=c.createRadialGradient(p[0],p[1],0,p[0],p[1],R);gr.addColorStop(0,`rgba(${r0},${g0},${b0},.96)`);gr.addColorStop(.62,`rgba(${r0},${g0},${b0},.7)`);gr.addColorStop(1,`rgba(${r0},${g0},${b0},0)`);
+   c.fillStyle=gr;c.beginPath();c.arc(p[0],p[1],R,0,6.2832);c.fill();
+   c.fillStyle=this.o.tipHi;c.beginPath();c.ellipse(p[0]-R*.22,p[1]-R*.25,R*.16,R*.08,-.6,0,6.2832);c.fill()});
+  c.setTransform(1,0,0,1,0,0);return true}
+}
+G.GyBrush={Stroke,InkCanvas,rng,hash,noise1,clamp,lerp,catmull,resample};
+})(window);
+
+</script>
+<script>
+/* source: glyphs.js */
+/* 결 / 락 hand-built brush centerlines (1000×1000 box). Stroke order ㄱ → ㅕ(─ ─ │) → ㄹ(ㄱ ─ ㄴ) */
+const GLYPH_GYEOL=[
+ {j:'ㄱ',pts:[[182,212],[300,202],[430,192],[532,180],[554,190],[560,214],[554,292],[530,378],[488,448],[422,510]],w:80,tail:'taper',dry:.7,seed:3},
+ {j:'ㅕ',pts:[[612,270],[684,265],[748,263]],w:69,dry:.45,seed:5},
+ {j:'ㅕ',pts:[[612,414],[684,409],[748,407]],w:69,dry:.5,seed:6},
+ {j:'ㅕ',pts:[[786,112],[788,250],[788,400],[785,520],[780,606]],w:87,tail:'taper',dry:.75,seed:9},
+ {j:'ㄹ',pts:[[256,676],[450,668],[650,660],[766,654],[788,664],[794,700],[790,782]],w:71,dry:.6,seed:12},
+ {j:'ㄹ',pts:[[272,792],[480,788],[640,785],[770,783]],w:67,dry:.6,seed:14},
+ {j:'ㄹ',pts:[[264,786],[264,846],[264,898],[282,914],[430,912],[620,906],[822,898]],w:71,dry:.75,seed:16},
+];
+const GLYPH_RAK=[
+ {j:'ㄹ',pts:[[190,178],[340,172],[500,164],[556,160],[574,172],[578,210],[574,304]],w:64,dry:.55,seed:21},
+ {j:'ㄹ',pts:[[200,322],[380,318],[560,314]],w:60,dry:.55,seed:22},
+ {j:'ㄹ',pts:[[198,320],[196,400],[196,466],[212,480],[380,476],[598,470]],w:64,dry:.7,seed:23},
+ {j:'ㅏ',pts:[[762,96],[765,260],[765,420],[762,560],[758,650]],w:83,tail:'taper',dry:.75,seed:24},
+ {j:'ㅏ',pts:[[778,372],[846,369],[912,366]],w:62,dry:.5,seed:25},
+ {j:'ㄱ',pts:[[222,724],[420,716],[620,708],[770,700],[792,710],[798,744],[792,830],[778,934]],w:74,tail:'taper',dry:.7,seed:26},
+];
+
+</script>
+<script>
+/* source: main.js */
+(()=>{
+const{InkCanvas,rng,hash,clamp,lerp}=GyBrush;
+const NS='http://www.w3.org/2000/svg',$=s=>document.querySelector(s);
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+const seg=(p,a,b)=>clamp((p-a)/(b-a));
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const brushEase=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const eo=t=>1-Math.pow(1-t,3);
+const DPR=()=>Math.min(2,devicePixelRatio||1);
+
+/* ---------- 한지 paper tile ---------- */
+(function(){const S=640,cv=document.createElement('canvas');cv.width=cv.height=S;const x=cv.getContext('2d'),r=rng(5);
+ x.fillStyle='#F4F1EA';x.fillRect(0,0,S,S);const id=x.getImageData(0,0,S,S),d=id.data;for(let i=0;i<d.length;i+=4){const n=(r()-.5)*9;d[i]+=n;d[i+1]+=n;d[i+2]+=n*1.15}x.putImageData(id,0,0);
+ for(let k=0;k<70;k++){const px=r()*S,py=r()*S,R=40+r()*170,g=x.createRadialGradient(px,py,0,px,py,R),dk=r()<.5;g.addColorStop(0,dk?'rgba(214,204,182,.22)':'rgba(255,253,248,.3)');g.addColorStop(1,dk?'rgba(214,204,182,0)':'rgba(255,253,248,0)');x.fillStyle=g;for(const[ox,oy]of[[0,0],[S,0],[-S,0],[0,S],[0,-S],[S,S],[-S,-S],[S,-S],[-S,S]]){x.save();x.translate(ox,oy);x.fillRect(px-R,py-R,2*R,2*R);x.restore()}}
+ x.lineCap='round';for(let k=0;k<800;k++){const px=r()*S,py=r()*S,a=r()*6.28,l=5+Math.pow(r(),2.2)*90,cu=(r()-.5)*1.3,tn=r();
+  x.strokeStyle=tn<.45?`rgba(255,254,250,${.2+r()*.35})`:tn<.9?`rgba(196,184,160,${.08+r()*.14})`:`rgba(140,128,108,${.07+r()*.1})`;x.lineWidth=.3+r()*.9;
+  for(const[ox,oy]of[[0,0],[S,0],[-S,0],[0,S],[0,-S]]){x.beginPath();x.moveTo(px+ox,py+oy);x.quadraticCurveTo(px+ox+Math.cos(a+cu)*l*.5,py+oy+Math.sin(a+cu)*l*.5,px+ox+Math.cos(a)*l,py+oy+Math.sin(a)*l);x.stroke()}}
+ document.documentElement.style.setProperty('--paper',`url(${cv.toDataURL('image/jpeg',.9)})`)})();
+
+/* ---------- 01 획 ---------- */
+const LINE=[[-60,560],[160,500],[360,540],[560,470],[780,520],[980,450],[1160,488],[1330,430],[1450,392],[1530,330],[1552,268],[1520,226],[1484,240]];
+const lineIC=new InkCanvas($('#lineCv'),1600,900,[{pts:LINE,w:44,tail:'taper',dry:.9,B:52,seed:8,entry:true}],{bleed:.2});
+const gyIC=new InkCanvas($('#gyCv'),1000,1000,GLYPH_GYEOL);
+const ghostG=$('#ghosts');const lc=lineIC.strokes[0].c;const lpath='M'+lc.map(q=>q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' L');
+const ghosts=[];for(let k=1;k<=5;k++)ghosts.push(el('path',{d:lpath,stroke:k%2?'#9A9DA3':'#3A3C40','stroke-width':k==1?1.2:.7,opacity:.5/k,transform:`translate(${-k*26} ${k*14})`},ghostG));
+const gLen=ghosts[0].getTotalLength();ghosts.forEach(g=>g.style.strokeDasharray=gLen);
+const lab=$('#labels');GLYPH_GYEOL.forEach((s,i)=>{const t=el('text',{x:s.pts[0][0]-40,y:s.pts[0][1]-52,opacity:0},lab);t.textContent=String(i+1).padStart(2,'0')+' '+s.j;s.lt=t;s.tk=el('circle',{cx:s.pts[0][0]-8,cy:s.pts[0][1]-8,r:3.5,fill:'#5FB8B0',opacity:0},lab)});
+const ST0=.24,STD=.08;
+function scene1(p,t){
+ lineIC.render([brushEase(seg(p,.02,.21))],t);
+ ghosts.forEach((g,k)=>g.style.strokeDashoffset=gLen*(1-ease(seg(p,.03+(k+1)*.012,.24+(k+1)*.01))));
+ const out=seg(p,.22,.34),lw=$('#s1 .lw');lw.style.opacity=1-out;lw.style.filter=`blur(${out*4}px)`;lw.style.transform=`translateY(calc(-50% - ${out*6}vh))`;
+ $('#grid').setAttribute('opacity',(seg(p,.2,.3)*.5-seg(p,.86,.96)*.38).toFixed(3));
+ let n=0;const qs=GLYPH_GYEOL.map((s,i)=>{const a=ST0+i*STD,q=brushEase(seg(p,a,a+STD*.9));if(q>0)n=i+1;const on=seg(p,a-.01,a+.02)*(1-seg(p,.84,.9));s.lt.setAttribute('opacity',on);s.tk.setAttribute('opacity',on);return q});
+ gyIC.render(qs,t);
+ const sd=seg(p,.2,.3);$('#s1 .side').style.opacity=sd;$('#s1 .count').style.opacity=sd;$('#cnt').textContent=String(n).padStart(2,'0');
+ const jam=n==0?-1:n==1?0:n<=4?1:2;['#o1','#o2','#o3'].forEach((o,k)=>$(o).classList.toggle('on',k<=jam));
+ const sq=eo(seg(p,.86,.93));$('#seal').setAttribute('opacity',sq);$('#seal').setAttribute('transform',`translate(0 ${18*(1-sq)})`);
+ $('#cap1').textContent=p<.23?'One ink line — 하나의 먹선, 금붕어의 잔상':p<.86?'Stroke order — ㄱ → ㅕ → ㄹ · 붓 누름 · 비백 · 번짐':'結 — 선이 결이 되었다';
+}
+
+/* ---------- 02 표제 ---------- */
+const S2={letters:[]};
+const KO_DEFS=[...GLYPH_GYEOL.map(d=>({...d,pts:d.pts.map(([x,y])=>[x*.9+60,y*.9+50]),w:d.w*1.08,seed:d.seed+100})),...GLYPH_RAK.map(d=>({...d,pts:d.pts.map(([x,y])=>[x*.9+1000,y*.9+50]),w:d.w*1.08}))];
+const koIC=new InkCanvas($('#koCv'),2000,1000,KO_DEFS);
+const nac=$('#nacCv'),nmask=document.createElement('canvas');
+function sizeNac(){nac.width=koIC.cv.width;nac.height=koIC.cv.height;nmask.width=nac.width;nmask.height=nac.height}sizeNac();
+function buildS2(){const lettersG=$('#enLetters'),clip=$('#enClip'),word='GYEOLLAK',fs=280,base=262;
+ const probe=el('text',{'font-family':'Bodoni Moda','font-size':fs},$('#en'));const ws=[...word].map(ch=>{probe.textContent=ch;return probe.getComputedTextLength()});probe.remove();
+ const track=14,total=ws.reduce((a,b)=>a+b,0)+track*(word.length-1);let x=(1600-total)/2;
+ [...word].forEach((ch,i)=>{const t=el('text',{x:x.toFixed(1),y:base,'font-family':'Bodoni Moda','font-size':fs},lettersG);t.textContent=ch;const c=el('text',{x:x.toFixed(1),y:base,'font-family':'Bodoni Moda','font-size':fs},clip);c.textContent=ch;S2.letters.push({t,c});x+=ws[i]+track})}
+let hover=0,mx=-1,my=-1,tmx=-1,tmy=-1;const koEl=$('#ko');
+koEl.addEventListener('pointermove',e=>{const r=koEl.getBoundingClientRect();tmx=(e.clientX-r.left)/r.width;tmy=(e.clientY-r.top)/r.height;if(mx<0){mx=tmx;my=tmy}hover=1});koEl.addEventListener('pointerleave',()=>hover=0);
+let hv=0;
+function scene2(p,t){
+ S2.letters.forEach((L,i)=>{const q=eo(seg(p,.02+i*.022,.16+i*.022)),tr=`translate(0 ${((1-q)*300).toFixed(1)})`;L.t.setAttribute('transform',tr);L.c.setAttribute('transform',tr)});
+ const f=ease(seg(p,.16,.42)),lvl=lerp(340,-30,f);let d=`M-40 ${lvl}`;for(let x=-40;x<=1640;x+=40)d+=` L${x} ${(lvl+Math.sin(x*.012+t*1.6)*10*(1-f*.6)+Math.sin(x*.031-t*2.3)*5).toFixed(1)}`;$('#enInk').setAttribute('d',d+' L1640 400 L-40 400Z');
+ const qs=KO_DEFS.map((_,i)=>{const a=.3+i*.042;return brushEase(seg(p,a,a+.04))});koIC.render(qs,t);
+ // 자개 nacre overlay: mouse lens + periodic sweep once written
+ mx+=(tmx-mx)*.18;my+=(tmy-my)*.18;hv+=((hover?1:0)-hv)*.12;const sweepOn=seg(p,.86,.92);
+ const n=nac.getContext('2d'),W=nac.width,H=nac.height;n.globalCompositeOperation='source-over';n.globalAlpha=1;n.clearRect(0,0,W,H);
+ if(hv<.01&&sweepOn<=0)return;
+ const m=nmask.getContext('2d');m.clearRect(0,0,W,H);
+ if(hv>.01){const g=m.createRadialGradient(mx*W,my*H,0,mx*W,my*H,H*.42);g.addColorStop(0,`rgba(255,255,255,${hv})`);g.addColorStop(.6,`rgba(255,255,255,${hv*.6})`);g.addColorStop(1,'rgba(255,255,255,0)');m.fillStyle=g;m.fillRect(0,0,W,H)}
+ if(sweepOn>0){const sx=((t*.16)%1.6-.3)*W;const g=m.createLinearGradient(sx-H*.5,0,sx+H*.5,H*.5);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(.5,`rgba(255,255,255,${.9*sweepOn})`);g.addColorStop(1,'rgba(255,255,255,0)');m.fillStyle=g;m.fillRect(0,0,W,H)}
+ n.drawImage(koIC.cv,0,0);n.globalCompositeOperation='source-in';
+ const a=t*.25,cx=W/2,cy=H/2,R=W*.6,g1=n.createLinearGradient(cx-Math.cos(a)*R,cy-Math.sin(a)*R,cx+Math.cos(a)*R,cy+Math.sin(a)*R);
+ ['#5FB8B0','#A6DDD5','#E8ECF0','#D9CFE8','#BFCBEA','#5FB8B0','#E8ECF0','#D9CFE8','#5FB8B0'].forEach((c,i,A)=>g1.addColorStop(i/(A.length-1),c));n.fillStyle=g1;n.fillRect(0,0,W,H);
+ n.globalCompositeOperation='source-atop';n.globalAlpha=.45;const g2=n.createLinearGradient(0,H*(.5+.5*Math.sin(t*.4)),W,H*(.5-.5*Math.sin(t*.4)));['#D9CFE8','#5FB8B0','#E8ECF0','#D9CFE8'].forEach((c,i,A)=>g2.addColorStop(i/(A.length-1),c));n.fillStyle=g2;n.fillRect(0,0,W,H);
+ n.globalAlpha=1;n.globalCompositeOperation='destination-in';n.drawImage(nmask,0,0);n.globalCompositeOperation='source-over';
+}
+
+/* ---------- 03 닿음 (from v1) ---------- */
+const S3={chars:[],rchars:[]};
+(function(){const lines=['우리는 닿는 순간부터','번지고 있었다'];const sl=$('#slogan'),rf=$('#refl');
+ lines.forEach((ln,li)=>{const b=document.createElement('span');b.className='br';const rb=b.cloneNode();
+  [...ln].forEach(ch=>{const c=document.createElement('span');c.className='c';c.textContent=ch===' '?'\u00a0':ch;b.appendChild(c);const rc=c.cloneNode(true);rb.appendChild(rc);S3.chars.push(c);S3.rchars.push(rc)});
+  if(li==0){const m=document.createElement('span');m.className='c';m.textContent='「';b.prepend(m);S3.chars.unshift(m);const rm=m.cloneNode(true);rb.prepend(rm);S3.rchars.unshift(rm)}
+  if(li==1){const m=document.createElement('span');m.className='c';m.textContent='」';b.appendChild(m);S3.chars.push(m);const rm=m.cloneNode(true);rb.appendChild(rm);S3.rchars.push(rm)}
+  sl.appendChild(b);rf.appendChild(rb)})})();
+S3.rings=[...Array(7)].map((_,i)=>el('ellipse',{cx:800,cy:600,rx:0,ry:0,stroke:i==2?'#5FB8B0':i%2?'#9A9DA3':'#1F2A3A'},$('#rings')));
+const spl=[...Array(9)].map((_,i)=>({e:el('circle',{r:2+(i%3)*1.6},$('#splash')),vx:(i-4)*38+((i*37)%11)-5,vy:-(120+((i*53)%90))}));const SY=600;
+function scene3(p,t){
+ const fall=seg(p,0,.18),y=lerp(-80,SY,fall*fall),dr=$('#drop'),st=1+fall*.35;dr.setAttribute('transform',`translate(800 ${y-32*st}) scale(${1/Math.sqrt(st)} ${st})`);dr.setAttribute('opacity',fall<1?1:0);
+ const imp=Math.max(0,p-.18);
+ S3.rings.forEach((r,i)=>{const q=clamp((imp-i*.045)/.55),e=eo(q);r.setAttribute('rx',(e*900).toFixed(1));r.setAttribute('ry',(e*95).toFixed(1));r.setAttribute('stroke-width',lerp(2.4,.3,e).toFixed(2));r.setAttribute('opacity',q>0?((1-q)*(i==2?.9:.7)).toFixed(3):0)});
+ const sq=seg(p,.18,.32);spl.forEach(s=>{const tt=sq*1.1;s.e.setAttribute('cx',(800+s.vx*tt).toFixed(1));s.e.setAttribute('cy',(SY+s.vy*tt+260*tt*tt).toFixed(1));s.e.setAttribute('opacity',sq>0&&sq<1?1-sq:0)});
+ let d='M-20 '+SY;const amp=imp>0?28*Math.exp(-imp*4):0;for(let x=-20;x<=1620;x+=16){const r=Math.abs(x-800);d+=` L${x} ${(SY+amp*Math.sin(r*.035-imp*60)*Math.exp(-r/420)+Math.sin(x*.01+t)*1.2).toFixed(1)}`}$('#surface').setAttribute('d',d);
+ const N=S3.chars.length;S3.chars.forEach((c,i)=>{const a=.22+i/N*.5,e=eo(seg(p,a,a+.12));c.style.opacity=e;c.style.filter=`blur(${((1-e)*14).toFixed(2)}px)`;c.style.transform=`translateY(${((1-e)*-.35).toFixed(3)}em) scale(${(1+(1-e)*.25).toFixed(3)})`;
+  c.style.textShadow=`0 0 ${(4+(1-e)*30).toFixed(1)}px rgba(31,42,58,${(.5*(1-e)+.08).toFixed(2)})`;const r=S3.rchars[i];r.style.opacity=e*.14;r.style.filter=`blur(${(3+(1-e)*10).toFixed(1)}px)`});
+ const rf=$('#refl'),rr=$('#slogan').getBoundingClientRect(),vh=innerHeight,sc=Math.max(innerWidth/1600,vh/900),sy=vh/2+(SY-450)*sc;rf.style.top=(2*sy-rr.bottom)+'px';rf.style.transform=`scaleY(-1) skewX(${Math.sin(t*.8)*1.5}deg)`;
+}
+
+/* ---------- 전환: 먹이 모서리에서 번져 화면을 덮는다 ---------- */
+const TR={cv:$('#trCv'),field:null,map:document.createElement('canvas')};
+function noise2(x,y,seed){const xi=Math.floor(x),yi=Math.floor(y),fx=x-xi,fy=y-yi,ux=fx*fx*(3-2*fx),uy=fy*fy*(3-2*fy);return lerp(lerp(hash(xi,yi,seed),hash(xi+1,yi,seed),ux),lerp(hash(xi,yi+1,seed),hash(xi+1,yi+1,seed),ux),uy)}
+function fbm(x,y){return noise2(x,y,17)*.5+noise2(x*2,y*2,19)*.25+noise2(x*4,y*4,23)*.125+noise2(x*8,y*8,29)*.0625+noise2(x*16,y*16,31)*.03125}
+function sceneTR(p,t){const cv=TR.cv,dpr=DPR(),W=Math.round(innerWidth*dpr),H=Math.round(innerHeight*dpr),mw=640,mh=Math.round(mw*H/W);
+ if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;TR.map.width=mw;TR.map.height=mh;TR.im=TR.map.getContext('2d').createImageData(mw,mh);TR.field=new Float32Array(mw*mh);TR.density=new Float32Array(mw*mh);const D=Math.hypot(mw,mh);
+  for(let y=0;y<mh;y++)for(let x=0;x<mw;x++){const u=(mw-x)/D,v=y/D,n=fbm(u*5,v*5),n2=fbm(u*13+40,v*13+40);const w1=u+(n-.5)*.25,w2=v+(fbm(u*5+20,v*5+20)-.5)*.25;TR.field[y*mw+x]=Math.hypot(w1,w2)+(n2-.5)*.095;TR.density[y*mw+x]=n2}}
+ const c=cv.getContext('2d'),R=ease(seg(p,.04,.91))*1.2,data=TR.im.data;for(let i=0;i<TR.field.length;i++){const dx=R-TR.field[i],q=clamp(dx/.045),a=q*q*(3-2*q),fog=clamp(1-dx/.12),sh=(11+fog*(12+TR.density[i]*25));data[i*4]=sh;data[i*4+1]=sh;data[i*4+2]=sh+fog*2;data[i*4+3]=a*255}
+ TR.map.getContext('2d').putImageData(TR.im,0,0);c.clearRect(0,0,W,H);c.filter=`blur(${.65*dpr}px)`;c.drawImage(TR.map,0,0,W,H);c.filter='none';
+ const cover=seg(p,.88,.97);if(cover>0){c.globalAlpha=cover;c.fillStyle='#0B0B0C';c.fillRect(0,0,W,H);c.globalAlpha=1}
+ const mn=$('#menu');mn.style.opacity=seg(p,.8,.9);[...mn.children].forEach((d,i)=>{const q=eo(seg(p,.8+i*.03,.9+i*.03));d.style.transform=`translateY(${(1-q)*24}px)`;d.style.opacity=q})}
+
+/* ---------- 04 심연: 흰 붓 결 + 수면 반사 + 자개 가장자리 ---------- */
+const AB={cv:$("#abCv"),gx:550,gy:104,gs:500};AB.wl=AB.gy+AB.gs*.95;
+const abOff=document.createElement('canvas');
+const abIC=new InkCanvas(abOff,1000,1000,GLYPH_GYEOL.map(d=>({...d,seed:d.seed+300,fiber:1})),{ink:[232,236,240],bleed:.34,blur:10,tipHi:'rgba(217,207,232,.6)'});
+const tintT=document.createElement('canvas'),tintP=document.createElement('canvas');let tintVer=-1;
+function layoutAB(){const dpr=DPR(),k4=Math.max(innerWidth*dpr/1600,innerHeight*dpr/900);abIC.layout(Math.round(AB.gs*k4));tintVer=-1}
+const S4={ribbons:[],fl:[...document.querySelectorAll('.fl')]};
+function buildRibbons(){const r=rng(77),G=$('#ribbons');const strokes=abIC.strokes;
+ for(let i=0;i<60;i++){const st=strokes[Math.floor(r()*strokes.length)],q=st.c[Math.floor(r()*st.N)],s=[AB.gx+q[0]/1000*AB.gs,AB.gy+q[1]/1000*AB.gs];
+  const full=i%9==0;const lines=[0,1,2,3].map(j=>{const col=full?'url(#nacreLine)':j==0?'#D9CFE8':j==3?'#5FB8B0':'#E8ECF0';return el('path',{stroke:col,'stroke-width':j==0||j==3?.7:.5,opacity:full?.9:j==0||j==3?.55:.42},G)});
+  S4.ribbons.push({s,lines,ph:r()*6.28,sp:.7+r()*.6,len:40+r()*55})}}
+function field(x,y,t){return Math.sin(x*.0024+t*.15)*1.7+Math.cos(y*.0042-t*.11)*1.3+Math.sin((x-y)*.0015+1.3)*.9}
+function scene4(p,t){
+ const cv=AB.cv,dpr=DPR(),W=Math.round(innerWidth*dpr),H=Math.round(innerHeight*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
+ const k4=Math.min(W/1250,H/900),ox=(W-1600*k4)/2,oy=(H-900*k4)/2,c=cv.getContext('2d');c.clearRect(0,0,W,H);
+ const qs=GLYPH_GYEOL.map((_,i)=>{const a=.02+i*.046;return brushEase(seg(p,a,a+.044))});abIC.render(qs,t);
+ const G=abIC.cv;if(tintVer!==abIC.ver){[[tintT,'#5FB8B0'],[tintP,'#D9CFE8']].forEach(([tc,col])=>{tc.width=G.width;tc.height=G.height;const x=tc.getContext('2d');x.drawImage(G,0,0);x.globalCompositeOperation='source-in';x.fillStyle=col;x.fillRect(0,0,G.width,G.height)});tintVer=abIC.ver}
+ const dis=seg(p,.45,.68),A=1-dis,lift=dis*40*k4;
+ const px=ox+AB.gx*k4,py=oy+AB.gy*k4-lift,ps=AB.gs*k4,wy=oy+AB.wl*k4;
+ if(A>0){
+  c.globalAlpha=A*.1;c.filter=`blur(${14*dpr}px)`;c.drawImage(G,px,py,ps,ps);c.filter=dis>0?`blur(${dis*8*dpr}px)`:'none';
+  const sh=Math.sin(t*.9)*.5*dpr;c.globalCompositeOperation='lighter';c.globalAlpha=A*.65;c.drawImage(tintT,px-(1.4*dpr+sh),py-.8*dpr,ps,ps);c.drawImage(tintP,px+1.4*dpr+sh,py+.8*dpr,ps,ps);
+  c.globalCompositeOperation='source-over';c.globalAlpha=A;c.drawImage(G,px,py,ps,ps);c.filter='none';
+  // 수면 반사
+  const rh=H-wy,step=2*dpr;for(let y=0;y<rh;y+=step){const sY=wy-y-py;if(sY<0||sY>=ps)continue;const srcY=sY/ps*G.height,off=Math.sin(y*.05/dpr+t*2.1)*(1.2+y*.03/dpr)*dpr;
+   c.globalAlpha=A*.36*Math.pow(1-y/rh,1.3);c.drawImage(G,0,srcY,G.width,Math.max(1,step/ps*G.height),px+off,wy+y,ps,step);
+   if(y%(8*dpr)<step){c.globalAlpha=A*.12*(1-y/rh);c.drawImage(tintT,0,srcY,G.width,Math.max(1,step/ps*G.height),px+off-4*dpr,wy+y,ps,step)}}
+ }
+ c.globalAlpha=1;const lg=c.createLinearGradient(0,0,W,0);lg.addColorStop(0,'rgba(232,236,240,0)');lg.addColorStop(.3,'rgba(95,184,176,.35)');lg.addColorStop(.5,'rgba(232,236,240,.6)');lg.addColorStop(.7,'rgba(217,207,232,.35)');lg.addColorStop(1,'rgba(232,236,240,0)');
+ c.fillStyle=lg;c.fillRect(0,wy,W,Math.max(1,dpr*.8));
+ $('#studio').style.opacity=seg(p,.22,.32)*(1-seg(p,.44,.5));
+ const grow=ease(seg(p,.44,.74)),rise=ease(seg(p,.72,.97)),fade=1-seg(p,.9,1)*.6,Rg=$('#ribbons');Rg.setAttribute('opacity',(seg(p,.44,.52)*fade).toFixed(3));Rg.setAttribute('transform',`translate(0 ${(-rise*170).toFixed(1)})`);
+ if(grow>0)S4.ribbons.forEach(R=>{const n=Math.max(2,Math.floor(R.len*grow*R.sp+2));let x=R.s[0],y=R.s[1];const P=[[x,y]];
+  for(let k=0;k<n;k++){const a=field(x,y,t)+R.ph*.3;x+=Math.cos(a)*9;y+=Math.sin(a)*9+lerp(.6,-3,rise);P.push([x,y])}
+  R.lines.forEach((ln,j)=>{let d='';for(let k=0;k<P.length;k++){const a=P[Math.max(0,k-1)],b=P[Math.min(P.length-1,k+1)],an=Math.atan2(b[1]-a[1],b[0]-a[0]),off=(j-1.5)*4.4*Math.cos(k*.11+R.ph+t*.7)*(.3+.7*Math.sin(Math.PI*k/(P.length-1||1)));
+   d+=(k?'L':'M')+(P[k][0]-Math.sin(an)*off).toFixed(1)+' '+(P[k][1]+Math.cos(an)*off).toFixed(1)}ln.setAttribute('d',d)})});
+ S4.fl.forEach((f,i)=>{const q=eo(seg(p,.74+i*.05,.86+i*.05));f.style.opacity=q;f.style.transform=`translateY(${(1-q)*60}px)`;f.style.filter=`blur(${(1-q)*8}px)`});
+}
+
+/* ---------- loop / HUD ---------- */
+const secs=['#s1','#s2','#s3','#tr','#s4'].map(s=>$(s)),chipOf=[0,1,2,3,3];
+const names=['01 · 획 STROKE','02 · 표제 DISPLAY','03 · 닿음 DROP','— · 번짐 BLOOM','04 · 심연 ABYSS'];
+const notes=['Scroll — 금붕어의 잔상이 선이 되고, 선이 결이 된다.','결은 붓글씨가 되고, 먹이 글자를 채운다. 결락 위에 커서를.','떨어지고, 닿고, 번진다.','먹이 모서리에서 번져 화면을 덮는다.','흰 먹의 결이 수면에 비치고, 리본이 되어 꽃으로 떠오른다.'];
+const prog=i=>{const s=secs[i],r=s.getBoundingClientRect();return clamp(-r.top/(s.offsetHeight-innerHeight))};
+const fns=[scene1,scene2,scene3,sceneTR,scene4];let ready=false,tour=null;
+window.GY={starts:()=>secs.map(s=>s.offsetTop),lens:()=>secs.map(s=>s.offsetHeight-innerHeight),ready:()=>ready,T:null,hover:(x,y)=>{tmx=mx=x;tmy=my=y;hover=1;hv=1}};
+function frame(now){const t=GY.T??now/1000;let cur=0;
+ secs.forEach((s,i)=>{const r=s.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)fns[i](prog(i),t);if(r.top<=innerHeight*.5)cur=i});
+ document.body.classList.toggle('dark',cur==4||(cur==3&&prog(3)>.7));$('#hudScene').textContent=names[cur];$('#hudNote').textContent=notes[cur];
+ document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',+c.dataset.s===cur||(c.dataset.s==='4'&&cur==3)));
+ const tot=document.documentElement.scrollHeight-innerHeight,pc=clamp(scrollY/tot);$('#bar').style.width=pc*100+'%';$('#hudPct').textContent=String(Math.round(pc*100)).padStart(3,'0')+'%';
+ if(tour){const q=clamp((now-tour.t0)/1000/44);scrollTo(0,q*tot);if(q>=1)stopTour()}requestAnimationFrame(frame)}
+const btn=$('#replay');function stopTour(){tour=null;btn.firstChild.textContent='↻ Replay'}
+btn.addEventListener('click',()=>{if(tour){stopTour();return}scrollTo(0,0);tour={t0:performance.now()+600};btn.firstChild.textContent='■ Stop'});
+addEventListener('wheel',()=>tour&&stopTour(),{passive:true});addEventListener('touchstart',()=>tour&&stopTour(),{passive:true});
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{stopTour();const i=+c.dataset.s;scrollTo({top:secs[i].offsetTop+(i==0?0:(secs[i].offsetHeight-innerHeight)*.6),behavior:'smooth'})}));
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{lineIC.layout();gyIC.layout();koIC.layout();sizeNac();layoutAB()},200)});
+document.fonts.ready.then(()=>Promise.all([document.fonts.load('400 280px "Bodoni Moda"'),document.fonts.load('300 40px "Noto Serif KR"','우리는닿는순간부터번지고있었다')])).catch(()=>{}).then(()=>{buildS2();layoutAB();buildRibbons();ready=true;requestAnimationFrame(frame)});
+})();
+
+</script>
+</body>
+</html>
