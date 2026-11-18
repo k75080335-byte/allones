@@ -334,6 +334,7 @@ html:not(.js-anim) .sf-copy.b{display:none}
 .blend .hd,.blend .kicker,.blend .kicker *,.blend .gauge{color:var(--hanji)!important;mix-blend-mode:difference}
 .debug{position:fixed;left:8px;top:50%;z-index:99;background:rgba(0,0,0,.7);color:#0f0;font:11px/1.4 monospace;padding:6px 8px}
 </style>
+<link rel="stylesheet" href="lp.css">
 </head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -440,8 +441,21 @@ html:not(.js-anim) .sf-copy.b{display:none}
   <div class="ch-list">
     <article class="ch-card" id="ch-members" tabindex="-1"><span class="num">01 / 04</span><h3>멤버<small>MEMBERS</small></h3><div class="ch-media"><img src="assets/v3/field_wind.webp" alt="바람 부는 들판의 네 멤버" loading="lazy"></div><p class="reveal">흰 수트의 네 사람. 백합, 동백, 수국, 능소화로 이어지는 네 개의 결.</p><a class="go" href="../../../v15/members.html">멤버 보기 →</a></article>
     <article class="ch-card" id="music" tabindex="-1"><span class="num">02 / 04</span><h3>음악<small>MUSIC · 장마의 잔향</small></h3>
+      <div class="lp-deck" aria-label="LP 미리 듣기 플레이어">
+        <div class="lp-object">
+          <div class="lp-disc-shift" aria-hidden="true"><div class="lp-vinyl">
+            <img class="lp-groove-art" src="assets/lp/groove_goldfish_xray.webp" alt="">
+            <img class="lp-label" src="assets/lp/label_lily.webp" alt="">
+          </div><i class="lp-light"></i></div>
+          <button class="lp-sleeve" type="button" aria-label="비가 맺지 못한 것들 — LP 꺼내서 미리 듣기" aria-pressed="false" aria-describedby="lp-help">
+            <img src="assets/lp/cover_lily.webp" alt="먹빛 백합 앨범 슬리브 시안" width="720" height="720">
+          </button>
+        </div>
+        <div class="lp-meta"><div><span class="lp-now-label">NOW SELECTED / 01</span><h4 class="lp-now">비가 맺지 못한 것들</h4><div class="lp-info">결락 · ALLONES. · 12 TRACKS · 20 SEC PREVIEW · 33⅓ RPM</div></div><span class="lp-state" role="status" aria-live="polite">TAP TO LISTEN</span></div>
+        <div class="lp-transport"><button type="button" class="lp-toggle" aria-label="미리 듣기 재생">PLAY</button><div class="lp-progress" aria-hidden="true"><i></i></div><span class="lp-time">00:00 / 00:20</span></div>
+      </div>
       <div class="tracks-wrap"><img class="koi" src="assets/v3/koi_after.webp" alt="" aria-hidden="true"><ol class="tracks" aria-label="수록곡"></ol></div>
-      <p class="reveal">닿는 순간 번지는 소리. 곡 이름을 누르면 20초 미리 듣기가 나와. 한 번에 한 곡만 재생돼.</p><a class="go" href="../../../v15/music.html">전체 듣기 →</a><audio id="pv" preload="none"></audio></article>
+      <p class="reveal" id="lp-help">닿는 순간 번지는 소리. 커버를 누르면 LP가 나오며 선택한 곡을 20초간 들려줘. 다시 누르면 멈춰. 곡 이름으로도 선택할 수 있어.</p><a class="go" href="../../../v15/music.html">전체 듣기 →</a><audio id="pv" preload="none"></audio></article>
     <article class="ch-card" id="world" tabindex="-1"><span class="num">03 / 04</span><h3>세계관<small>WORLD</small></h3><div class="ch-media"><img src="assets/sc_world_sm.webp" alt="먹과 붓, 펼친 책이 놓인 책상" loading="lazy"></div><p class="reveal">먹선 한 획이 수면이 되는 곳. 결락의 이야기가 시작된 자리.</p><a class="go" href="../../../v15/story.html">이야기 읽기 →</a></article>
     <article class="ch-card" id="archive" tabindex="-1"><span class="num">04 / 04</span><h3>아카이브<small>ARCHIVE</small></h3>
       <div class="strip" tabindex="0" aria-label="굿즈 시안 (옆으로 넘기기)">

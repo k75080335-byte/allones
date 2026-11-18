@@ -16,18 +16,73 @@ if (lily) { media.add(lily); new IntersectionObserver(es => es.forEach(e => { if
 const TR = [['비가 맺지 못한 것들', '', '00_intro', 'INTRO'], ['Crescent Scar', '', '', '2026 RE-RECORDING'], ['능소화', '', '', 'TRACK 03'], ['Amnesia', '', '03_amnesia', 'TRACK 04'], ['상사화', '', '05_sangsahwa', 'TRACK 05'], ['Rewind', '', '04_rewind', 'TITLE'], ['결로', '結露', '02_gyeolro', 'TRACK 07'], ['잔불', '', '', 'TRACK 08'], ['연소', '', '', 'TRACK 09'], ['치자', '', '07_chija', 'HIDDEN'], ['Soda Pop', '', '06_sodapop', 'BONUS 1'], ['첫눈이 오면', '', '08_firstsnow', 'BONUS 2']];
 const ol = $('.tracks'), pv = $('#pv'); media.add(pv);
 let cur = -1, stopT = 0;
+/* ── LP: 커버 → 판이 오른쪽으로 55% 나옴 → 33⅓rpm(1.8s/rev) 회전 + 재생 / 다시 누르면 감속 정지 ── */
+const deck = $('.lp-deck'), sleeve = $('.lp-sleeve'), vinyl = $('.lp-vinyl'), label = $('.lp-label');
+const nowT = $('.lp-now'), nowN = $('.lp-now-label'), st = $('.lp-state'), tog = $('.lp-toggle'), bar = $('.lp-progress'), tm = $('.lp-time');
+const LBL = ['lily', 'camellia', 'hydrangea', 'campsis'];
+const PLAYABLE = TR.map((t, i) => t[2] ? i : -1).filter(i => i >= 0);
+const REV = 1800, SLIDE = reduce ? 0 : 950;
+let ang = 0, vel = 0, spinTo = 0, last = 0, lpRaf = 0, slideT = 0;
+const spinLoop = now => {
+  const dt = last ? Math.min(64, now - last) : 16; last = now;
+  vel += (spinTo - vel) * (spinTo ? .035 : .022) * (dt / 16.7);
+  if (!spinTo && vel < .0005) vel = 0;
+  ang = (ang + vel * 360 * dt / REV) % 360;
+  vinyl.style.transform = `rotate(${ang}deg)`;
+  deck.classList.toggle('is-spinning', vel > .05);
+  if (vel || spinTo) lpRaf = requestAnimationFrame(spinLoop); else { lpRaf = 0; last = 0; }
+};
+const spin = on => { if (reduce) return; spinTo = on ? 1 : 0; if (!lpRaf) lpRaf = requestAnimationFrame(spinLoop); };
+const fmt = s => `00:${String(Math.floor(Math.max(0, s))).padStart(2, '0')}`;
+const select = i => {
+  cur = i; const [t] = TR[i];
+  nowT.textContent = t; nowN.textContent = `NOW SELECTED / ${String(i + 1).padStart(2, '0')}`;
+  sleeve.setAttribute('aria-label', `${t} — LP 꺼내서 미리 듣기`);
+  label.src = `assets/lp/label_${LBL[i % LBL.length]}.webp`;
+};
+const shift = $('.lp-disc-shift');
+const start = i => {
+  const fresh = i !== cur || !pv.src;
+  if (fresh) { select(i); pv.src = `../../../v15/audio/${TR[i][2]}.mp3`; pv.currentTime = 0; }
+  solo(pv);
+  const wasOut = deck.classList.contains('is-out'); deck.classList.add('is-out');
+  // iOS: play() must be called inside the gesture — start muted, unmute when the disc is fully out
+  pv.muted = true; pv.play().catch(() => {});
+  st.textContent = 'DROPPING NEEDLE';
+  let done = false;
+  const drop = () => {
+    if (done) return; done = true; shift.removeEventListener('transitionend', onEnd); clearTimeout(slideT);
+    if (fresh && pv.currentTime < 2) pv.currentTime = 0;
+    pv.muted = false; spin(true);
+    clearTimeout(stopT); stopT = setTimeout(() => pv.pause(), Math.max(0, (20 - pv.currentTime) * 1000));
+  };
+  const onEnd = e => { if (e.propertyName === 'transform') drop(); };
+  if (wasOut || !SLIDE) { drop(); return; }
+  shift.addEventListener('transitionend', onEnd); clearTimeout(slideT); slideT = setTimeout(drop, SLIDE * 4); // fallback
+};
+const stop = () => { clearTimeout(slideT); pv.muted = false; clearTimeout(stopT); pv.pause(); };
+const toggle = () => (!pv.paused && cur >= 0) ? stop() : start(cur >= 0 ? cur : PLAYABLE[0]);
+sleeve.addEventListener('click', toggle); tog.addEventListener('click', toggle);
 TR.forEach(([t, k, f, s], i) => {
   const li = document.createElement('li'); if (!f) li.className = 'prep';
   li.innerHTML = `<button type="button" ${f ? '' : 'aria-disabled="true"'} aria-label="${t} ${f ? '20초 미리 듣기' : '준비 중'}"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${t}${k ? `<small lang="zh-Hant">${k}</small>` : ''}</span><span class="s">${f ? s : '준비 중'}</span></button>`;
-  if (f) li.firstChild.addEventListener('click', () => {
-    if (cur === i && !pv.paused) { pv.pause(); return; }
-    cur = i; pv.src = `../../../v15/audio/${f}.mp3`; pv.currentTime = 0; solo(pv); pv.play().catch(() => {});
-    clearTimeout(stopT); stopT = setTimeout(() => pv.pause(), 20000);
-  });
+  if (f) li.firstChild.addEventListener('click', () => { (cur === i && !pv.paused) ? stop() : start(i); });
   ol.appendChild(li);
 });
+const sync = () => {
+  const on = !pv.paused; sleeve.setAttribute('aria-pressed', String(on));
+  tog.textContent = on ? 'PAUSE' : 'PLAY'; tog.setAttribute('aria-label', on ? '미리 듣기 일시정지' : '미리 듣기 재생');
+  if (on) { if (!pv.muted) st.textContent = reduce ? 'PLAYING' : 'PLAYING · 33⅓ RPM'; }
+  else { spin(false); st.textContent = cur >= 0 && pv.currentTime > 0 ? 'PAUSED' : 'TAP TO LISTEN'; }
+};
+pv.addEventListener('playing', () => { if (!pv.muted) sync(); }); pv.addEventListener('volumechange', sync);
+pv.addEventListener('pause', sync); pv.addEventListener('ended', sync);
+pv.addEventListener('timeupdate', () => { const t = Math.min(20, pv.currentTime || 0); bar.style.setProperty('--played', `${t / 20 * 100}%`); tm.textContent = `${fmt(t)} / 00:20`; });
 const mark = () => $$('.tracks li').forEach((li, k) => li.classList.toggle('on', k === cur && !pv.paused));
 pv.addEventListener('play', mark); pv.addEventListener('pause', mark); pv.addEventListener('ended', mark);
+select(PLAYABLE[0]);
+/* 섹션을 벗어나면 정지 */
+new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting && !pv.paused) stop(); })).observe($('#music'));
 /* 잉어는 잔상으로만(9%) — 포인터를 늦게 따라온다 */
 const koi = $('.koi'), tw = $('.tracks-wrap');
 if (!reduce && koi) {
