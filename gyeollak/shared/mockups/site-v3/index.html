@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ko" class="no-js is-ink">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>결락 GYEOLLAK — 사이트 시안 v3</title>
+<meta name="description" content="4인조 밴드 결락(結落)의 브랜드 월드. 먹선 한 획이 수면에 닿아 가라앉고, 꽃으로 떠오른다.">
+<script>if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("js-pre");document.documentElement.classList.remove("is-ink")}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- Song Myung: 제목용 서체. 슬로건은 확정 붓글씨 이미지(gl_slogan_brush_v01) 사용 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preload" as="image" href="assets/gyeol_white.webp" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%230B0B0C%22/%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%225%22 fill=%22%23F4F1EA%22/%3E%3C/svg%3E">
+<style>
+:root{
+  --hanji:#F4F1EA; --nong:#0B0B0C; --cheong:#1F2A3A; --eun:#E8ECF0; --teal:#5FB8B0; --pearl:#D9CFE8;
+  --fg:var(--nong); --fg2:rgba(11,11,12,.72);
+  --serif:'Song Myung','Gowun Batang',serif; --sans:'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  --gw:min(80vw,52svh); --gx:50%; --gy:calc(13svh + var(--gw)/2 + 8px);
+  --flood:1; --cx:50%; --cy:40%; --depth:0;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+@media (min-width:900px){ :root{ --gw:min(68svh,40vw); --gx:45%; --gy:50%; } }
+.is-ink{ --fg:var(--hanji); --fg2:rgba(244,241,234,.74); }
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--nong);-webkit-text-size-adjust:100%}
+body{word-break:keep-all;overflow-wrap:break-word;font-family:var(--sans);color:var(--hanji);background:var(--nong);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,video,canvas,svg{display:block}
+a{color:inherit}
+.skip{position:fixed;left:12px;top:-60px;z-index:100;background:var(--hanji);color:var(--nong);padding:10px 14px;font-size:14px;border-radius:2px}
+.skip:focus{top:12px}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── header ─────────────────────────── */
+.hd{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;justify-content:space-between;align-items:flex-start;padding:18px 20px;pointer-events:none;color:var(--fg);transition:color .35s}
+.hd a{pointer-events:auto;text-decoration:none}
+.brand{display:flex;align-items:baseline;gap:8px;line-height:1}
+.brand-ko{font-family:var(--serif);font-size:22px;letter-spacing:.02em}
+.brand-hj{font-family:var(--serif);font-size:13px;opacity:.7}
+.brand-en{font-size:10px;font-weight:600;letter-spacing:.24em;opacity:.8}
+.menu ol{list-style:none;text-align:right}
+.menu a{display:block;font-size:11px;font-weight:600;letter-spacing:.18em;line-height:24px;min-height:24px;padding-left:12px;position:relative}
+.menu a::before{content:"";position:absolute;right:calc(100% - 4px);top:50%;width:0;height:1px;background:currentColor;transition:width .3s var(--ease)}
+.menu a[aria-current="true"]::before,.menu a:hover::before{width:14px}
+.on-paper .hd{color:var(--nong)}
+.hd{transition:color .35s,background-color .35s}
+.past-hero .hd{background:linear-gradient(rgba(11,11,12,.94) 72%,rgba(11,11,12,0));padding-bottom:30px}
+.past-hero.on-paper .hd{background:linear-gradient(rgba(244,241,234,.97) 72%,rgba(244,241,234,0))}
+
+/* ── hero ───────────────────────────── */
+.hero{position:relative;height:100svh;min-height:560px;overflow:hidden;color:var(--fg)}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:none}
+[data-tier="high"].js-anim #gl{display:block}
+.bg-static{position:absolute;inset:0;background:radial-gradient(120% 80% at var(--gx) 35%,#16202d 0%,var(--nong) 60%),var(--nong)}
+.bg-static::after,.bg-paper::after{content:"";position:absolute;inset:0;background:url(assets/hanji_fiber.webp) 0 0/600px;opacity:.22;mix-blend-mode:screen}
+.bg-paper{position:absolute;inset:0;background:var(--hanji);display:none}
+.bg-paper::after{mix-blend-mode:multiply;opacity:.35}
+.ink-flood{position:absolute;inset:-12%;display:none;background:radial-gradient(90% 70% at var(--cx) var(--cy),var(--nong) 0%,var(--nong) 45%,var(--cheong) 140%);
+  clip-path:circle(calc(var(--flood) * 220vmax) at var(--cx) var(--cy));filter:url(#bleedEdge)}
+.js-anim .bg-static{display:none}
+.js-anim[data-tier="low"] .bg-paper,.js-anim[data-tier="low"] .ink-flood{display:block}
+.rings{position:absolute;left:var(--cx);top:var(--cy);width:0;height:0;display:none}
+.js-anim[data-tier="low"] .rings{display:block}
+.rings i{position:absolute;left:-60px;top:-18px;width:120px;height:36px;border-radius:50%;border:1.5px solid var(--teal);opacity:0;box-shadow:0 0 0 1px rgba(217,207,232,.6) inset}
+.stage{position:absolute;inset:0;z-index:2}
+.fall{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:none}
+.js-anim .fall{display:block}
+.glyph{position:absolute;left:calc(var(--gx) - var(--gw) / 2);top:calc(var(--gy) - var(--gw) / 2);width:var(--gw);height:var(--gw);will-change:transform}
+.glyph>*{position:absolute;inset:0;width:100%;height:100%}
+.glyph-media{-webkit-mask:url(assets/gyeol_white.webp) center/contain no-repeat;mask:url(assets/gyeol_white.webp) center/contain no-repeat;background:var(--hanji)}
+.glyph-media video{width:100%;height:100%;object-fit:cover;transform:scale(1.45);transform-origin:50% 42%;opacity:.3}
+.glyph-media .nacre,.slice .nacre{position:absolute;inset:0;background:linear-gradient(115deg,transparent 20%,var(--teal) 38%,var(--pearl) 50%,var(--eun) 58%,transparent 72%) 0 0/250% 100% no-repeat;mix-blend-mode:screen;opacity:0}
+.glyph-write,.slices{display:none}
+.js-anim .glyph-write,.js-anim .slices{display:block}
+.slice{position:absolute;inset:0;background:url(assets/gyeol_white.webp) center/contain no-repeat;opacity:0}
+.slice .nacre{-webkit-mask:url(assets/gyeol_white.webp) center/contain no-repeat;mask:url(assets/gyeol_white.webp) center/contain no-repeat;mix-blend-mode:normal}
+.kicker{z-index:3;position:absolute;left:20px;top:64px;font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--fg2);line-height:1.6}
+.kicker b{font-weight:600;color:var(--fg);letter-spacing:.18em;font-size:11px}
+.title{position:absolute;left:20px;bottom:calc(64px + env(safe-area-inset-bottom));color:var(--fg)}
+.title .en{display:block;font-weight:250;font-size:clamp(38px,5vw,84px);letter-spacing:.06em;line-height:.95;margin-left:-.04em}
+.title .ko{display:flex;gap:10px;align-items:baseline;margin-top:10px;font-family:var(--serif);font-size:clamp(16px,1.5vw,22px)}
+.title .ko small{font-family:var(--sans);font-size:12px;letter-spacing:.1em;color:var(--fg2)}
+.slogan{position:absolute;right:18px;top:calc(var(--gy) + var(--gw)/2 + 18px);writing-mode:vertical-rl;font-family:var(--serif);font-size:clamp(22px,2.6vw,40px);line-height:1.5;letter-spacing:.08em;color:var(--hanji);white-space:nowrap}
+.slogan .c{display:inline-block}
+.slogan .br{display:block}
+.cta{position:absolute;right:20px;bottom:calc(64px + env(safe-area-inset-bottom));display:none}
+.hero-ctl{position:absolute;left:20px;bottom:calc(30px + env(safe-area-inset-bottom));display:flex;gap:6px}
+.btn{font:600 11px/1 var(--sans);letter-spacing:.14em;color:var(--fg);background:transparent;border:1px solid currentColor;border-radius:999px;min-height:28px;padding:0 12px;cursor:pointer;opacity:.75}
+.btn:hover{opacity:1}
+.no-js .hero-ctl,[data-tier="static"] .hero-ctl{display:none}
+.cue{display:inline-flex;align-items:center;gap:10px;font-size:13px;color:var(--fg);text-decoration:none;letter-spacing:.04em}
+.cue i{display:block;width:1px;height:36px;background:currentColor;transform-origin:top;animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media (max-width:899px){
+  .kicker{top:62px;max-width:58vw}
+  .title{bottom:calc(112px + env(safe-area-inset-bottom))}
+  .cue-wrap{position:absolute;left:20px;bottom:calc(66px + env(safe-area-inset-bottom))}
+  .hero-ctl{left:auto;right:16px;bottom:calc(40px + env(safe-area-inset-bottom))}
+  .gauge .trk{width:min(40vw,200px)}
+  .slogan{right:16px}
+  .letterbox.top{font-size:0}
+  .member .fl{font-size:11px;letter-spacing:.08em}
+}
+@media (min-width:900px){
+  .kicker{left:32px;top:84px}
+  .title{left:32px;bottom:72px}
+  .slogan{left:calc(var(--gx) + var(--gw)/2 + 5vw);right:auto;top:calc(var(--gy) - var(--gw)/2 + 4px)}
+  .cue-wrap{position:absolute;right:32px;bottom:72px}
+  .hero-ctl{left:auto;right:32px;bottom:30px}
+  .hd{padding:24px 32px}
+}
+.letterbox{position:absolute;left:0;right:0;height:9svh;background:var(--nong);z-index:5;transform:scaleY(0);pointer-events:none;display:flex;align-items:center;padding:0 20px;font:500 10px/1 var(--sans);letter-spacing:.2em;color:rgba(244,241,234,.8)}
+.letterbox.top{top:0;transform-origin:top;justify-content:center}.letterbox.bot{bottom:0;transform-origin:bottom;justify-content:space-between}
+.veil{position:absolute;inset:0;background:var(--cheong);opacity:0;z-index:4;pointer-events:none}
+
+/* ═══════ v3 — 수면 위 → 먹 → 12m 런웨이 → 0m 개화 → 장 → 아웃트로 ═══════ */
+.slogan{writing-mode:horizontal-tb}
+.slogan img{height:min(30svh,250px);width:auto}
+@media (min-width:900px){ .slogan img{height:min(58svh,500px)} }
+.eyebrow{display:block;font:600 11px/1.4 var(--sans);letter-spacing:.22em;text-transform:uppercase}
+
+/* ── surface: 수면 위 들판 → 먹 번짐(스크롤로 감기는 영상) ── */
+.surface{position:relative;z-index:3;background:var(--cheong);color:var(--hanji)}
+.js-anim .sf-field{-webkit-mask:radial-gradient(circle at 100% 0,#000 calc(var(--pe,1) * 160% - 8%),transparent calc(var(--pe,1) * 160%));mask:radial-gradient(circle at 100% 0,#000 calc(var(--pe,1) * 160% - 8%),transparent calc(var(--pe,1) * 160%))}
+.sf-stick{position:relative;min-height:100svh;overflow:hidden}
+.js-anim .surface{height:300svh}
+.js-anim .sf-stick{position:sticky;top:0;height:100svh}
+.sf-field,.sf-dive,.sf-shade{position:absolute;inset:0;width:100%;height:100%}
+.sf-field img{width:100%;height:100%;object-fit:cover;transform:scale(calc(1.12 - var(--sp,0) * .12));transform-origin:50% 60%}
+.sf-dive{object-fit:cover;background:#f3f3f1;-webkit-mask:radial-gradient(circle at 100% 0,#000 calc(var(--dv,0) * 170% - 10%),transparent calc(var(--dv,0) * 170%));mask:radial-gradient(circle at 100% 0,#000 calc(var(--dv,0) * 170% - 10%),transparent calc(var(--dv,0) * 170%))}
+.no-js .sf-dive,[data-tier="static"] .sf-dive{display:none}
+.sf-shade{background:linear-gradient(180deg,rgba(11,11,12,.55),rgba(11,11,12,0) 30%,rgba(11,11,12,0) 55%,rgba(11,11,12,.7));pointer-events:none}
+.sf-end{position:absolute;inset:0;background:linear-gradient(var(--cheong),var(--cheong));opacity:var(--se,0);pointer-events:none}
+.sf-copy{position:absolute;left:20px;right:20px;bottom:calc(84px + env(safe-area-inset-bottom));max-width:26em;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.sf-copy h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.6vw,66px);line-height:1.25;margin-top:10px}
+.sf-copy p{margin-top:12px;font-size:16px;line-height:1.7;color:rgba(244,241,234,.86)}
+.sf-copy .eyebrow{color:rgba(244,241,234,.8)}
+.sf-copy.b{top:96px;bottom:auto;padding:18px 20px 22px;margin-left:-20px;background:radial-gradient(closest-side,rgba(11,11,12,.82),rgba(11,11,12,.6) 65%,rgba(11,11,12,0));text-shadow:0 1px 12px rgba(11,11,12,.6)}
+.js-anim .sf-copy{opacity:0;transform:translateY(16px)}
+.js-anim .sf-copy.on{opacity:1;transform:none}
+.no-js .sf-copy.b,[data-tier="static"] .sf-copy.b{display:none}
+@media (min-width:900px){ .sf-copy{left:6vw;bottom:12svh} .sf-copy.b{left:6vw;top:24svh;max-width:min(40vw,640px)} }
+
+/* ── depth 12m: ODALINE식 런웨이 + Novu식 한 명씩 ── */
+.depth{position:relative;z-index:3;background:linear-gradient(var(--cheong),var(--nong) 60%);color:var(--hanji)}
+.depth-head{position:relative;padding:20svh 20px 8svh;overflow:hidden}
+.depth-num{position:absolute;left:50%;top:6svh;transform:translateX(-50%);font-weight:200;font-size:clamp(200px,44vw,600px);line-height:.8;letter-spacing:-.04em;color:rgba(232,236,240,.08);white-space:nowrap;filter:url(#liquidNum);user-select:none;pointer-events:none}
+.depth-num sub{font-size:.22em;vertical-align:baseline;letter-spacing:0}
+.depth h2{position:relative;font-family:var(--serif);font-weight:400;font-size:clamp(28px,4.2vw,60px);line-height:1.3;max-width:12em}
+.depth .lede{position:relative;margin-top:14px;font-size:16px;line-height:1.7;color:rgba(244,241,234,.82);max-width:30em}
+.fish{position:absolute;right:-6%;top:12%;width:min(46vw,420px);opacity:.09;filter:invert(1);pointer-events:none}
+.runway{position:relative;padding:0 20px 14svh;display:grid;gap:10svh}
+.look{position:relative;display:grid;gap:16px}
+.look .media{position:relative;aspect-ratio:9/16;max-height:82svh;overflow:hidden;border-radius:2px;background:#0d1622}
+.look .media img,.look .media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.62) contrast(1.04)}
+.look .no{font:600 11px/1 var(--sans);letter-spacing:.24em;color:rgba(244,241,234,.7)}
+.look h3{font-family:var(--serif);font-weight:400;font-size:clamp(44px,7vw,112px);line-height:1;letter-spacing:.02em;margin-top:8px}
+.look dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin-top:14px;font-size:14px;line-height:1.5}
+.look dt{font:600 10px/1.9 var(--sans);letter-spacing:.2em;color:rgba(244,241,234,.6)}
+.look dd{color:var(--hanji)}
+.look .fl{width:min(36vw,170px);margin-top:10px;filter:invert(1);opacity:.85}
+.rw-queue,.rw-ticks{display:none}
+/* stage mode (JS high/low) */
+.js-anim .runway.stage{height:420svh;padding:0;display:block}
+.js-anim .runway.stage .rw-stick{position:sticky;top:0;height:100svh;overflow:hidden}
+.js-anim .runway.stage .look{position:absolute;inset:0;display:block;pointer-events:none;visibility:hidden}
+.js-anim .runway.stage .look.on,.js-anim .runway.stage .look.prev{visibility:visible}
+.js-anim .runway.stage .look.on{pointer-events:auto;z-index:2}
+.js-anim .runway.stage .media{position:absolute;inset:0;max-height:none;aspect-ratio:auto;border-radius:0;clip-path:circle(0% at 100% 0)}
+.js-anim .runway.stage .look.prev .media{clip-path:circle(150% at 100% 0)}
+.js-anim .runway.stage .look.on .media{clip-path:circle(150% at 100% 0);transition:clip-path .9s cubic-bezier(.65,0,.35,1)}
+.js-anim .runway.stage .media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,12,.5),rgba(11,11,12,0) 28%,rgba(11,11,12,0) 50%,rgba(11,11,12,.86))}
+.js-anim .runway.stage .info{position:absolute;left:20px;right:20px;bottom:calc(92px + env(safe-area-inset-bottom));z-index:2}
+.js-anim .runway.stage .info>*{opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.js-anim .runway.stage .look.on .info>*{opacity:1;transform:none;transition-delay:.25s}
+.js-anim .runway.stage .look .fl{position:absolute;right:0;bottom:0;width:min(30vw,150px);margin:0}
+.js-anim .runway.stage .rw-ticks{display:flex;position:absolute;z-index:4;left:20px;right:20px;top:86px;gap:6px}
+.rw-ticks button{flex:1;min-height:28px;background:none;border:0;color:rgba(244,241,234,.55);font:600 10px/1 var(--sans);letter-spacing:.18em;text-align:left;cursor:pointer;position:relative;padding-top:8px}
+.rw-ticks button::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:rgba(244,241,234,.25)}
+.rw-ticks button::after{content:"";position:absolute;left:0;top:0;height:2px;width:calc(var(--f,0) * 100%);background:linear-gradient(90deg,var(--teal),var(--pearl))}
+.rw-ticks button[aria-current="true"]{color:var(--hanji)}
+.js-anim .runway.stage .rw-queue{display:block;position:absolute;inset:0;z-index:1;pointer-events:none}
+.rw-queue img{position:absolute;bottom:20%;height:46%;width:auto;opacity:.0;-webkit-mask:radial-gradient(50% 50% at 50% 45%,#000 45%,transparent 100%);mask:radial-gradient(50% 50% at 50% 45%,#000 45%,transparent 100%);filter:grayscale(1) brightness(.7) blur(2px);transition:opacity .8s,transform .8s var(--ease)}
+@media (min-width:900px){
+  .depth-head{padding:24svh 6vw 10svh}
+  .runway{padding:0 6vw 16svh;grid-template-columns:repeat(2,1fr);gap:12svh 6vw}
+  .js-anim .runway.stage .media{left:auto;right:6vw;top:12svh;bottom:8svh;width:calc(80svh * 9 / 16);height:auto;border-radius:2px}
+  .js-anim .runway.stage .media::after{background:linear-gradient(180deg,rgba(11,11,12,0) 70%,rgba(11,11,12,.5))}
+  .js-anim .runway.stage .info{left:6vw;right:auto;bottom:auto;top:30svh;max-width:34vw}
+  .js-anim .runway.stage .look .fl{position:static;margin-top:28px;width:150px}
+  .js-anim .runway.stage .rw-ticks{left:6vw;right:auto;width:34vw;top:auto;bottom:12svh}
+  .rw-queue img{opacity:.0}
+  .js-anim .runway.stage .rw-queue img.q{opacity:.42}
+}
+
+/* ── rise 0m: 한지가 번져 오르고, 꽃이 빽빽하게 핀다 ── */
+.rise{position:relative;background:var(--nong);z-index:3}
+.rise-paper{position:relative;background:var(--hanji);color:var(--nong);padding:20svh 20px 10svh;overflow:hidden}
+.rise-paper::before{content:"";position:absolute;inset:0;background:url(assets/hanji_fiber.webp) 0 0/600px;opacity:.35;mix-blend-mode:multiply;pointer-events:none}
+.rise h2{position:relative;font-family:var(--serif);font-weight:400;font-size:clamp(34px,5.4vw,80px);line-height:1.2}
+.rise .lede{position:relative;margin-top:14px;font-size:16px;line-height:1.7;color:rgba(11,11,12,.78);max-width:30em}
+.garden{position:relative;height:150svh;margin-top:4svh}
+.garden figure{position:absolute;width:var(--w);left:var(--x);top:var(--y);margin:0;transform:rotate(var(--r,0deg))}
+.garden .bud{position:relative;aspect-ratio:1}
+.garden .bud img{position:absolute;inset:0;width:100%;height:100%}
+.garden .col{clip-path:circle(75% at 50% 50%)}
+.garden figcaption{position:relative;display:flex;gap:10px;align-items:baseline;font-size:12px;letter-spacing:.14em;margin-top:-6%;padding-left:12%}
+.garden figcaption b{font-family:var(--serif);font-weight:400;font-size:20px;letter-spacing:0}
+.garden .sm{opacity:.5}.garden .sm figcaption{display:none}
+.garden .sheen{position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(95,184,176,.35) 45%,rgba(217,207,232,.45) 52%,transparent 64%) 0 0/260% 100% no-repeat;mix-blend-mode:multiply;pointer-events:none;opacity:0}
+.f1{--w:72vw;--x:-6vw;--y:0}
+.f2{--w:62vw;--x:38vw;--y:24svh;--r:8deg}
+.f3{--w:70vw;--x:-4vw;--y:62svh;--r:-6deg}
+.f4{--w:60vw;--x:40vw;--y:96svh;--r:4deg}
+.f5{--w:30vw;--x:62vw;--y:2svh;--r:30deg}
+.f6{--w:26vw;--x:6vw;--y:120svh;--r:-24deg}
+@media (min-width:900px){
+  .rise-paper{padding:24svh 6vw 10svh}
+  .garden{height:120svh}
+  .f1{--w:34vw;--x:2vw;--y:6svh}.f2{--w:30vw;--x:30vw;--y:30svh}.f3{--w:32vw;--x:58vw;--y:0}.f4{--w:28vw;--x:66vw;--y:58svh}
+  .f5{--w:14vw;--x:44vw;--y:2svh}.f6{--w:16vw;--x:14vw;--y:78svh}
+}
+
+/* ── chapters (Shopify Editions식 장 + 고정 목차) ── */
+.chapters{position:relative;background:var(--hanji);color:var(--nong);padding:118px 20px 14svh;z-index:3}
+.ch-index{position:sticky;top:118px;z-index:5;background:var(--hanji);display:flex;gap:4px;overflow-x:auto;padding:10px 0;border-bottom:1px solid rgba(11,11,12,.15);list-style:none}
+.ch-index a{display:block;font-size:12px;font-weight:600;letter-spacing:.14em;padding:8px 10px;text-decoration:none;color:rgba(11,11,12,.7);border-radius:999px;white-space:nowrap}
+.ch-index a[aria-current="true"]{color:var(--hanji);background:var(--nong)}
+.ch-card{position:relative;padding:12svh 0 4svh;scroll-margin-top:170px}
+.ch-card .num{font-size:12px;letter-spacing:.2em;font-weight:600;color:rgba(11,11,12,.72)}
+.ch-card h3{font-family:var(--serif);font-weight:400;font-size:clamp(72px,16vw,220px);line-height:.9;letter-spacing:-.01em;margin:10px 0 22px;position:relative;z-index:2}
+.ch-card h3 small{display:block;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.24em;margin-top:14px;color:rgba(11,11,12,.72)}
+.ch-media{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:2px;background:#ddd8cc;margin-top:-6vw}
+.ch-media img{width:100%;height:100%;object-fit:cover}
+.ch-card p{font-size:16px;line-height:1.7;margin-top:16px;max-width:30em}
+.ch-card .go{display:inline-block;margin-top:14px;font-size:13px;font-weight:600;letter-spacing:.08em;padding:12px 0;text-underline-offset:5px}
+/* MUSIC: 트랙 목록 + 잉어 잔상 */
+.tracks{position:relative;list-style:none;border-top:1px solid rgba(11,11,12,.85);margin-top:8px}
+.tracks li{border-bottom:1px solid rgba(11,11,12,.14)}
+.tracks button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:3em 1fr auto;align-items:baseline;gap:12px;width:100%;min-height:52px;padding:14px 4px;cursor:pointer;position:relative;z-index:1}
+.tracks button:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+.tracks .n{font:600 11px/1 var(--sans);letter-spacing:.16em;color:rgba(11,11,12,.6)}
+.tracks .t{font-family:var(--serif);font-size:clamp(20px,2.2vw,30px);line-height:1.2}
+.tracks .t small{font-family:var(--sans);font-size:12px;margin-left:8px;color:rgba(11,11,12,.6)}
+.tracks .s{font:600 10px/1 var(--sans);letter-spacing:.16em;color:rgba(11,11,12,.62)}
+.tracks .prep button{cursor:default}.tracks .prep .t{color:rgba(11,11,12,.45)}
+.tracks li.on .t{background:linear-gradient(90deg,var(--teal),var(--pearl)) 0 100%/100% 2px no-repeat}
+.tracks li.on .s::before{content:"■ ";color:var(--teal)}
+.koi{position:absolute;left:0;top:0;width:min(60vw,360px);pointer-events:none;opacity:0;transition:opacity .6s;z-index:0;will-change:transform}
+.tracks-wrap{position:relative}.tracks-wrap:hover .koi,.tracks-wrap.ko .koi{opacity:.09}
+/* ARCHIVE: 굿즈 가로 스트립 */
+.ch-list{min-width:0}
+.strip{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 0 14px;margin-top:6px;scrollbar-width:thin}
+.strip figure{flex:0 0 min(62vw,260px);scroll-snap-align:start}
+.strip img{width:100%;aspect-ratio:1;object-fit:cover;background:#e6e1d6;border-radius:2px}
+.strip figcaption{font-size:12px;letter-spacing:.08em;margin-top:6px;color:rgba(11,11,12,.7)}
+@media (min-width:900px){
+  .chapters{display:grid;grid-template-columns:26% 1fr;gap:5vw;padding:0 6vw 16svh}
+  .ch-index{flex-direction:column;align-self:start;top:0;height:100svh;padding:22svh 0 0;border:0;background:none;gap:2px}
+  .ch-index a{font-size:clamp(22px,2.4vw,36px);font-family:var(--serif);font-weight:400;letter-spacing:.02em;padding:6px 0;border-radius:0;background:none!important}
+  .ch-index a[aria-current="true"]{color:var(--nong)}
+  .ch-index a[aria-current="true"]::after{content:"";display:block;height:2px;width:48px;margin-top:6px;background:linear-gradient(90deg,var(--teal),var(--pearl))}
+  .ch-card{padding:20svh 0 4svh}
+  .ch-media{margin-top:-4.5vw}
+}
+
+/* ── outro 0m: 들판 + 붓글씨 슬로건 + 수면 반사 ── */
+.outro{position:relative;z-index:3;background:var(--nong);color:rgba(244,241,234,.78);overflow:hidden}
+.outro-scene{position:relative;height:88svh;min-height:560px;display:grid;place-items:center}
+.outro-scene>img.bg{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;filter:brightness(.5) saturate(.35) contrast(1.05)}
+.outro-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--nong) 0,rgba(11,11,12,0) 40%,rgba(11,11,12,0) 80%,var(--nong) 100%);pointer-events:none}
+@media (min-width:900px){ .outro-scene>img.bg{top:0;height:100%;object-fit:cover;object-position:50% 50%} .outro-scene{place-items:center end;padding-right:14vw} }
+.sl-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;margin-top:-10svh}
+@media (min-width:900px){ .sl-wrap{margin-top:0} }
+.sl-wrap img{height:min(40svh,340px);width:auto}
+.sl-wrap .rb{height:calc(min(40svh,340px) * .42);overflow:hidden;margin-top:6px}
+@media (min-width:900px){ .sl-wrap img{height:min(52svh,440px)} .sl-wrap .rb{height:calc(min(52svh,440px) * .42)} }
+.sl-wrap .refl{transform:scaleY(-1);transform-origin:50% 0;translate:0 100%;opacity:.38;-webkit-mask:linear-gradient(180deg,transparent 35%,#000);mask:linear-gradient(180deg,transparent 35%,#000);filter:url(#water) blur(.6px)}
+.outro-meta{position:relative;z-index:2;padding:4svh 20px calc(84px + env(safe-area-inset-bottom));display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:13px;line-height:1.7}
+.outro-meta nav a{margin-right:16px;font-size:11px;font-weight:600;letter-spacing:.18em;text-decoration:none}
+@media (min-width:900px){ .outro-meta{padding:4svh 6vw 72px} }
+
+/* ── gauge 0m→12m→0m ───────────────── */
+.gauge{white-space:nowrap;position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:10px;font:600 11px/1 var(--sans);letter-spacing:.12em;color:var(--fg);transition:color .35s;pointer-events:none}
+.on-paper .gauge{color:var(--nong)}
+.gauge .trk{position:relative;width:min(44vw,260px);height:11px;background:repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px calc(100% / 12)) 0 50%/100% 5px no-repeat;opacity:.9}
+.gauge .trk::after{content:"";position:absolute;left:0;right:0;top:5px;height:1px;background:currentColor;opacity:.35}
+.gauge .dot{position:absolute;top:1px;left:calc(var(--depth) / 12 * 100%);width:9px;height:9px;margin-left:-4px;border-radius:50%;background:currentColor}
+.gauge output{min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}
+
+/* ── ink bleed (menu transition) ───── */
+.bleed{position:fixed;inset:0;z-index:60;pointer-events:none;display:none;--r:0%}
+.bleed i{position:absolute;inset:-4%;clip-path:circle(var(--r) at 100% 0);filter:url(#bleedEdge)}
+.bleed .rim{background:conic-gradient(from 200deg at 100% 0,var(--teal),var(--pearl),var(--eun),var(--teal));clip-path:circle(calc(var(--r) + 2.2%) at 100% 0);opacity:.9}
+.bleed .ink{background:radial-gradient(140% 140% at 100% 0,var(--nong) 40%,var(--cheong))}
+
+/* ── scroll-driven CSS (모든 엔진, Firefox 2026-10-27~) ── */
+@supports (animation-timeline: view()){
+  .rise-paper{animation:paperIn linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
+  @keyframes paperIn{from{clip-path:circle(8% at 50% 100%)}to{clip-path:circle(150% at 50% 100%)}}
+  .garden figure{animation:budIn linear both;animation-timeline:view();animation-range:entry 0% cover 45%}
+  @keyframes budIn{from{transform:translateY(14svh) scale(.62) rotate(calc(var(--r,0deg) - 18deg));opacity:.2}to{transform:rotate(var(--r,0deg));opacity:1}}
+  .garden .col{animation:colIn linear both;animation-timeline:view();animation-range:cover 25% cover 55%}
+  @keyframes colIn{from{clip-path:circle(0% at 50% 55%)}to{clip-path:circle(75% at 50% 50%)}}
+  .garden .sheen{animation:sheen linear both;animation-timeline:view();animation-range:cover 40% cover 65%}
+  @keyframes sheen{0%{opacity:0;background-position:120% 0}30%{opacity:1}100%{opacity:0;background-position:-30% 0}}
+  .fish{animation:fishDrift linear both;animation-timeline:view()}
+  @keyframes fishDrift{from{transform:translate(10%,10%) rotate(8deg)}to{transform:translate(-30%,-20%) rotate(-6deg)}}
+  .ch-media{animation:mediaIn linear both;animation-timeline:view();animation-range:entry 0% cover 35%}
+  @keyframes mediaIn{from{clip-path:circle(6% at 100% 0)}to{clip-path:circle(150% at 100% 0)}}
+  .ch-card h3{animation:titleIn linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+  @keyframes titleIn{from{letter-spacing:.18em;opacity:.15}to{letter-spacing:-.01em;opacity:1}}
+  .outro-scene>img.bg{animation:outroBg linear both;animation-timeline:view();animation-range:entry 0% exit 0%}
+  @keyframes outroBg{from{transform:scale(1.15)}to{transform:scale(1)}}
+}
+@supports not (animation-timeline: view()){ .garden .col{clip-path:none} }
+/* 텍스트 등장은 시간 기반, 0.5초 */
+.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .js-pre .stage{visibility:hidden;animation:unhide 0s 2.5s forwards}
+  .js-pre .bg-static{display:none}.js-pre .bg-paper{display:block}
+}
+@keyframes unhide{to{visibility:visible}}
+.on-dive .hd,.on-dive .gauge{color:var(--nong)}
+.blend .hd,.blend .kicker,.blend .kicker *,.blend .gauge{color:var(--hanji)!important;mix-blend-mode:difference}
+.debug{position:fixed;left:8px;top:50%;z-index:99;background:rgba(0,0,0,.7);color:#0f0;font:11px/1.4 monospace;padding:6px 8px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="bleedEdge" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="70" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="brush" x="-50%" y="-2%" width="200%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="1.1 .018" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2.2 0 0 0 1.75" result="gaps"/><feComposite in="d" in2="gaps" operator="in"/></filter>
+  <filter id="water"><feTurbulence type="fractalNoise" baseFrequency=".008 .09" numOctaves="2" seed="3" result="n"><animate attributeName="baseFrequency" dur="9s" values=".008 .09;.01 .07;.008 .09" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="liquidNum"><feTurbulence id="lnT" type="fractalNoise" baseFrequency=".006 .014" numOctaves="2" seed="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G"/></filter>
+</svg>
+
+<header class="hd">
+  <a class="brand" href="#top" aria-label="결락 처음으로"><span class="brand-ko">결락</span><span class="brand-hj" lang="zh-Hant">結落</span><span class="brand-en">GYEOLLAK</span></a>
+  <nav class="menu" aria-label="주 메뉴"><ol>
+    <li><a href="#members">MEMBERS</a></li><li><a href="#music">MUSIC</a></li><li><a href="#world">WORLD</a></li><li><a href="#archive">ARCHIVE</a></li>
+  </ol></nav>
+</header>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<main id="main" tabindex="-1">
+<section class="hero" id="top" aria-labelledby="h-title">
+  <div class="bg-static" aria-hidden="true"></div>
+  <div class="bg-paper" aria-hidden="true"></div>
+  <div class="ink-flood" aria-hidden="true"></div>
+  <div class="rings" aria-hidden="true"><i></i><i></i><i></i></div>
+  <p class="kicker"><b>BAND · 2026</b><br>네 사람이 하나의 결이 되는 곳</p>
+  <div class="stage">
+    <svg class="fall" aria-hidden="true"><g filter="url(#brush)"><path id="fallPath" fill="none" stroke="#0B0B0C" stroke-linecap="round"/><path id="fallHair" fill="none" stroke="#0B0B0C" stroke-linecap="round" opacity=".55"/></g><circle id="fallDrop" r="0" fill="#0B0B0C"/></svg>
+    <div class="glyph" aria-hidden="true">
+      <div class="glyph-media"><video id="lily" muted playsinline preload="metadata" poster="assets/lily_ink_end.jpg" src="assets/lily_ink.mp4"></video><span class="nacre"></span></div>
+      <canvas class="glyph-write"></canvas>
+      <div class="slices"><div class="slice"><span class="nacre"></span></div><div class="slice"><span class="nacre"></span></div><div class="slice"><span class="nacre"></span></div><div class="slice"><span class="nacre"></span></div></div>
+    </div>
+    <h1 class="title" id="h-title"><span class="en">GYEOLLAK</span><span class="ko">결락 <small lang="zh-Hant">結落</small></span></h1>
+    <p class="slogan"><img src="assets/v3/slogan_brush.webp" width="237" height="812" alt="우리는 닿는 순간부터 번지고 있었다" decoding="async"></p>
+    <div class="cue-wrap"><a class="cue" href="#surface"><i></i>스크롤해서 들어가기</a></div>
+    <div class="hero-ctl"><button class="btn" id="pauseBtn" type="button" aria-pressed="false">일시정지</button><button class="btn" id="replayBtn" type="button">다시 보기</button></div>
+  </div>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="letterbox top" aria-hidden="true">SCENE 01 — 수면 위</div>
+  <div class="letterbox bot" aria-hidden="true"><span>0m · 들판</span><span>결락 · 結落</span></div>
+</section>
+
+<section class="surface" id="surface" aria-labelledby="h-surface">
+  <div class="sf-stick">
+    <picture class="sf-field"><source media="(min-width:900px)" srcset="assets/v3/field_wind.webp"><img src="assets/v3/field_group_m.webp" alt="바람 부는 풀밭에 흰 수트를 입고 나란히 선 네 멤버" loading="lazy"></picture>
+    <div class="sf-shade" aria-hidden="true"></div>
+    <video class="sf-dive" muted playsinline preload="none" aria-hidden="true" data-tall="assets/v3/dive_tall.mp4" data-wide="assets/v3/dive_wide.mp4"></video>
+    <div class="sf-end" aria-hidden="true"></div>
+    <div class="sf-copy a"><span class="eyebrow">0m · 수면 위</span><h2 id="h-surface">닿기 전,<br>들판의 네 사람</h2><p>바람이 풀을 한쪽으로 눕힌다. 한 방울이 떨어져 나가기 직전의 고요.</p></div>
+    <div class="sf-copy b" aria-hidden="true"><span class="eyebrow">먹 · 落</span><h2>떨어진 한 방울이<br>번지기 시작한다</h2><p>먹이 수면을 뚫고 가라앉는다. 그 끝에서 꽃 한 송이가 열린다.</p></div>
+  </div>
+</section>
+
+<section class="depth" id="members" tabindex="-1" aria-labelledby="h-depth">
+  <div class="depth-head">
+    <div class="depth-num" aria-hidden="true"><span class="dn">12</span><sub>m</sub></div>
+    <img class="fish" src="assets/fish_c.webp" alt="" loading="lazy">
+    <h2 id="h-depth" class="reveal">가장 깊은 곳에서<br>넷은 서로에게 닿았다</h2>
+    <p class="lede reveal">수심 12m. 빛이 닿지 않는 자리에서 먹은 가라앉고, 네 사람의 결이 하나로 엉긴다.</p>
+  </div>
+  <div class="runway">
+    <div class="rw-stick">
+      <div class="rw-queue" aria-hidden="true"><img src="assets/v3/st_taejun_sm.webp" alt=""><img src="assets/v3/st_yuseong_sm.webp" alt=""><img src="assets/v3/st_jinwoo_sm.webp" alt=""><img src="assets/v3/st_ryuhyun_sm.webp" alt=""></div>
+      <article class="look" data-v="assets/v3/lp_taejun.mp4" aria-labelledby="m1">
+        <div class="media"><img src="assets/v3/st_taejun.webp" alt="빛 상자 앞 수면 위에 흰 수트로 선 문태준" loading="lazy"></div>
+        <div class="info"><span class="no">結 01 — LOOK</span><h3 id="m1">문태준</h3><dl><dt>꽃</dt><dd>백합 LILY</dd><dt>키</dt><dd>195cm</dd></dl><img class="fl" src="assets/v3/fl_lily_ink.webp" alt="" loading="lazy"></div>
+      </article>
+      <article class="look" data-v="assets/v3/lp_yuseong.mp4" aria-labelledby="m2">
+        <div class="media"><img src="assets/v3/st_yuseong.webp" alt="붉은 꽃잎이 떨어지는 빛 아래 선 채유성" loading="lazy"></div>
+        <div class="info"><span class="no">結 02 — LOOK</span><h3 id="m2">채유성</h3><dl><dt>꽃</dt><dd>동백 CAMELLIA</dd><dt>키</dt><dd>190cm</dd></dl><img class="fl" src="assets/v3/fl_camellia_ink.webp" alt="" loading="lazy"></div>
+      </article>
+      <article class="look" data-v="assets/v3/lp_jinwoo.mp4" aria-labelledby="m3">
+        <div class="media"><img src="assets/v3/st_jinwoo.webp" alt="밤바다에 서서 빛나는 나비를 든 하진우" loading="lazy"></div>
+        <div class="info"><span class="no">結 03 — LOOK</span><h3 id="m3">하진우</h3><dl><dt>꽃</dt><dd>수국 HYDRANGEA</dd><dt>키</dt><dd>189cm</dd></dl><img class="fl" src="assets/v3/fl_hydrangea_ink.webp" alt="" loading="lazy"></div>
+      </article>
+      <article class="look" data-v="assets/v3/lp_ryuhyun.mp4" aria-labelledby="m4">
+        <div class="media"><img src="assets/v3/st_ryuhyun.webp" alt="능소화가 떠다니는 물속에 잠긴 채류현" loading="lazy"></div>
+        <div class="info"><span class="no">結 04 — LOOK</span><h3 id="m4">채류현</h3><dl><dt>꽃</dt><dd>능소화 TRUMPET VINE</dd><dt>키</dt><dd>188cm</dd></dl><img class="fl" src="assets/v3/fl_campsis_ink.webp" alt="" loading="lazy"></div>
+      </article>
+      <div class="rw-ticks" role="group" aria-label="멤버 선택"><button type="button">01 태준</button><button type="button">02 유성</button><button type="button">03 진우</button><button type="button">04 류현</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="rise" aria-labelledby="h-rise">
+  <div class="rise-paper">
+    <h2 id="h-rise" class="reveal">다시, 수면으로</h2>
+    <p class="lede reveal">0m. 번진 자리마다 꽃이 핀다. 먹으로 그린 선 위에 색이 돌아온다.</p>
+    <div class="garden">
+      <figure class="f5 sm" aria-hidden="true"><div class="bud"><img src="assets/v3/fl_hydrangea_ink.webp" alt="" loading="lazy"></div></figure>
+      <figure class="f1"><div class="bud"><img src="assets/v3/fl_lily_ink.webp" alt="" loading="lazy"><img class="col" src="assets/v3/fl_lily_col.webp" alt="백합" loading="lazy"><i class="sheen"></i></div><figcaption><b>백합</b>태준</figcaption></figure>
+      <figure class="f2"><div class="bud"><img src="assets/v3/fl_camellia_ink.webp" alt="" loading="lazy"><img class="col" src="assets/v3/fl_camellia_col.webp" alt="동백" loading="lazy"><i class="sheen"></i></div><figcaption><b>동백</b>유성</figcaption></figure>
+      <figure class="f3"><div class="bud"><img src="assets/v3/fl_hydrangea_ink.webp" alt="" loading="lazy"><img class="col" src="assets/v3/fl_hydrangea_col.webp" alt="수국" loading="lazy"><i class="sheen"></i></div><figcaption><b>수국</b>진우</figcaption></figure>
+      <figure class="f4"><div class="bud"><img src="assets/v3/fl_campsis_ink.webp" alt="" loading="lazy"><img class="col" src="assets/v3/fl_campsis_col.webp" alt="능소화" loading="lazy"><i class="sheen"></i></div><figcaption><b>능소화</b>류현</figcaption></figure>
+      <figure class="f6 sm" aria-hidden="true"><div class="bud"><img src="assets/v3/fl_camellia_ink.webp" alt="" loading="lazy"></div></figure>
+    </div>
+  </div>
+</section>
+
+<section class="chapters" aria-label="챕터">
+  <ol class="ch-index">
+    <li><a href="#ch-members">MEMBERS</a></li><li><a href="#music">MUSIC</a></li><li><a href="#world">WORLD</a></li><li><a href="#archive">ARCHIVE</a></li>
+  </ol>
+  <div class="ch-list">
+    <article class="ch-card" id="ch-members" tabindex="-1"><span class="num">01 / 04</span><h3>멤버<small>MEMBERS</small></h3><div class="ch-media"><img src="assets/v3/field_wind.webp" alt="바람 부는 들판의 네 멤버" loading="lazy"></div><p class="reveal">흰 수트의 네 사람. 백합, 동백, 수국, 능소화로 이어지는 네 개의 결.</p><a class="go" href="../../../v15/members.html">멤버 보기 →</a></article>
+    <article class="ch-card" id="music" tabindex="-1"><span class="num">02 / 04</span><h3>음악<small>MUSIC · 장마의 잔향</small></h3>
+      <div class="tracks-wrap"><img class="koi" src="assets/v3/koi_after.webp" alt="" aria-hidden="true"><ol class="tracks" aria-label="수록곡"></ol></div>
+      <p class="reveal">닿는 순간 번지는 소리. 곡 이름을 누르면 20초 미리 듣기가 나와. 한 번에 한 곡만 재생돼.</p><a class="go" href="../../../v15/music.html">전체 듣기 →</a><audio id="pv" preload="none"></audio></article>
+    <article class="ch-card" id="world" tabindex="-1"><span class="num">03 / 04</span><h3>세계관<small>WORLD</small></h3><div class="ch-media"><img src="assets/sc_world_sm.webp" alt="먹과 붓, 펼친 책이 놓인 책상" loading="lazy"></div><p class="reveal">먹선 한 획이 수면이 되는 곳. 결락의 이야기가 시작된 자리.</p><a class="go" href="../../../v15/story.html">이야기 읽기 →</a></article>
+    <article class="ch-card" id="archive" tabindex="-1"><span class="num">04 / 04</span><h3>아카이브<small>ARCHIVE</small></h3>
+      <div class="strip" tabindex="0" aria-label="굿즈 시안 (옆으로 넘기기)">
+        <figure><img src="../../../v15/img/goods/01-clear-archive.webp" alt="" loading="lazy"><figcaption>CLEAR ARCHIVE</figcaption></figure>
+        <figure><img src="../../../v15/img/goods/02-chrome-thorn.webp" alt="" loading="lazy"><figcaption>CHROME THORN</figcaption></figure>
+        <figure><img src="../../../v15/img/goods/03-liquid-drip.webp" alt="" loading="lazy"><figcaption>LIQUID DRIP</figcaption></figure>
+        <figure><img src="../../../v15/img/goods/04-x-ray.webp" alt="" loading="lazy"><figcaption>X-RAY</figcaption></figure>
+        <figure><img src="../../../v15/img/goods/05-soft-sleeve.webp" alt="" loading="lazy"><figcaption>SOFT SLEEVE</figcaption></figure>
+        <figure><img src="../../../v15/img/goods/06-sprue-kit.webp" alt="" loading="lazy"><figcaption>SPRUE KIT</figcaption></figure>
+        <figure><img src="../../../v15/img/goods/07-receipt-sleeve.webp" alt="" loading="lazy"><figcaption>RECEIPT SLEEVE</figcaption></figure>
+        <figure><img src="../../../v15/img/goods/08-vending-capsule.webp" alt="" loading="lazy"><figcaption>VENDING CAPSULE</figcaption></figure>
+      </div>
+      <p class="reveal">잔상으로 남은 것들. 앨범 케이스 시안과 기록을 모았다.</p><a class="go" href="../../../v15/objects.html">아카이브 열기 →</a></article>
+  </div>
+</section>
+
+</main>
+<footer class="outro" aria-label="마무리">
+  <div class="outro-scene">
+    <img class="bg" src="assets/v3/field_wind.webp" alt="" loading="lazy">
+    <div class="sl-wrap"><img src="assets/v3/slogan_brush.webp" width="237" height="812" alt="우리는 닿는 순간부터 번지고 있었다" loading="lazy"><div class="rb" aria-hidden="true"><img class="refl" src="assets/v3/slogan_brush.webp" width="237" height="812" alt="" loading="lazy"></div></div>
+  </div>
+  <div class="outro-meta"><p>결락 結落 · GYEOLLAK — 사이트 시안 v3 (2026-11-18)</p><nav aria-label="바닥 메뉴"><a href="#members">MEMBERS</a><a href="#music">MUSIC</a><a href="#world">WORLD</a><a href="#archive">ARCHIVE</a></nav></div>
+</footer>
+
+<div class="gauge" aria-hidden="true"><span>수심</span><span class="trk"><span class="dot"></span></span><output id="depthOut">0m</output></div>
+<div class="bleed" aria-hidden="true"><i class="rim"></i><i class="ink"></i></div>
+<div class="debug" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/SplitText.min.js"></script>
+<script src="brush.js"></script>
+<script src="glyphs.js"></script>
+<script src="main.js"></script>
+<script src="v3.js"></script>
+</body>
+</html>
