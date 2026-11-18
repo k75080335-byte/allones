@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>결락 · X-RAY × 자개 draw-on 미리보기</title><link rel="icon" href="data:,">
+<link rel="stylesheet" href="najeon.css">
+<style>
+body{margin:0;background:radial-gradient(70% 60% at 50% 50%,#1F2A3A,#0B0B0C 72%);color:#E8ECF0;font:500 11px/1.6 ui-monospace,Menlo,monospace;letter-spacing:.16em;min-height:100vh;display:grid;place-items:center}
+#st{width:min(86vmin,900px)}
+.ui{position:fixed;left:24px;bottom:20px;display:flex;gap:14px;align-items:center}
+.ui button{background:none;border:1px solid rgba(232,236,240,.4);color:inherit;font:inherit;letter-spacing:inherit;padding:6px 10px;cursor:pointer}
+.ui button[aria-pressed=true]{border-color:#5FB8B0;color:#5FB8B0}
+.cap{position:fixed;left:24px;top:20px;color:rgba(232,236,240,.6)}
+</style></head><body>
+<p class="cap">GYEOLLAK · X-RAY / 螺鈿 · DRAW-ON PREVIEW<br><span id="pp">0%</span></p>
+<div id="st"></div>
+<div class="ui" id="ui"></div>
+<script src="najeon.js"></script>
+<script>
+(() => {
+  const q = new URLSearchParams(location.search), names = ['camellia','hydrangea','campsis','lily','goldfish'];
+  let name = q.get('m') || 'camellia', nj, t0, dur = +(q.get('dur') || 7000);
+  const st = document.getElementById('st'), ui = document.getElementById('ui'), pp = document.getElementById('pp');
+  const go = n => { name = n; st.innerHTML = ''; const d = document.createElement('div'); st.appendChild(d); nj = GYNajeon.mount(d, { name, base: './' }); window.__nj = nj; t0 = performance.now();
+    [...ui.children].forEach(b => b.setAttribute('aria-pressed', b.dataset.n === n)); };
+  names.forEach(n => { const b = document.createElement('button'); b.textContent = n.toUpperCase(); b.dataset.n = n; b.onclick = () => go(n); ui.appendChild(b); });
+  go(name);
+  if (q.get('auto') !== '0') { const tick = t => { const p = Math.min(1, (t - t0) / dur); nj.set(p); pp.textContent = Math.round(p * 100) + '%'; requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
+  window.__set = p => { nj.set(p); pp.textContent = Math.round(p * 100) + '%'; };
+})();
+</script></body></html>

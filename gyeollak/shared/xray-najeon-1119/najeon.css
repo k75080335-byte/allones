@@ -1,0 +1,14 @@
+/* 결락 · X-RAY × 자개 draw-on (shared, 2026-11-19) */
+.nj{position:relative;aspect-ratio:1/1;width:100%;contain:layout paint}
+.nj>*{position:absolute;inset:0;width:100%;height:100%}
+.nj-mono{opacity:0;object-fit:contain;-webkit-mask:var(--mask) center/100% 100% no-repeat;mask:var(--mask) center/100% 100% no-repeat}
+.nj-nacre{opacity:0;mix-blend-mode:screen;
+  -webkit-mask:var(--mask) center/100% 100% no-repeat;mask:var(--mask) center/100% 100% no-repeat;
+  background-image:linear-gradient(112deg,transparent 28%,rgba(217,207,232,.95) 42%,rgba(232,236,240,1) 47%,rgba(95,184,176,.9) 53%,transparent 68%),var(--tex);
+  background-size:260% 260%,100% 100%;background-position:var(--sx,0%) 0,center;background-blend-mode:screen;filter:saturate(1.15) contrast(1.05)}
+.nj-win{opacity:0;object-fit:contain}
+.nj-lines path{fill:none;stroke:url(#njLine);stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.nj-lines{filter:drop-shadow(0 0 2px rgba(232,236,240,.35))}
+.nj-frame rect,.nj-frame path{fill:none;stroke:rgba(232,236,240,.8);stroke-width:1;vector-effect:non-scaling-stroke}
+.nj.paper .nj-frame rect,.nj.paper .nj-frame path{stroke:rgba(31,42,58,.8)}
+@media (prefers-reduced-motion:reduce){.nj *{transition:none!important;animation:none!important}}
