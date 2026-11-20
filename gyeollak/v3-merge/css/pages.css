@@ -1,0 +1,28 @@
+.pg-music{background:var(--navy);color:var(--hanji)}
+.m-hero{padding-top:24vh;min-height:78svh;background:linear-gradient(var(--hanji) 0%,var(--mist) 22%,var(--dusk) 55%,var(--navy) 100%);overflow:hidden}
+.m-hero .h-xl{color:var(--ink)}.m-hero .eyebrow{color:var(--sub)}.m-hero .lede{color:#D8D4CA;margin-top:24vh}
+.m-hero .afterfish{right:6vw;top:28vh}
+.pg-music .on-d,.m-intro{background:var(--navy)}
+.pg-game{background:var(--hanji)}
+.g-hero{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center;min-height:100svh;padding-top:18vh}
+.g-hero .tmp{margin-top:22px}.g-hero .door{margin-left:12px}
+.g-art img{width:100%;max-width:560px;aspect-ratio:1;object-fit:cover;border-radius:4px;margin-left:auto}
+.g-art figcaption{margin-top:10px;color:var(--sub);text-align:right}
+.g-plan{background:linear-gradient(var(--hanji-2),var(--navy) 40%)}
+.g-list{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:20px}
+.g-list li{border-top:1px solid var(--hair-d);padding-top:16px;display:flex;gap:14px}.g-list b{font-family:var(--f-mono);font-weight:400;color:var(--teal)}
+.g-list span{font-family:var(--f-head);font-weight:700;font-size:20px;letter-spacing:-.03em}.g-list small{display:block;font-family:var(--f-body);font-weight:400;font-size:15px;color:var(--sub-d);margin-top:6px;letter-spacing:0}
+.pg-goods .intro{padding-top:20vh}
+.goods-note{padding:0 6vw 10vh;color:var(--sub);font-size:15px;max-width:52em}
+@media(max-width:760px){.g-hero{grid-template-columns:1fr;padding-top:20vh}.g-list{grid-template-columns:1fr}.m-hero .lede{margin-top:14vh}.g-hero .door{margin-left:0}}
+
+/* GOODS 04 이름표 목록 */
+.cat{background:var(--hanji)}
+.cat-grid{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:22px 18px}
+.cat-grid figure{margin:0}
+.cat-grid img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;background:var(--navy)}
+.cat-grid img.cut{object-fit:contain;object-position:center bottom;background:linear-gradient(var(--hanji-2),#dcd6c8);padding:14px 10px 0}
+.cat-grid figcaption{display:flex;flex-direction:column;gap:4px;padding-top:10px;border-top:1px solid var(--hair);margin-top:10px}
+.cat-grid figcaption b{font-size:16px;font-weight:700}
+.cat-grid figcaption span{font-size:12px;color:var(--sub);letter-spacing:.06em}
+@media (max-width:600px){.cat-grid{grid-template-columns:1fr 1fr;gap:18px 12px}.cat-grid figcaption b{font-size:15px}}
